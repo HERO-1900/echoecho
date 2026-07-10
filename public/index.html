@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>念念 EchoEcho · 事事有回应,句句有回响</title>
+<meta name="description" content="情侣双向备忘录:她说的每句话,都有回响。">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#FAF6F0">
+<style>
+:root{--bg:#FAF6F0;--ink:#2C3A42;--coral:#E8604C;--coral-soft:#FBEAE6;--line:#EADFD2;--ok:#3E8E5A;--doing:#C77B24;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+.wrap{max-width:520px;margin:0 auto;padding:0 16px calc(env(safe-area-inset-bottom) + 90px)}
+/* —— 品牌 —— */
+.waves{display:inline-block;vertical-align:-4px}
+h1.logo{font-size:26px;letter-spacing:2px}
+.slogan{color:#8a7d6e;font-size:13px;margin-top:4px}
+/* —— onboarding —— */
+#onb{padding-top:14vh;text-align:center}
+.onb-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:26px;text-align:left}
+.seg{display:flex;background:var(--coral-soft);border-radius:12px;padding:4px;margin-bottom:16px}
+.seg button{flex:1;border:0;background:transparent;padding:9px;border-radius:9px;font-size:15px;color:var(--ink)}
+.seg button.on{background:#fff;color:var(--coral);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+input,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:16px;background:#fff;color:var(--ink);outline:none}
+input:focus,textarea:focus{border-color:var(--coral)}
+label{display:block;font-size:13px;color:#8a7d6e;margin:12px 0 6px}
+.btn{display:block;width:100%;border:0;background:var(--coral);color:#fff;font-size:16px;font-weight:600;padding:14px;border-radius:14px;margin-top:18px;cursor:pointer}
+.btn:disabled{opacity:.5}
+/* —— 主界面 —— */
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 10px}
+header .sp{font-size:19px;font-weight:700}
+.chip{font-size:12px;background:var(--coral-soft);color:var(--coral);padding:4px 10px;border-radius:99px;border:0;cursor:pointer}
+.stats{display:flex;gap:10px;margin:6px 0 14px}
+.stat{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.stat b{font-size:20px;color:var(--coral)}.stat span{display:block;font-size:11px;color:#8a7d6e;margin-top:2px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;font-size:13px;color:#6b5f52;cursor:pointer}
+.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* —— 卡片 —— */
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.meta{display:flex;justify-content:space-between;font-size:12px;color:#8a7d6e;margin-bottom:6px}
+.txt{font-size:16px;line-height:1.5;white-space:pre-wrap}
+.voice{margin-top:8px}
+.voice button{border:1px solid var(--line);background:var(--coral-soft);color:var(--coral);border-radius:99px;padding:5px 14px;font-size:13px;cursor:pointer}
+.flow{display:flex;gap:6px;margin-top:12px;align-items:center;flex-wrap:wrap}
+.st{font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:#faf6f0;color:#8a7d6e;cursor:pointer}
+.st.on-received{background:var(--coral-soft);color:var(--coral);border-color:var(--coral);font-weight:600}
+.st.on-doing{background:#FCF3E3;color:var(--doing);border-color:var(--doing);font-weight:600}
+.st.on-done{background:#E8F3EC;color:var(--ok);border-color:var(--ok);font-weight:600}
+.prog{width:100%;margin-top:10px;accent-color:var(--coral)}
+.pct{font-size:12px;color:#8a7d6e}
+.ai{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;font-size:13px}
+.ai button,.ai a{border:1px solid var(--coral);background:#fff;color:var(--coral);border-radius:99px;padding:5px 14px;font-size:13px;cursor:pointer;text-decoration:none;display:inline-block}
+.ai .running{color:#8a7d6e}
+.note{margin-top:8px;font-size:13px;color:var(--ok);background:#E8F3EC;border-radius:10px;padding:8px 10px}
+/* —— 底部输入 —— */
+.composer{position:fixed;left:0;right:0;bottom:0;background:rgba(250,246,240,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 16px calc(env(safe-area-inset-bottom) + 10px)}
+.composer .row{max-width:520px;margin:0 auto;display:flex;gap:8px;align-items:flex-end}
+.composer textarea{flex:1;height:44px;max-height:100px;resize:none;border-radius:14px;padding:11px 12px}
+.mic,.send{width:44px;height:44px;border-radius:50%;border:0;font-size:19px;cursor:pointer;flex:none}
+.send{background:var(--coral);color:#fff}
+.mic{background:#fff;border:1px solid var(--line)}
+.mic.rec{background:var(--coral);color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.12)}}
+/* —— 弹层 —— */
+.sheet{position:fixed;inset:0;background:rgba(44,58,66,.45);display:none;align-items:flex-end;z-index:50}
+.sheet.show{display:flex}
+.sheet .in{background:var(--bg);width:100%;max-width:520px;margin:0 auto;border-radius:20px 20px 0 0;padding:20px 18px calc(env(safe-area-inset-bottom) + 20px);max-height:80vh;overflow:auto}
+.sheet h3{margin-bottom:12px}.sheet .row2{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 18px;border-radius:99px;font-size:13px;z-index:99;display:none}
+.empty{text-align:center;color:#b0a493;padding:48px 0;font-size:14px;line-height:2}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- 未结对:开屏 -->
+<div class="wrap" id="onb" style="display:none">
+  <svg class="waves" width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="8" fill="#E8604C"/><circle cx="28" cy="28" r="16" fill="none" stroke="#E8604C" stroke-width="2.5" opacity=".45"/><circle cx="28" cy="28" r="24" fill="none" stroke="#E8604C" stroke-width="2" opacity=".2"/></svg>
+  <h1 class="logo">念念 <span style="color:#E8604C">EchoEcho</span></h1>
+  <div class="slogan">事事有回应,句句有回响。</div>
+  <div class="onb-card">
+    <div class="seg"><button id="segNew" class="on">建小家</button><button id="segJoin">用邀请码加入</button></div>
+    <div id="fNew">
+      <label>你的昵称</label><input id="nick1" placeholder="比如:圆圆" maxlength="12">
+      <label>小家名字(可选)</label><input id="spname" placeholder="我们的小家" maxlength="16">
+      <button class="btn" id="btnNew">创建并生成邀请码</button>
+    </div>
+    <div id="fJoin" style="display:none">
+      <label>你的昵称</label><input id="nick2" placeholder="比如:大熊" maxlength="12">
+      <label>邀请码</label><input id="code" placeholder="NN-XXXX" style="text-transform:uppercase" maxlength="7">
+      <button class="btn" id="btnJoin">加入小家</button>
+    </div>
+  </div>
+</div>
+
+<!-- 已结对:主界面 -->
+<div class="wrap" id="app" style="display:none">
+  <header>
+    <div><div class="sp" id="spName">小家</div><div class="slogan" id="meName"></div></div>
+    <div><button class="chip" id="inviteChip">邀请码</button> <button class="chip" id="setChip">设置</button></div>
+  </header>
+  <div class="stats" id="stats"></div>
+  <div class="tabs">
+    <button data-f="all" class="on">全部</button><button data-f="mine">我发出的</button><button data-f="todo">我收到的</button>
+  </div>
+  <div id="list"></div>
+</div>
+
+<div class="composer" id="composer" style="display:none">
+  <div class="row">
+    <textarea id="txt" placeholder="说件事,让它有着落…"></textarea>
+    <button class="mic" id="mic" title="按住说话">🎙️</button>
+    <button class="send" id="send" title="发送">↑</button>
+  </div>
+</div>
+
+<div class="sheet" id="sheet"><div class="in" id="sheetIn"></div></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const API=p=>fetch('/api'+p.path,{method:p.m||'GET',headers:{...(auth()?{authorization:'Bearer '+auth().token}:{}),...(p.h||{}),...(p.body&&!(p.body instanceof Blob)?{'content-type':'application/json'}:{})},body:p.body?(p.body instanceof Blob?p.body:JSON.stringify(p.body)):undefined}).then(r=>p.raw?r:r.json());
+// #auth=<base64 json> 换设备登录入口(hash 不会发送到服务器);读取后立即从地址栏清掉
+if(location.hash.startsWith('#auth=')){try{localStorage.ee_auth=atob(location.hash.slice(6));history.replaceState(null,'',location.pathname)}catch(e){}}
+const auth=()=>{try{return JSON.parse(localStorage.ee_auth||'null')}catch(e){return null}};
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200)};
+const ago=ts=>{const d=Date.now()-ts;if(d<60e3)return'刚刚';if(d<3600e3)return Math.floor(d/60e3)+' 分钟前';if(d<86400e3)return Math.floor(d/3600e3)+' 小时前';return new Date(ts).toLocaleDateString('zh-CN',{month:'numeric',day:'numeric'})+'日'};
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let ME=null,MEMBERS=[],ITEMS=[],FILTER='all',lastSeen=Number(localStorage.ee_seen||0);
+
+// ---------- onboarding ----------
+$('#segNew').onclick=()=>{$('#segNew').classList.add('on');$('#segJoin').classList.remove('on');$('#fNew').style.display='';$('#fJoin').style.display='none'};
+$('#segJoin').onclick=()=>{$('#segJoin').classList.add('on');$('#segNew').classList.remove('on');$('#fJoin').style.display='';$('#fNew').style.display='none'};
+$('#btnNew').onclick=async()=>{const n=$('#nick1').value.trim();if(!n)return toast('先填昵称');
+  const r=await API({path:'/space',m:'POST',body:{nickname:n,name:$('#spname').value.trim()}});
+  if(!r.token)return toast(r.error||'创建失败');
+  localStorage.ee_auth=JSON.stringify(r);toast('小家已建好,把邀请码发给 TA:'+r.invite_code);boot()};
+$('#btnJoin').onclick=async()=>{const n=$('#nick2').value.trim(),c=$('#code').value.trim();if(!n||!c)return toast('昵称和邀请码都要填');
+  const r=await API({path:'/join',m:'POST',body:{nickname:n,invite_code:c}});
+  if(!r.token)return toast(r.error||'加入失败');
+  localStorage.ee_auth=JSON.stringify(r);toast('结对成功!');boot()};
+
+// ---------- 主流程 ----------
+async function boot(){
+  if(!auth()){$('#onb').style.display='';$('#app').style.display='none';$('#composer').style.display='none';return}
+  $('#onb').style.display='none';$('#app').style.display='';$('#composer').style.display='';
+  const me=await API({path:'/me'});
+  if(me.error){localStorage.removeItem('ee_auth');return boot()}
+  ME=me.me;MEMBERS=me.members;
+  $('#spName').textContent=me.space.name;$('#meName').textContent='我是 '+ME.nickname;
+  $('#inviteChip').textContent='邀请码 '+me.space.invite_code;
+  $('#inviteChip').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(me.space.invite_code);toast('邀请码已复制:'+me.space.invite_code)};
+  if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();
+  await refresh();
+}
+async function refresh(){
+  const r=await API({path:'/items'});if(r.error)return;
+  const fresh=r.items.filter(i=>i.created_at>lastSeen&&i.from_member!==ME.id);
+  if(fresh.length&&lastSeen&&'Notification'in window&&Notification.permission==='granted')
+    new Notification('念念 · '+nick(fresh[0].from_member),{body:fresh[0].text.slice(0,60)});
+  if(r.items.length){lastSeen=Math.max(lastSeen,...r.items.map(i=>i.created_at));localStorage.ee_seen=lastSeen}
+  ITEMS=r.items;render();
+}
+const nick=id=>(MEMBERS.find(m=>m.id===id)||{}).nickname||'TA';
+function render(){
+  const mine=ITEMS.filter(i=>i.from_member===ME.id),todo=ITEMS.filter(i=>i.from_member!==ME.id);
+  const done=mine.filter(i=>i.status==='done').length;
+  $('#stats').innerHTML=
+    `<div class="stat"><b>${mine.length?Math.round(done/mine.length*100)+'%':'—'}</b><span>我的念念办妥率</span></div>`+
+    `<div class="stat"><b>${todo.filter(i=>i.status!=='done').length}</b><span>待我回响</span></div>`+
+    `<div class="stat"><b>${ITEMS.filter(i=>i.research==='done').length}</b><span>AI 僚机方案</span></div>`;
+  const list=FILTER==='mine'?mine:FILTER==='todo'?todo:ITEMS;
+  $('#list').innerHTML=list.length?list.map(card).join(''):
+    '<div class="empty">还没有念念。<br>说一句,让它句句有回响。</div>';
+}
+function card(i){
+  const isMine=i.from_member===ME.id;
+  const stBtn=(k,txt)=>`<button class="st ${i.status===k?'on-'+k:''}" onclick="setStatus('${i.id}','${k}')">${txt}</button>`;
+  let flow=`<div class="flow">${stBtn('received','收到')} → ${stBtn('doing','在办')} → ${stBtn('done','办妥')}`;
+  if(i.status==='doing')flow+=`<span class="pct">${i.progress}%</span></div><input class="prog" type="range" min="0" max="100" value="${i.progress}" onchange="setProgress('${i.id}',this.value)">`;
+  else flow+='</div>';
+  let ai='<div class="ai">';
+  if(i.research==='none')ai+=`<button onclick="wantResearch('${i.id}')">🧭 请 AI 僚机出方案</button>`;
+  else if(i.research==='wanted'||i.research==='running')ai+='<span class="running">🧭 僚机调研中,好了会出现在这里…</span>';
+  else if(i.research==='done')ai+=`<a href="javascript:openPage('${i.id}')">🧭 看 AI 僚机方案</a>`;
+  else ai+='<span class="running">僚机这次没弄成,可以重新叫他</span> '+`<button onclick="wantResearch('${i.id}')">再试</button>`;
+  ai+='</div>';
+  return `<div class="card">
+    <div class="meta"><span>${esc(nick(i.from_member))}${isMine?'(我)':''} · ${i.kind==='voice'?'🎙️ 语音':'✏️ 文字'}</span><span>${ago(i.created_at)}</span></div>
+    <div class="txt">${esc(i.text)}</div>
+    ${i.audio_key?`<div class="voice"><button onclick="playVoice('${encodeURIComponent(i.audio_key)}',this)">▶ 听原声</button></div>`:''}
+    ${flow}
+    ${i.status==='done'&&i.note?`<div class="note">✅ ${esc(i.note)}</div>`:''}
+    ${ai}
+  </div>`;
+}
+window.setStatus=async(id,st)=>{
+  let body={status:st};
+  if(st==='done'){const n=prompt('办妥啦!给 TA 留一句交待(可选):');if(n)body.note=n}
+  await API({path:'/items/'+id,m:'PATCH',body});refresh();
+};
+window.setProgress=async(id,v)=>{await API({path:'/items/'+id,m:'PATCH',body:{progress:Number(v),status:'doing'}});refresh()};
+window.wantResearch=async id=>{await API({path:'/items/'+id,m:'PATCH',body:{research:'wanted'}});toast('已叫 AI 僚机,出方案后自动出现');refresh()};
+window.openPage=async id=>{const r=await API({path:'/page/'+id,raw:true});const h=await r.text();const w=open('about:blank');w.document.write(h);w.document.close()};
+window.playVoice=async(k,btn)=>{btn.textContent='…';const r=await API({path:'/audio/'+k,raw:true});const b=await r.blob();new Audio(URL.createObjectURL(b)).play();btn.textContent='▶ 听原声'};
+
+// ---------- 发送 ----------
+$('#send').onclick=async()=>{const t=$('#txt').value.trim();if(!t)return;
+  $('#txt').value='';await API({path:'/items',m:'POST',body:{text:t}});refresh()};
+// 录音:点一下开始,再点结束(Typeless 式)
+let rec=null,chunks=[];
+$('#mic').onclick=async()=>{
+  if(rec&&rec.state==='recording'){rec.stop();return}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    const mime=MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':'audio/mp4';
+    rec=new MediaRecorder(stream,{mimeType:mime});chunks=[];
+    rec.ondataavailable=e=>chunks.push(e.data);
+    rec.onstop=async()=>{
+      stream.getTracks().forEach(t=>t.stop());$('#mic').classList.remove('rec');
+      const blob=new Blob(chunks,{type:mime});toast('转写中…');
+      const r=await API({path:'/voice',m:'POST',h:{'content-type':mime},body:blob});
+      if(r.ok){toast('已发送:'+(r.transcript||'').slice(0,24));refresh()}else toast(r.error||'发送失败');
+    };
+    rec.start();$('#mic').classList.add('rec');toast('录音中,再点一下结束');
+  }catch(e){toast('需要麦克风权限')}
+};
+// tabs
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');FILTER=b.dataset.f;render()});
+// 设置面板
+$('#setChip').onclick=()=>{
+  $('#sheetIn').innerHTML=`<h3>设置</h3>
+    <div class="row2"><span>小家成员</span><span>${MEMBERS.map(m=>esc(m.nickname)).join('、')}</span></div>
+    <div class="row2"><span>硬件挂链(预留)</span><button class="chip" onclick="mkDevice()">生成设备 Token</button></div>
+    <div class="row2"><span>退出登录</span><button class="chip" onclick="localStorage.removeItem('ee_auth');location.reload()">退出</button></div>
+    <p style="font-size:12px;color:#8a7d6e;margin-top:14px">念念 EchoEcho v1.0.0 · 事事有回应,句句有回响</p>`;
+  $('#sheet').classList.add('show')};
+$('#sheet').onclick=e=>{if(e.target.id==='sheet')$('#sheet').classList.remove('show')};
+window.mkDevice=async()=>{const r=await API({path:'/devices',m:'POST',body:{label:'挂链'}});
+  prompt('把这个 Token 写进你的硬件(按下即录音,松开上传):',r.device_token)};
+
+setInterval(()=>{if(auth()&&ME)refresh()},12000);
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js');
+boot();
+</script>
+</body>
+</html>

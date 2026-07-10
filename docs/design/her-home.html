@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>念念 EchoEcho · 她的首页</title>
+<style>
+/* ============================================================
+   念念 EchoEcho · 高保真设计稿 02 / 05 · 她的视角
+   发念念(按住说话)+ 我的念念列表(三态 + 进度 + 办妥率)
+   静态 mockup;纯内联 CSS,无外部依赖
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+:root{
+  --paper:#FAF6F0; --coral:#E8604C; --ink:#2C3A42;
+  --ink60:rgba(44,58,66,.62); --ink40:rgba(44,58,66,.42);
+  --line:rgba(44,58,66,.09); --coral-soft:rgba(232,96,76,.09);
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#EDE5D8;background-image:radial-gradient(1100px 760px at 50% -8%,#F8F2E9,#E9DFD0);
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:48px 24px;color:var(--ink);
+}
+.page-label{font-size:13px;color:rgba(44,58,66,.52);font-style:italic;margin-bottom:14px;letter-spacing:.06em}
+
+.phone{background:#22262a;border-radius:58px;padding:11px;
+  box-shadow:0 42px 84px rgba(44,58,66,.26),0 12px 26px rgba(44,58,66,.16)}
+.screen{width:390px;height:844px;background:var(--paper);border-radius:47px;overflow:hidden;
+  position:relative;display:flex;flex-direction:column}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  width:124px;height:36px;background:#0b0d0e;border-radius:19px;z-index:60}
+.statusbar{height:59px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 30px 8px;font-size:15px;font-weight:600;position:relative;z-index:55;letter-spacing:.02em}
+.statusbar .sicons{display:flex;align-items:center;gap:6px}
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  width:134px;height:5px;border-radius:3px;background:rgba(44,58,66,.82);z-index:70}
+
+.content{flex:1;overflow-y:auto;scrollbar-width:none;padding:8px 22px 20px}
+.content::-webkit-scrollbar{display:none}
+
+/* ---------- 头部 ---------- */
+.header{display:flex;align-items:center;gap:12px;padding:6px 2px 0}
+.avatars{position:relative;width:56px;height:40px;flex:none}
+.ava{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:#fff;border:2.5px solid var(--paper);position:absolute;top:0}
+.ava.her{background:var(--coral);left:0;z-index:2}
+.ava.him{background:var(--ink);left:20px;z-index:1}
+.hgreet{flex:1;min-width:0}
+.hgreet .hi{font-size:19px;font-weight:800;letter-spacing:.02em}
+.hgreet .sub{margin-top:2px;font-size:11.5px;color:var(--ink60)}
+.hgreet .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#E8604C;
+  margin-right:4px;vertical-align:1px;box-shadow:0 0 0 3px rgba(232,96,76,.15)}
+.bell{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;flex:none;position:relative}
+.bell .n{position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;border-radius:8px;
+  background:var(--coral);color:#fff;font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;padding:0 4px}
+
+/* ---------- 统计条:我的念念都有着落 ---------- */
+.stats{margin-top:16px;background:var(--ink);border-radius:22px;padding:18px 20px 16px;color:#fff;
+  position:relative;overflow:hidden}
+.stats .ring-deco{position:absolute;border-radius:50%;border:1.5px solid rgba(250,246,240,.10)}
+.stats .ring-deco.a{width:150px;height:150px;right:-45px;top:-55px}
+.stats .ring-deco.b{width:150px;height:150px;right:-45px;top:-55px;transform:scale(.66)}
+.stats .cap{font-size:11px;letter-spacing:.2em;color:rgba(250,246,240,.55);font-weight:600}
+.stats .row{display:flex;margin-top:12px}
+.stats .cell{flex:1}
+.stats .cell + .cell{border-left:1px solid rgba(250,246,240,.14);padding-left:18px}
+.stats .num{font-size:26px;font-weight:800;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.stats .num small{font-size:13px;font-weight:600;margin-left:1px}
+.stats .num.coral{color:#F2907F}
+.stats .lab{margin-top:3px;font-size:10.5px;color:rgba(250,246,240,.6);letter-spacing:.06em}
+
+/* ---------- 发念念:按住说话 ---------- */
+.speak{margin-top:18px;background:#fff;border-radius:24px;border:1px solid var(--line);
+  box-shadow:0 10px 26px rgba(44,58,66,.06);padding:22px 20px 18px;text-align:center;position:relative}
+.speak .stitle{font-family:"Songti SC","Noto Serif SC",Georgia,serif;font-size:15px;font-weight:700;letter-spacing:.1em}
+.speak .stitle em{color:var(--coral);font-style:normal}
+.hold-btn{margin:18px auto 0;width:104px;height:104px;border-radius:50%;background:var(--coral);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#fff;
+  box-shadow:0 0 0 12px rgba(232,96,76,.10),0 0 0 26px rgba(232,96,76,.05),0 16px 30px rgba(232,96,76,.35);
+  cursor:pointer}
+.hold-btn .h1{font-size:16px;font-weight:800;letter-spacing:.2em;text-indent:.2em}
+.hold-btn .h2{font-size:10px;opacity:.85;letter-spacing:.1em}
+.speak .alt{margin-top:20px;display:flex;align-items:center;gap:8px}
+.speak .fake-input{flex:1;height:38px;border-radius:19px;background:var(--paper);
+  border:1px solid rgba(44,58,66,.12);display:flex;align-items:center;padding:0 14px;
+  font-size:12px;color:var(--ink40)}
+.speak .send{flex:none;height:38px;padding:0 16px;border-radius:19px;background:var(--coral-soft);
+  color:var(--coral);font-size:12px;font-weight:700;display:flex;align-items:center;letter-spacing:.05em}
+
+/* ---------- 我的念念列表 ---------- */
+.sec{margin-top:22px;display:flex;align-items:baseline;justify-content:space-between;padding:0 2px}
+.sec .t{font-size:16px;font-weight:800;letter-spacing:.04em}
+.sec .more{font-size:11.5px;color:var(--ink40)}
+.card{margin-top:12px;background:#fff;border-radius:20px;border:1px solid var(--line);
+  box-shadow:0 6px 18px rgba(44,58,66,.05);padding:15px 16px 14px}
+.crow{display:flex;align-items:flex-start;gap:10px}
+.ctext{flex:1;min-width:0}
+.ctitle{font-size:14.5px;font-weight:700;line-height:1.45;letter-spacing:.01em}
+.cmeta{margin-top:5px;font-size:11px;color:var(--ink40);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.badge{flex:none;font-size:10px;font-weight:800;padding:4px 10px;border-radius:99px;letter-spacing:.12em;margin-top:1px}
+.badge.received{color:var(--ink60);border:1.5px solid rgba(44,58,66,.28);background:#fff}
+.badge.doing{color:#fff;background:var(--coral);box-shadow:0 4px 10px rgba(232,96,76,.3)}
+.badge.done{color:#fff;background:var(--ink)}
+.pwrap{margin-top:11px;display:flex;align-items:center;gap:9px}
+.ptrack{flex:1;height:6px;border-radius:3px;background:rgba(44,58,66,.08);overflow:hidden}
+.pfill{height:100%;border-radius:3px;background:linear-gradient(90deg,#F2907F,var(--coral))}
+.pfill.inkfill{background:var(--ink)}
+.pct{flex:none;font-size:11px;font-weight:800;color:var(--coral);font-variant-numeric:tabular-nums;width:34px;text-align:right}
+.pct.inkpct{color:var(--ink60)}
+.reply-line{margin-top:10px;background:var(--paper);border-radius:12px;padding:9px 12px;
+  font-size:11.5px;line-height:1.55;color:var(--ink60);display:flex;gap:7px}
+.reply-line .who{flex:none;font-weight:700;color:var(--ink)}
+.reply-line.done-line{background:rgba(44,58,66,.05)}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--coral-soft);color:var(--coral);
+  font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:99px;letter-spacing:.03em}
+.check{color:#fff;background:var(--ink);width:15px;height:15px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;font-size:9px;flex:none}
+
+/* ---------- Tab 栏 ---------- */
+.tabbar{flex:none;height:82px;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);
+  border-top:1px solid var(--line);display:flex;padding:9px 12px 0;position:relative;z-index:40}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:10px;letter-spacing:.05em;color:var(--ink40)}
+.tab.active{color:var(--coral);font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="page-label">02 / 05 · 她的视角 — 按住说念念 + 我的念念(收到 / 在办 / 办妥 + 办妥率)</div>
+
+<div class="phone">
+  <div class="screen">
+    <div class="island"></div>
+    <div class="statusbar">
+      <span>9:41</span>
+      <span class="sicons">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="7" width="3" height="5" rx="1" fill="#2C3A42"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#2C3A42"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#2C3A42"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#2C3A42" opacity=".35"/></svg>
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><path d="M8.5 10.8 6.2 8.4a3.4 3.4 0 0 1 4.6 0L8.5 10.8Z" fill="#2C3A42"/><path d="M4.2 6.3a6.4 6.4 0 0 1 8.6 0" stroke="#2C3A42" stroke-width="1.7" stroke-linecap="round"/><path d="M1.6 3.6a10 10 0 0 1 13.8 0" stroke="#2C3A42" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x=".8" y=".8" width="21" height="11.4" rx="3.4" stroke="#2C3A42" stroke-opacity=".4" stroke-width="1.2"/><rect x="2.5" y="2.5" width="14" height="8" rx="2" fill="#2C3A42"/><path d="M23.6 4.4v4.2a2.3 2.3 0 0 0 0-4.2Z" fill="#2C3A42" fill-opacity=".4"/></svg>
+      </span>
+    </div>
+
+    <div class="content">
+      <div class="header">
+        <div class="avatars">
+          <div class="ava her">念</div>
+          <div class="ava him">响</div>
+        </div>
+        <div class="hgreet">
+          <div class="hi">晚上好,小念</div>
+          <div class="sub"><span class="dot"></span>阿响在线 · 你们的小家已结对 386 天</div>
+        </div>
+        <div class="bell">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 2 6.5H4c.5-1 2-2.5 2-6.5Z" stroke="#2C3A42" stroke-width="1.7" stroke-linejoin="round"/><path d="M10 19.5a2.2 2.2 0 0 0 4 0" stroke="#2C3A42" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <span class="n">2</span>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="ring-deco a"></div><div class="ring-deco b"></div>
+        <div class="cap">我的念念,都有着落</div>
+        <div class="row">
+          <div class="cell">
+            <div class="num coral">92<small>%</small></div>
+            <div class="lab">本月办妥率</div>
+          </div>
+          <div class="cell">
+            <div class="num">3.2<small>小时</small></div>
+            <div class="lab">平均回响速度</div>
+          </div>
+          <div class="cell">
+            <div class="num">17<small>条</small></div>
+            <div class="lab">本月念念</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="speak">
+        <div class="stitle">此刻想说的,<em>念</em>出来就好</div>
+        <div class="hold-btn">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="9" y="3" width="6" height="11" rx="3" stroke="#fff" stroke-width="1.8"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M12 18v3" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <div class="h1">按住说</div>
+          <div class="h2">松开即发送</div>
+        </div>
+        <div class="alt">
+          <div class="fake-input">不方便说话?打字也算数……</div>
+          <div class="send">发念念</div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="t">我的念念</div>
+        <div class="more">全部 17 条 &#8250;</div>
+      </div>
+
+      <!-- 在办 60% -->
+      <div class="card">
+        <div class="crow">
+          <div class="ctext">
+            <div class="ctitle">周五帮我取干洗的裙子,蓝色那条</div>
+            <div class="cmeta">昨天 21:47 · 语音 6&#8221;</div>
+          </div>
+          <div class="badge doing">在办</div>
+        </div>
+        <div class="pwrap">
+          <div class="ptrack"><div class="pfill" style="width:60%"></div></div>
+          <div class="pct">60%</div>
+        </div>
+        <div class="reply-line">
+          <span class="who">阿响:</span>单据在玄关抽屉找到了,周五下班顺路去取。
+        </div>
+      </div>
+
+      <!-- 在办 45% + AI 僚机 -->
+      <div class="card">
+        <div class="crow">
+          <div class="ctext">
+            <div class="ctitle">想买台洗衣机,预算三千,最好能洗羽绒服</div>
+            <div class="cmeta">7 月 9 日 21:03 · 语音 11&#8221; · <span class="chip">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M12 3.5 13.8 10.2 20.5 12 13.8 13.8 12 20.5 10.2 13.8 3.5 12 10.2 10.2Z" fill="#E8604C"/></svg>
+              AI 僚机已出 3 档方案</span></div>
+          </div>
+          <div class="badge doing">在办</div>
+        </div>
+        <div class="pwrap">
+          <div class="ptrack"><div class="pfill" style="width:45%"></div></div>
+          <div class="pct">45%</div>
+        </div>
+      </div>
+
+      <!-- 收到 -->
+      <div class="card">
+        <div class="crow">
+          <div class="ctext">
+            <div class="ctitle">下次纪念日想去那家川菜馆</div>
+            <div class="cmeta">今天 09:12 · 文字 · 已送达,等 TA 接单</div>
+          </div>
+          <div class="badge received">收到</div>
+        </div>
+        <div class="pwrap">
+          <div class="ptrack"><div class="pfill" style="width:8%"></div></div>
+          <div class="pct">8%</div>
+        </div>
+      </div>
+
+      <!-- 办妥 -->
+      <div class="card">
+        <div class="crow">
+          <div class="ctext">
+            <div class="ctitle">阳台的绿萝记得浇水</div>
+            <div class="cmeta">周二 08:30 · 3 小时办妥</div>
+          </div>
+          <div class="badge done">办妥</div>
+        </div>
+        <div class="reply-line done-line">
+          <span class="check">&#10003;</span><span><span class="who">阿响:</span>浇啦,顺手把黄叶也剪了。</span>
+        </div>
+      </div>
+
+      <!-- 办妥 -->
+      <div class="card">
+        <div class="crow">
+          <div class="ctext">
+            <div class="ctitle">帮我妈订下周六去杭州的高铁票</div>
+            <div class="cmeta">周一 12:05 · 半天办妥</div>
+          </div>
+          <div class="badge done">办妥</div>
+        </div>
+        <div class="reply-line done-line">
+          <span class="check">&#10003;</span><span><span class="who">阿响:</span>G7538 · 周六 09:02 发车,票已出,发妈妈手机了。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabbar">
+      <div class="tab active">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" fill="currentColor"/><circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="1.6" opacity=".45"/></svg>
+        念念
+      </div>
+      <div class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3.5 13.8 10.2 20.5 12 13.8 13.8 12 20.5 10.2 13.8 3.5 12 10.2 10.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        僚机
+      </div>
+      <div class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4.5 10.5 12 4.5l7.5 6v8a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        小家
+      </div>
+      <div class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M5 19.5c1.4-3.2 4-4.8 7-4.8s5.6 1.6 7 4.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        我的
+      </div>
+    </div>
+
+    <div class="homebar"></div>
+  </div>
+</div>
+
+</body>
+</html>

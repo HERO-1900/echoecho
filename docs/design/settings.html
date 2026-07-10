@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>念念 EchoEcho · 小家与设置</title>
+<style>
+/* ============================================================
+   念念 EchoEcho · 高保真设计稿 05 / 05 · 小家 · 设置
+   结对管理(一对多)+ 提醒设置(强提醒)+ 硬件挂链占位
+   静态 mockup;纯内联 CSS,无外部依赖
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+:root{
+  --paper:#FAF6F0; --coral:#E8604C; --ink:#2C3A42;
+  --ink60:rgba(44,58,66,.62); --ink40:rgba(44,58,66,.42);
+  --line:rgba(44,58,66,.09); --coral-soft:rgba(232,96,76,.09);
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#EDE5D8;background-image:radial-gradient(1100px 760px at 50% -8%,#F8F2E9,#E9DFD0);
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:48px 24px;color:var(--ink);
+}
+.page-label{font-size:13px;color:rgba(44,58,66,.52);font-style:italic;margin-bottom:14px;letter-spacing:.06em}
+
+.phone{background:#22262a;border-radius:58px;padding:11px;
+  box-shadow:0 42px 84px rgba(44,58,66,.26),0 12px 26px rgba(44,58,66,.16)}
+.screen{width:390px;height:844px;background:var(--paper);border-radius:47px;overflow:hidden;
+  position:relative;display:flex;flex-direction:column}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  width:124px;height:36px;background:#0b0d0e;border-radius:19px;z-index:60}
+.statusbar{height:59px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 30px 8px;font-size:15px;font-weight:600;position:relative;z-index:55;letter-spacing:.02em}
+.statusbar .sicons{display:flex;align-items:center;gap:6px}
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  width:134px;height:5px;border-radius:3px;background:rgba(44,58,66,.82);z-index:70}
+
+.content{flex:1;overflow-y:auto;scrollbar-width:none;padding:6px 22px 20px}
+.content::-webkit-scrollbar{display:none}
+
+.ptitle{padding:8px 2px 0;font-size:22px;font-weight:800;letter-spacing:.04em}
+.psub{margin-top:3px;padding:0 2px;font-size:11.5px;color:var(--ink60)}
+
+.sec-t{margin-top:20px;font-size:13px;font-weight:800;letter-spacing:.12em;color:var(--ink60);padding:0 2px}
+
+/* ---------- 结对卡片 ---------- */
+.pair{margin-top:11px;background:#fff;border:1px solid var(--line);border-radius:20px;
+  box-shadow:0 6px 18px rgba(44,58,66,.05);padding:14px 16px;display:flex;align-items:center;gap:13px}
+.pava{width:46px;height:46px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:700;color:#fff}
+.pava.her{background:var(--coral);box-shadow:0 0 0 4px rgba(232,96,76,.14)}
+.pava.mom{background:var(--ink);box-shadow:0 0 0 4px rgba(44,58,66,.10)}
+.ptext{flex:1;min-width:0}
+.pname{font-size:15px;font-weight:800;display:flex;align-items:center;gap:7px}
+.tagchip{font-size:9px;font-weight:800;letter-spacing:.08em;padding:2.5px 8px;border-radius:99px}
+.tagchip.main{background:var(--coral);color:#fff}
+.tagchip.sub{background:rgba(44,58,66,.08);color:var(--ink60)}
+.pdesc{margin-top:4px;font-size:11px;color:var(--ink60);line-height:1.5}
+.parrow{flex:none;color:var(--ink40);font-size:17px;font-weight:300}
+
+.pair.add{border:1.5px dashed rgba(232,96,76,.5);background:rgba(232,96,76,.04);box-shadow:none}
+.pair.add .pava{background:transparent;border:1.5px dashed rgba(232,96,76,.55);color:var(--coral);
+  box-shadow:none;font-size:22px;font-weight:400}
+.pair.add .pname{color:var(--coral)}
+.pair.add .pdesc{color:var(--ink40)}
+
+/* ---------- 设置行 + 开关 ---------- */
+.setting-card{margin-top:11px;background:#fff;border:1px solid var(--line);border-radius:20px;
+  box-shadow:0 6px 18px rgba(44,58,66,.05);overflow:hidden}
+.srow{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.srow + .srow{border-top:1px solid var(--line)}
+.sicon{width:34px;height:34px;border-radius:11px;background:var(--coral-soft);flex:none;
+  display:flex;align-items:center;justify-content:center}
+.sicon.inkbg{background:rgba(44,58,66,.07)}
+.stext{flex:1;min-width:0}
+.sname{font-size:13.5px;font-weight:700}
+.sdesc{margin-top:3px;font-size:10.5px;color:var(--ink60);line-height:1.5}
+.sval{flex:none;font-size:11.5px;color:var(--ink40)}
+
+.toggle{flex:none;width:46px;height:27px;border-radius:14px;position:relative}
+.toggle.on{background:var(--coral);box-shadow:inset 0 1px 2px rgba(0,0,0,.08)}
+.toggle.off{background:rgba(44,58,66,.16)}
+.toggle::after{content:"";position:absolute;top:2.5px;width:22px;height:22px;border-radius:50%;
+  background:#fff;box-shadow:0 2px 5px rgba(44,58,66,.25)}
+.toggle.on::after{right:2.5px}
+.toggle.off::after{left:2.5px}
+
+/* ---------- 硬件挂链占位 ---------- */
+.charm{margin-top:11px;background:var(--ink);color:#fff;border-radius:22px;padding:18px;
+  position:relative;overflow:hidden;display:flex;gap:15px;align-items:center}
+.charm .ring-deco{position:absolute;border-radius:50%;border:1.5px solid rgba(250,246,240,.09)}
+.charm .ring-deco.a{width:190px;height:190px;right:-70px;bottom:-90px}
+.charm .ring-deco.b{width:190px;height:190px;right:-70px;bottom:-90px;transform:scale(.66)}
+/* 挂链示意:圆环吊坠 + 双圈回声(品牌图形,占位非渲染图) */
+.charm-visual{width:86px;height:110px;flex:none;position:relative}
+.charm-visual .strap{position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  width:30px;height:34px;border:3px solid rgba(250,246,240,.4);border-radius:15px 15px 4px 4px;border-bottom:none}
+.charm-visual .pend{position:absolute;top:30px;left:50%;transform:translateX(-50%);
+  width:70px;height:70px;border-radius:50%;background:#FAF6F0;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 10px 22px rgba(0,0,0,.3)}
+.charm-visual .pend .core{width:14px;height:14px;border-radius:50%;background:var(--coral);
+  box-shadow:0 0 0 9px rgba(232,96,76,.18),0 0 0 18px rgba(232,96,76,.08)}
+.charm-text{flex:1;min-width:0;position:relative}
+.charm .soon{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.14em;
+  background:rgba(242,144,127,.2);color:#F2907F;border:1px solid rgba(242,144,127,.4);
+  padding:3px 9px;border-radius:99px}
+.charm .cname{margin-top:8px;font-size:16px;font-weight:800;letter-spacing:.03em}
+.charm .cdesc{margin-top:6px;font-size:11px;line-height:1.65;color:rgba(250,246,240,.72);
+  font-family:"Songti SC","Noto Serif SC",Georgia,serif}
+.charm .cbtn{margin-top:11px;display:inline-flex;height:32px;padding:0 16px;border-radius:16px;
+  border:1.5px solid rgba(242,144,127,.55);color:#F2907F;font-size:11.5px;font-weight:800;
+  align-items:center;letter-spacing:.05em;cursor:pointer}
+
+.foot{margin-top:20px;text-align:center;font-size:10.5px;color:var(--ink40);line-height:2}
+.foot .quit{color:rgba(232,96,76,.75);font-weight:700}
+
+/* ---------- Tab 栏 ---------- */
+.tabbar{flex:none;height:82px;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);
+  border-top:1px solid var(--line);display:flex;padding:9px 12px 0;position:relative;z-index:40}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:10px;letter-spacing:.05em;color:var(--ink40)}
+.tab.active{color:var(--coral);font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="page-label">05 / 05 · 小家 · 设置 — 结对管理(一对多)+ 强提醒 + 硬件挂链占位</div>
+
+<div class="phone">
+  <div class="screen">
+    <div class="island"></div>
+    <div class="statusbar">
+      <span>9:41</span>
+      <span class="sicons">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="7" width="3" height="5" rx="1" fill="#2C3A42"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#2C3A42"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#2C3A42"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#2C3A42" opacity=".35"/></svg>
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><path d="M8.5 10.8 6.2 8.4a3.4 3.4 0 0 1 4.6 0L8.5 10.8Z" fill="#2C3A42"/><path d="M4.2 6.3a6.4 6.4 0 0 1 8.6 0" stroke="#2C3A42" stroke-width="1.7" stroke-linecap="round"/><path d="M1.6 3.6a10 10 0 0 1 13.8 0" stroke="#2C3A42" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x=".8" y=".8" width="21" height="11.4" rx="3.4" stroke="#2C3A42" stroke-opacity=".4" stroke-width="1.2"/><rect x="2.5" y="2.5" width="14" height="8" rx="2" fill="#2C3A42"/><path d="M23.6 4.4v4.2a2.3 2.3 0 0 0 0-4.2Z" fill="#2C3A42" fill-opacity=".4"/></svg>
+      </span>
+    </div>
+
+    <div class="content">
+      <div class="ptitle">小家</div>
+      <div class="psub">结对与提醒 · 你的每一句,都不会落空</div>
+
+      <div class="sec-t">结对管理</div>
+
+      <div class="pair">
+        <div class="pava her">念</div>
+        <div class="ptext">
+          <div class="pname">小念 <span class="tagchip main">主结对 · 女朋友</span></div>
+          <div class="pdesc">结对 386 天 · 本月你的办妥率 92% · 平均回响 3.2 小时</div>
+        </div>
+        <div class="parrow">&#8250;</div>
+      </div>
+
+      <div class="pair">
+        <div class="pava mom">妈</div>
+        <div class="ptext">
+          <div class="pname">妈妈 <span class="tagchip sub">订阅式结对</span></div>
+          <div class="pdesc">每周日 20:00 收到你的回响简报 · 在办 1 条:「体检报告出了给妈看看」</div>
+        </div>
+        <div class="parrow">&#8250;</div>
+      </div>
+
+      <div class="pair add">
+        <div class="pava">+</div>
+        <div class="ptext">
+          <div class="pname">添加结对</div>
+          <div class="pdesc">父母、孩子都可以结对(订阅式) · 生成邀请码递过去</div>
+        </div>
+      </div>
+
+      <div class="sec-t">提醒设置</div>
+
+      <div class="setting-card">
+        <div class="srow">
+          <div class="sicon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 2 6.5H4c.5-1 2-2.5 2-6.5Z" stroke="#E8604C" stroke-width="1.7" stroke-linejoin="round"/><path d="M10 19.5a2.2 2.2 0 0 0 4 0" stroke="#E8604C" stroke-width="1.7" stroke-linecap="round"/><path d="M19.5 3.5c1.2 1 2 2.3 2.3 3.8M4.5 3.5c-1.2 1-2 2.3-2.3 3.8" stroke="#E8604C" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </div>
+          <div class="stext">
+            <div class="sname">强提醒</div>
+            <div class="sdesc">新念念响铃 + 全屏横幅,直到你点「收到」才罢休</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="srow">
+          <div class="sicon inkbg">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20 13.5A8 8 0 1 1 10.5 4 6.5 6.5 0 0 0 20 13.5Z" stroke="#2C3A42" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="stext">
+            <div class="sname">免打扰时段</div>
+            <div class="sdesc">深夜的念念先存着,起床后第一时间响</div>
+          </div>
+          <div class="sval">23:00 – 08:00</div>
+          <div class="toggle on" style="margin-left:10px"></div>
+        </div>
+        <div class="srow">
+          <div class="sicon inkbg">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="15" rx="2.5" stroke="#2C3A42" stroke-width="1.7"/><path d="M4 9.5h16M8.5 3.5v3M15.5 3.5v3" stroke="#2C3A42" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </div>
+          <div class="stext">
+            <div class="sname">每日回响简报</div>
+            <div class="sdesc">每晚 22:00 汇总今天的念念进度,发给你们俩</div>
+          </div>
+          <div class="toggle off"></div>
+        </div>
+        <div class="srow">
+          <div class="sicon inkbg">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3.5 13.8 10.2 20.5 12 13.8 13.8 12 20.5 10.2 13.8 3.5 12 10.2 10.2Z" stroke="#2C3A42" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="stext">
+            <div class="sname">AI 僚机自动接单</div>
+            <div class="sdesc">新念念涉及「买 / 选 / 订」时,僚机先出方案再叫你</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+      </div>
+
+      <div class="sec-t">念念硬件</div>
+
+      <div class="charm">
+        <div class="ring-deco a"></div><div class="ring-deco b"></div>
+        <div class="charm-visual">
+          <div class="strap"></div>
+          <div class="pend"><div class="core"></div></div>
+        </div>
+        <div class="charm-text">
+          <span class="soon">即将上市 · 占位</span>
+          <div class="cname">念念挂链 EchoCharm</div>
+          <div class="cdesc">挂在包上,捏一下,想念即刻递到 TA 手机;TA 办妥时,挂链轻轻震三下。</div>
+          <div class="cbtn">预约体验 &#8250;</div>
+        </div>
+      </div>
+
+      <div class="foot">
+        念念 EchoEcho · v0.1.0 设计稿<br>
+        <span class="quit">退出小家</span> · 退出前会把你们的回忆打包给你
+      </div>
+    </div>
+
+    <div class="tabbar">
+      <div class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" fill="currentColor"/><circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="1.6" opacity=".45"/></svg>
+        念念
+      </div>
+      <div class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3.5 13.8 10.2 20.5 12 13.8 13.8 12 20.5 10.2 13.8 3.5 12 10.2 10.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        僚机
+      </div>
+      <div class="tab active">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4.5 10.5 12 4.5l7.5 6v8a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        小家
+      </div>
+      <div class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M5 19.5c1.4-3.2 4-4.8 7-4.8s5.6 1.6 7 4.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        我的
+      </div>
+    </div>
+
+    <div class="homebar"></div>
+  </div>
+</div>
+
+</body>
+</html>

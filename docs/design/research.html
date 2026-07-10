@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>念念 EchoEcho · AI 僚机方案</title>
+<style>
+/* ============================================================
+   念念 EchoEcho · 高保真设计稿 04 / 05 · AI 僚机方案页
+   示例场景:「想买洗衣机」→ 预算三档 + 对比表 + 主推
+   ⚠ 页内品牌 / 型号 / 参数 / 价格均为设计稿示例文案,
+     非真实调研结论,落地时由 AI 调研管线生成真实数据
+   静态 mockup;纯内联 CSS,无外部依赖
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+:root{
+  --paper:#FAF6F0; --coral:#E8604C; --ink:#2C3A42;
+  --ink60:rgba(44,58,66,.62); --ink40:rgba(44,58,66,.42);
+  --line:rgba(44,58,66,.09); --coral-soft:rgba(232,96,76,.09);
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:#EDE5D8;background-image:radial-gradient(1100px 760px at 50% -8%,#F8F2E9,#E9DFD0);
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:48px 24px;color:var(--ink);
+}
+.page-label{font-size:13px;color:rgba(44,58,66,.52);font-style:italic;margin-bottom:14px;letter-spacing:.06em}
+
+.phone{background:#22262a;border-radius:58px;padding:11px;
+  box-shadow:0 42px 84px rgba(44,58,66,.26),0 12px 26px rgba(44,58,66,.16)}
+.screen{width:390px;height:844px;background:var(--paper);border-radius:47px;overflow:hidden;
+  position:relative;display:flex;flex-direction:column}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  width:124px;height:36px;background:#0b0d0e;border-radius:19px;z-index:60}
+.statusbar{height:59px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 30px 8px;font-size:15px;font-weight:600;position:relative;z-index:55;letter-spacing:.02em}
+.statusbar .sicons{display:flex;align-items:center;gap:6px}
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  width:134px;height:5px;border-radius:3px;background:rgba(44,58,66,.82);z-index:70}
+
+.content{flex:1;overflow-y:auto;scrollbar-width:none;padding:6px 22px 20px}
+.content::-webkit-scrollbar{display:none}
+
+/* ---------- 导航 ---------- */
+.nav{display:flex;align-items:center;gap:10px;padding:6px 0 0}
+.back{width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;flex:none}
+.nav .nt{font-size:16px;font-weight:800;letter-spacing:.04em;display:flex;align-items:center;gap:6px}
+.nav .nt svg{flex:none}
+.nav .share{margin-left:auto;font-size:11.5px;color:var(--ink40)}
+
+/* ---------- 念念原文 ---------- */
+.origin{margin-top:14px;background:#fff;border-radius:20px;border:1px solid var(--line);
+  box-shadow:0 6px 18px rgba(44,58,66,.05);padding:15px 17px;display:flex;gap:12px;align-items:flex-start}
+.origin .odot{width:10px;height:10px;border-radius:50%;background:var(--coral);flex:none;margin-top:6px;
+  box-shadow:0 0 0 5px rgba(232,96,76,.16),0 0 0 10px rgba(232,96,76,.06)}
+.origin .oq{font-family:"Songti SC","Noto Serif SC",Georgia,serif;font-size:15px;line-height:1.6;font-weight:700}
+.origin .om{margin-top:5px;font-size:11px;color:var(--ink40)}
+
+/* ---------- 僚机说明行 ---------- */
+.wing-note{margin-top:12px;display:flex;align-items:center;gap:8px;padding:0 4px;
+  font-size:11.5px;color:var(--ink60);line-height:1.5}
+.wing-note b{color:var(--coral)}
+
+/* ---------- 预算三档 ---------- */
+.sec-t{margin-top:18px;font-size:14px;font-weight:800;letter-spacing:.06em;padding:0 2px}
+.tiers{margin-top:11px;display:flex;gap:9px}
+.tier{flex:1;background:#fff;border:1.5px solid var(--line);border-radius:17px;
+  padding:13px 10px 12px;text-align:center;position:relative}
+.tier .tl{font-size:10.5px;color:var(--ink60);letter-spacing:.08em}
+.tier .tp{margin-top:6px;font-size:17px;font-weight:800;font-variant-numeric:tabular-nums}
+.tier .tp small{font-size:10px;font-weight:600;color:var(--ink40)}
+.tier .td{margin-top:5px;font-size:9.5px;color:var(--ink40);line-height:1.5}
+.tier.pick{border-color:var(--coral);background:linear-gradient(180deg,rgba(232,96,76,.07),#fff 55%);
+  box-shadow:0 10px 22px rgba(232,96,76,.16)}
+.tier.pick .tp{color:var(--coral)}
+.tier .flag{position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  background:var(--coral);color:#fff;font-size:9px;font-weight:800;letter-spacing:.1em;
+  padding:3px 10px;border-radius:99px;white-space:nowrap;box-shadow:0 4px 9px rgba(232,96,76,.35)}
+
+/* ---------- 对比表 ---------- */
+.table-card{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:18px;
+  overflow:hidden;box-shadow:0 6px 18px rgba(44,58,66,.05)}
+table{width:100%;border-collapse:collapse;font-size:10.5px}
+th,td{padding:9px 8px;text-align:center;border-bottom:1px solid var(--line);line-height:1.4}
+th:first-child,td:first-child{text-align:left;padding-left:14px;color:var(--ink60);font-weight:600;width:64px}
+thead th{background:rgba(44,58,66,.035);font-weight:800;font-size:10.5px;letter-spacing:.02em;color:var(--ink)}
+thead th .brand{display:block;font-size:9px;font-weight:600;color:var(--ink40);margin-top:2px;letter-spacing:.05em}
+tbody tr:last-child td{border-bottom:none}
+td.win{color:var(--coral);font-weight:800}
+col.pickcol{background:rgba(232,96,76,.05)}
+.tfoot{padding:8px 14px 10px;font-size:9.5px;color:var(--ink40);border-top:1px dashed rgba(44,58,66,.12);line-height:1.5}
+
+/* ---------- 主推卡 ---------- */
+.reco{margin-top:14px;background:var(--ink);color:#fff;border-radius:22px;padding:17px 18px 15px;
+  position:relative;overflow:hidden}
+.reco .ring-deco{position:absolute;border-radius:50%;border:1.5px solid rgba(250,246,240,.10)}
+.reco .ring-deco.a{width:170px;height:170px;right:-55px;top:-70px}
+.reco .ring-deco.b{width:170px;height:170px;right:-55px;top:-70px;transform:scale(.66)}
+.reco .rcap{font-size:10px;letter-spacing:.22em;color:#F2907F;font-weight:800}
+.reco .rname{margin-top:7px;font-size:17px;font-weight:800;letter-spacing:.02em}
+.reco .rprice{margin-top:3px;font-size:12px;color:rgba(250,246,240,.65)}
+.reco .rprice b{color:#F2907F;font-size:15px;font-variant-numeric:tabular-nums}
+.reco ul{margin-top:11px;list-style:none;display:flex;flex-direction:column;gap:7px}
+.reco li{font-size:11.5px;line-height:1.55;color:rgba(250,246,240,.85);display:flex;gap:8px}
+.reco li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--coral);flex:none;margin-top:6px}
+.reco .tip{margin-top:12px;background:rgba(250,246,240,.08);border:1px dashed rgba(250,246,240,.25);
+  border-radius:12px;padding:8px 12px;font-size:10.5px;line-height:1.6;color:rgba(250,246,240,.75)}
+.reco .tip b{color:#F2907F}
+
+/* ---------- 底部行动 ---------- */
+.cta-row{margin-top:14px;display:flex;gap:9px}
+.cta{flex:1;height:46px;border-radius:23px;display:flex;align-items:center;justify-content:center;gap:7px;
+  font-size:13.5px;font-weight:800;letter-spacing:.05em;cursor:pointer}
+.cta.main{background:var(--coral);color:#fff;box-shadow:0 12px 24px rgba(232,96,76,.32)}
+.cta.sub{flex:0 0 118px;background:#fff;border:1.5px solid rgba(44,58,66,.16);color:var(--ink60);font-size:12px}
+
+/* ---------- Tab 栏 ---------- */
+.tabbar{flex:none;height:82px;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);
+  border-top:1px solid var(--line);display:flex;padding:9px 12px 0;position:relative;z-index:40}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:10px;letter-spacing:.05em;color:var(--ink40)}
+.tab.active{color:var(--coral);font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="page-label">04 / 05 · AI 僚机 — 「想买洗衣机」自动调研:预算三档 + 对比表 + 主推(数据为示例文案)</div>
+
+<div class="phone">
+  <div class="screen">
+    <div class="island"></div>
+    <div class="statusbar">
+      <span>9:41</span>
+      <span class="sicons">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><rect x="0" y="7" width="3" height="5" rx="1" fill="#2C3A42"/><rect x="5" y="5" width="3" height="7" rx="1" fill="#2C3A42"/><rect x="10" y="2.5" width="3" height="9.5" rx="1" fill="#2C3A42"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#2C3A42" opacity=".35"/></svg>
+        <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><path d="M8.5 10.8 6.2 8.4a3.4 3.4 0 0 1 4.6 0L8.5 10.8Z" fill="#2C3A42"/><path d="M4.2 6.3a6.4 6.4 0 0 1 8.6 0" stroke="#2C3A42" stroke-width="1.7" stroke-linecap="round"/><path d="M1.6 3.6a10 10 0 0 1 13.8 0" stroke="#2C3A42" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x=".8" y=".8" width="21" height="11.4" rx="3.4" stroke="#2C3A42" stroke-opacity=".4" stroke-width="1.2"/><rect x="2.5" y="2.5" width="14" height="8" rx="2" fill="#2C3A42"/><path d="M23.6 4.4v4.2a2.3 2.3 0 0 0 0-4.2Z" fill="#2C3A42" fill-opacity=".4"/></svg>
+      </span>
+    </div>
+
+    <div class="content">
+      <div class="nav">
+        <div class="back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14.5 5.5 8 12l6.5 6.5" stroke="#2C3A42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="nt">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3.5 13.8 10.2 20.5 12 13.8 13.8 12 20.5 10.2 13.8 3.5 12 10.2 10.2Z" fill="#E8604C"/></svg>
+          AI 僚机 · 选购方案
+        </div>
+        <div class="share">重新调研</div>
+      </div>
+
+      <div class="origin">
+        <div class="odot"></div>
+        <div>
+          <div class="oq">「想买台洗衣机,预算三千,最好能洗羽绒服」</div>
+          <div class="om">小念 · 7 月 9 日 21:03 · 语音 11&#8221;</div>
+        </div>
+      </div>
+
+      <div class="wing-note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M12 3.5 13.8 10.2 20.5 12 13.8 13.8 12 20.5 10.2 13.8 3.5 12 10.2 10.2Z" fill="#E8604C"/></svg>
+        <span><b>僚机</b>对比了 6 款 10kg 滚筒热门机型,按她的三个条件筛出三档,别忘了先量阳台柜宽度。</span>
+      </div>
+
+      <div class="sec-t">按预算分三档</div>
+      <div class="tiers">
+        <div class="tier">
+          <div class="tl">稳妥入门</div>
+          <div class="tp">&#65509;1,999<small> 起</small></div>
+          <div class="td">基础滚筒<br>够用但无烘干</div>
+        </div>
+        <div class="tier pick">
+          <div class="flag">僚机主推</div>
+          <div class="tl">刚好卡预算</div>
+          <div class="tp">&#65509;2,499<small> 档</small></div>
+          <div class="td">羽绒洗 + 除菌<br>她的条件全满足</div>
+        </div>
+        <div class="tier">
+          <div class="tl">一步到位</div>
+          <div class="tp">&#65509;2,999<small> 档</small></div>
+          <div class="td">带热风除味<br>略超预算 3%</div>
+        </div>
+      </div>
+
+      <div class="sec-t">主推档 · 三款对比</div>
+      <div class="table-card">
+        <table>
+          <colgroup><col><col class="pickcol"><col><col></colgroup>
+          <thead>
+            <tr>
+              <th></th>
+              <th>A 款<span class="brand">水魔方系列</span></th>
+              <th>B 款<span class="brand">精华洗系列</span></th>
+              <th>C 款<span class="brand">直驱滚筒</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>参考价</td><td class="win">&#65509;2,399</td><td>&#65509;2,599</td><td>&#65509;2,299</td></tr>
+            <tr><td>容量</td><td>10 kg</td><td>10 kg</td><td>10 kg</td></tr>
+            <tr><td>羽绒洗</td><td class="win">专用程序</td><td>羊毛档代替</td><td>专用程序</td></tr>
+            <tr><td>电机</td><td>变频直驱</td><td class="win">直驱一级</td><td>变频直驱</td></tr>
+            <tr><td>脱水噪音</td><td class="win">62 dB</td><td>65 dB</td><td>66 dB</td></tr>
+            <tr><td>机身宽</td><td>595 mm</td><td>595 mm</td><td class="win">530 mm</td></tr>
+          </tbody>
+        </table>
+        <div class="tfoot">* 设计稿示例数据 · 实际方案由 AI 僚机联网调研生成,附带比价与评测来源</div>
+      </div>
+
+      <div class="reco">
+        <div class="ring-deco a"></div><div class="ring-deco b"></div>
+        <div class="rcap">僚机主推 · A 款</div>
+        <div class="rname">水魔方系列 10kg 滚筒</div>
+        <div class="rprice">参考价 <b>&#65509;2,399</b> · 低于预算 &#65509;601</div>
+        <ul>
+          <li>有专门的羽绒洗程序,她那件长羽绒服能整件下水</li>
+          <li>脱水 62 dB,你们卧室挨着阳台,夜里洗也不吵</li>
+          <li>大促历史价 &#65509;2,199,僚机可以帮你盯降价</li>
+        </ul>
+        <div class="tip"><b>顺手提醒:</b>阳台洗衣柜预留一般 600 mm,A/B 款机身 595 mm 属于极限塞入——今晚回家先量一下,拿不准就选 C 款(530 mm)。</div>
+      </div>
+
+      <div class="cta-row">
+        <div class="cta main">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="10" cy="12" r="5" stroke="#fff" stroke-width="1.8"/><path d="M18 7a8.5 8.5 0 0 1 0 10" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity=".7"/></svg>
+          把方案回响给小念
+        </div>
+        <div class="cta sub">存进在办备注</div>
+      </div>
+    </div>
+
+    <div class="tabbar">
+      <div class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" fill="currentColor"/><circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="1.6" opacity=".45"/></svg>
+        念念
+      </div>
+      <div class="tab active">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3.5 13.8 10.2 20.5 12 13.8 13.8 12 20.5 10.2 13.8 3.5 12 10.2 10.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        僚机
+      </div>
+      <div class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4.5 10.5 12 4.5l7.5 6v8a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        小家
+      </div>
+      <div class="tab">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M5 19.5c1.4-3.2 4-4.8 7-4.8s5.6 1.6 7 4.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        我的
+      </div>
+    </div>
+
+    <div class="homebar"></div>
+  </div>
+</div>
+
+</body>
+</html>
