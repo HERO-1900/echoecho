@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>念念 EchoEcho · 产品白皮书 — 事事有回应,句句有回响</title>
+<meta name="description" content="情侣双向备忘录:功能现状、支持程度与发展路线图">
+<style>
+:root{--bg:#FAF6F0;--ink:#2C3A42;--coral:#E8604C;--soft:#FBEAE6;--line:#EADFD2;--ok:#3E8E5A;--part:#C77B24;--plan:#8a7d6e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 80px}
+a{color:var(--coral)}
+/* hero */
+.hero{text-align:center;padding:64px 0 40px}
+.hero .tag{display:inline-block;font-size:12px;background:var(--soft);color:var(--coral);border-radius:99px;padding:4px 12px;margin-bottom:18px}
+.hero h1{font-size:44px;letter-spacing:4px}
+.hero h1 em{font-style:normal;color:var(--coral)}
+.hero .slg{font-size:20px;margin-top:10px;color:#6b5f52}
+.hero .sub{font-size:14px;color:#8a7d6e;margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto}
+.hero .cta{display:inline-block;background:var(--coral);color:#fff;text-decoration:none;font-weight:600;padding:13px 34px;border-radius:14px;margin-top:26px}
+/* section */
+h2{font-size:24px;margin:56px 0 8px;display:flex;align-items:center;gap:10px}
+h2::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 4px var(--soft)}
+.lead{color:#8a7d6e;font-size:14px;margin-bottom:20px}
+/* 故事三格 */
+.story{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.story div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+.story b{display:block;font-size:15px;margin-bottom:6px}
+.story span{font-size:13px;color:#8a7d6e}
+@media(max-width:640px){.story{grid-template-columns:1fr}}
+/* 功能表 */
+.feat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px}
+.feat .head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.feat b{font-size:16px}
+.badge{font-size:12px;padding:3px 12px;border-radius:99px;white-space:nowrap}
+.b-ok{background:#E8F3EC;color:var(--ok)}.b-part{background:#FCF3E3;color:var(--part)}.b-plan{background:#F1EBE2;color:var(--plan)}
+.feat p{font-size:14px;color:#5d5347;margin-top:8px}
+.feat .todo{font-size:13px;color:#8a7d6e;margin-top:6px}
+/* timeline */
+.tl{border-left:2px solid var(--line);margin-left:8px;padding-left:24px}
+.tl .node{position:relative;padding-bottom:28px}
+.tl .node::before{content:"";position:absolute;left:-31px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 4px var(--soft)}
+.tl .node.future::before{background:#fff;border:2px solid var(--plan);box-shadow:none}
+.tl time{font-size:12px;color:var(--coral);font-weight:600}
+.tl .node.future time{color:var(--plan)}
+.tl b{display:block;font-size:16px;margin:2px 0 4px}
+.tl p{font-size:14px;color:#5d5347}
+footer{text-align:center;font-size:12px;color:#b0a493;margin-top:64px;border-top:1px solid var(--line);padding-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div class="tag">产品白皮书 · v1.0.0 已上线 · 名字为暂定名</div>
+  <svg width="64" height="64" viewBox="0 0 56 56"><circle cx="28" cy="28" r="8" fill="#E8604C"/><circle cx="28" cy="28" r="16" fill="none" stroke="#E8604C" stroke-width="2.5" opacity=".45"/><circle cx="28" cy="28" r="24" fill="none" stroke="#E8604C" stroke-width="2" opacity=".2"/></svg>
+  <h1>念念 <em>EchoEcho</em></h1>
+  <div class="slg">事事有回应,句句有回响。</div>
+  <div class="sub">面向男生:帮你记住女朋友说的每句话。面向女生:让他想忘都忘不了。<br>微信里的话会被刷走,这里的每句话都必须有着落。</div>
+  <a class="cta" href="/">立即使用(免下载)</a>
+</div>
+
+<h2>它怎么工作</h2>
+<div class="lead">一条消息 = 一个「念念」。不是聊天软件,是一条<b style="color:var(--coral)">必须有交待</b>的专属通道。</div>
+<div class="story">
+  <div><b>1 她说</b><span>打字,或按住说话——语音自动转成文字,原声也保留。</span></div>
+  <div><b>2 他办</b><span>他的清单里多了一条任务卡:收到 → 在办(带进度%)→ 办妥(附一句交待)。</span></div>
+  <div><b>3 都看得见</b><span>她那边实时看到进度和办妥率;AI 僚机还能替他先出方案。</span></div>
+</div>
+
+<h2>功能板块与支持程度</h2>
+<div class="lead">诚实标注:✅ 已上线可用 / 🔶 基础版(有限制) / ⚪ 规划中</div>
+
+<div class="feat"><div class="head"><b>结对小家</b><span class="badge b-ok">✅ 已上线</span></div>
+<p>建小家 → 生成邀请码(NN-XXXX)→ TA 输入即结对。不用手机号、不用密码。同一小家可加多人,天然支持订阅父母、孩子。</p>
+<div class="todo">后续:成员角色与提醒偏好细分(v1.3)。</div></div>
+
+<div class="feat"><div class="head"><b>双向消息流(文字+语音)</b><span class="badge b-ok">✅ 已上线</span></div>
+<p>Typeless 式录音:点一下开始说,再点一下结束,云端 Whisper 自动转文字,原声可回听。已实测中文转写准确。</p>
+<div class="todo">已知问题:转写偶尔输出繁体字,v1.1 修复。</div></div>
+
+<div class="feat"><div class="head"><b>三态有着落</b><span class="badge b-ok">✅ 已上线</span></div>
+<p>每条念念三态流转:<b>收到 / 在办 / 办妥</b>——对应"凡事有交待、事事有回应、件件有着落"。在办可拖进度条,办妥可附一句交待;她的首页有办妥率统计。</p>
+<div class="todo">后续:排名与奖励机制、回响速度榜(v1.3)。</div></div>
+
+<div class="feat"><div class="head"><b>AI 僚机</b><span class="badge b-ok">✅ 已上线</span></div>
+<p>任何一条念念点「请 AI 僚机出方案」:AI 自动调研并生成完整方案页——快速结论、预算分档、型号对比表、行动清单。例:"想买台三千左右的静音洗衣机" → 一页可直接照办的选购方案。</p>
+<div class="todo">限制:方案由 AI 生成,价格型号需实际核实;当前依赖一台在线的引擎机器(详见路线图 v1.1)。</div></div>
+
+<div class="feat"><div class="head"><b>提醒系统</b><span class="badge b-part">🔶 基础版</span></div>
+<p>当前:App 打开时轮询 + 浏览器通知。</p>
+<div class="todo">v1.1 做 Web Push(锁屏可见);「与微信彻底区分的独特震动与铃声」需要原生 App 能力,随 v1.2 原生壳落地。</div></div>
+
+<div class="feat"><div class="head"><b>全终端覆盖</b><span class="badge b-part">🔶 网页版+PWA 已上线</span></div>
+<p>网页版即开即用;手机浏览器「添加到主屏幕」即获得 App 形态(全屏、图标、通知)。电脑浏览器同样可用。</p>
+<div class="todo">v1.2 原生 iOS/Android App(强提醒、快捷键、桌面挂件);Mac 菜单栏快捷录音随后。</div></div>
+
+<div class="feat"><div class="head"><b>硬件挂链(EchoCharm)</b><span class="badge b-plan">⚪ 接口已就绪,硬件规划中</span></div>
+<p>设想:一个挂链/磁吸小方块,按一下录音、再按结束,松手即送达 TA 的清单。<b>云端接口已开发并实测通过</b>(设备 Token + 音频直传 + 自动转写),任何硬件厂/创客现在就能对接,协议见仓库 docs/HARDWARE_API.md。</p>
+<div class="todo">v2.0:硬件打样(ESP32 级,蓝牙/Wi-Fi 双模)。</div></div>
+
+<h2>发展路线图</h2>
+<div class="lead">时间线为工程排期承诺的方向,具体日期随验证节奏微调。</div>
+<div class="tl">
+  <div class="node"><time>2026-07 · 已完成</time><b>v1.0 上线</b><p>结对/双向消息/语音转写/三态流转/AI 僚机/PWA/硬件接口,当夜开源发布 GitHub。</p></div>
+  <div class="node future"><time>2026-08</time><b>v1.1 可靠性与体验</b><p>Web Push 锁屏提醒;转写繁→简;AI 引擎云端常驻(不依赖单机);独立数据库;办妥率周报。</p></div>
+  <div class="node future"><time>2026-Q4</time><b>v1.2 原生 App</b><p>iOS/Android 原生壳上架(强提醒、独特震动铃声、分享面板接入),网页版持续同源更新。</p></div>
+  <div class="node future"><time>2027-H1</time><b>v1.3 趣味与多元关系</b><p>排名/奖励/成就体系;父母、孩子订阅式结对的差异化界面;多语言。</p></div>
+  <div class="node future"><time>2027 内</time><b>v2.0 硬件 EchoCharm</b><p>挂链实体打样与小批量;按一下,念念即达。</p></div>
+</div>
+
+<h2>开放与自部署</h2>
+<div class="lead">代码完全开源(MIT),自己部署只要一个 Cloudflare 免费账号;AI 引擎支持 BYOK(接任意 OpenAI 兼容模型)。</div>
+<p style="font-size:14px">仓库:<a href="https://github.com/HERO-1900/echoecho">github.com/HERO-1900/echoecho</a>(含 5 屏 App 设计稿、硬件协议、品牌手册)</p>
+
+<footer>念念 EchoEcho(暂定名)· 事事有回应,句句有回响 · MIT License</footer>
+</div>
+</body>
+</html>
