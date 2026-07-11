@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拉勾勾 Pinky Promise · 拉过勾的事,不许忘</title>
+<meta name="description" content="双向情侣备忘录:她说一句,他那边变成任务卡。收到、在办、办妥,盖上"说到做到"的章。">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+/* ============ RESET & TOKENS ============ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --pink:#F4A7B9;
+  --pink-soft:#FBDDE5;
+  --pink-mist:#FDF0F3;
+  --cream:#FFF8F0;
+  --red:#C73E3A;
+  --red-deep:#A93330;
+  --ink:#33272A;
+  --ink-60:rgba(51,39,42,.62);
+  --ink-40:rgba(51,39,42,.4);
+  --ink-12:rgba(51,39,42,.12);
+  --radius-lg:28px;
+  --radius-md:20px;
+  --radius-sm:14px;
+  --shadow-card:0 6px 24px rgba(51,39,42,.08),0 2px 6px rgba(51,39,42,.05);
+  --shadow-pop:0 18px 48px rgba(199,62,58,.16),0 4px 12px rgba(51,39,42,.08);
+  --font:"PingFang SC","Hiragino Sans GB","Source Han Sans SC","Noto Sans CJK SC","Microsoft YaHei",-apple-system,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font);
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+section{position:relative}
+
+/* ============ REVEAL ANIMATION ============ */
+.js .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  *{animation-duration:.01s!important;animation-iteration-count:1!important}
+}
+
+/* ============ PINKY HOOK MICRO-INTERACTION ============ */
+@keyframes hookWiggle{
+  0%{transform:rotate(0)}
+  25%{transform:rotate(-7deg)}
+  55%{transform:rotate(5deg)}
+  80%{transform:rotate(-2deg)}
+  100%{transform:rotate(0)}
+}
+.hookable .pinky-mark{transform-origin:50% 55%;transition:transform .3s}
+.hookable:hover .pinky-mark{animation:hookWiggle .7s ease}
+
+/* ============ HEADER ============ */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,248,240,.86);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--ink-12);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:.5px}
+.brand .en{font-size:11px;font-weight:500;color:var(--ink-60);letter-spacing:1.2px;display:block;line-height:1.2;text-transform:uppercase}
+.brand-txt{line-height:1.25}
+.nav-cta{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--red);color:var(--cream);
+  padding:9px 18px;border-radius:999px;
+  font-size:14px;font-weight:600;letter-spacing:.5px;
+  transition:transform .25s,box-shadow .25s,background .25s;
+  box-shadow:0 3px 10px rgba(199,62,58,.28);
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(199,62,58,.35);background:var(--red-deep)}
+
+/* ============ HERO ============ */
+.hero{padding:64px 0 40px;overflow:hidden}
+.hero-inner{display:grid;grid-template-columns:1fr;gap:52px;align-items:center}
+.hero-blob{
+  position:absolute;top:-160px;right:-180px;width:560px;height:560px;
+  background:radial-gradient(circle at 40% 40%,var(--pink-soft),transparent 68%);
+  border-radius:50%;pointer-events:none;z-index:-1;
+}
+.hero-blob-2{
+  position:absolute;bottom:-100px;left:-220px;width:480px;height:480px;
+  background:radial-gradient(circle at 60% 50%,rgba(244,167,185,.35),transparent 66%);
+  border-radius:50%;pointer-events:none;z-index:-1;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;letter-spacing:2px;color:var(--red);
+  border:1.5px solid rgba(199,62,58,.35);border-radius:999px;
+  padding:6px 16px;margin-bottom:22px;background:rgba(255,255,255,.5);
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--red)}
+.hero h1{
+  font-size:clamp(38px,8.5vw,64px);
+  line-height:1.22;font-weight:800;letter-spacing:2px;
+}
+.hero h1 .accent{
+  color:var(--red);position:relative;display:inline-block;
+}
+.hero h1 .accent::after{
+  content:"";position:absolute;left:2px;right:2px;bottom:4px;height:.28em;
+  background:var(--pink-soft);z-index:-1;border-radius:4px;
+}
+.hero-sub{
+  margin-top:22px;font-size:clamp(15px,2.5vw,18px);
+  color:var(--ink-60);max-width:460px;
+}
+.hero-sub strong{color:var(--ink);font-weight:600}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px;align-items:center}
+.btn-main{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--red);color:var(--cream);
+  font-size:16px;font-weight:700;letter-spacing:1px;
+  padding:16px 30px;border-radius:999px;
+  box-shadow:0 8px 22px rgba(199,62,58,.32);
+  transition:transform .25s,box-shadow .25s,background .25s;
+}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(199,62,58,.4);background:var(--red-deep)}
+.btn-main svg{width:18px;height:18px}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:15px;font-weight:600;color:var(--ink);
+  padding:15px 24px;border-radius:999px;border:1.5px solid var(--ink-12);
+  background:rgba(255,255,255,.6);transition:border-color .25s,transform .25s;
+}
+.btn-ghost:hover{border-color:var(--pink);transform:translateY(-2px)}
+.hero-note{margin-top:16px;font-size:12.5px;color:var(--ink-40);letter-spacing:.5px}
+
+/* ============ PHONE MOCKUP ============ */
+.phone-stage{position:relative;display:flex;justify-content:center;padding:10px 0 26px}
+.phone{
+  width:308px;background:#fff;border:9px solid var(--ink);border-radius:46px;
+  box-shadow:var(--shadow-pop);position:relative;overflow:hidden;
+  transform:rotate(0deg);
+}
+.phone-notch{
+  width:110px;height:24px;background:var(--ink);border-radius:0 0 16px 16px;
+  margin:0 auto;position:relative;z-index:2;
+}
+.phone-screen{background:linear-gradient(175deg,var(--pink-mist) 0%,#fff 42%);padding:14px 15px 20px;min-height:560px}
+.app-bar{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 14px}
+.app-bar-title{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;letter-spacing:1px}
+.app-bar-title svg{width:22px;height:22px}
+.app-bar-day{font-size:11px;color:var(--ink-40);letter-spacing:.5px}
+.task-card{
+  background:#fff;border:1.5px solid var(--ink-12);border-radius:var(--radius-sm);
+  padding:13px 14px;margin-bottom:11px;box-shadow:0 2px 8px rgba(51,39,42,.05);
+  position:relative;
+}
+.task-from{font-size:10.5px;color:var(--ink-40);letter-spacing:.5px;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.task-from .ava{width:16px;height:16px;border-radius:50%;background:var(--pink);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:700}
+.task-txt{font-size:13.5px;font-weight:600;line-height:1.5}
+.task-meta{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+.chip{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10.5px;font-weight:700;letter-spacing:1px;
+  padding:4px 10px;border-radius:999px;
+}
+.chip svg{width:11px;height:11px}
+.chip-recv{background:var(--pink-mist);color:var(--red);border:1px solid rgba(244,167,185,.7)}
+.chip-doing{background:rgba(244,167,185,.22);color:var(--red-deep);border:1px solid rgba(244,167,185,.6)}
+.chip-done{background:var(--red);color:#fff}
+.task-time{font-size:10px;color:var(--ink-40)}
+.progress{
+  margin-top:10px;height:7px;border-radius:99px;background:var(--pink-mist);overflow:hidden;position:relative;
+}
+.progress i{
+  display:block;height:100%;width:65%;border-radius:99px;
+  background:linear-gradient(90deg,var(--pink),var(--red));
+}
+.progress-num{font-size:10px;font-weight:700;color:var(--red);margin-top:5px;text-align:right;letter-spacing:.5px}
+.task-done-note{
+  margin-top:9px;font-size:11px;color:var(--ink-60);background:var(--cream);
+  border-radius:8px;padding:7px 10px;line-height:1.5;
+}
+.mini-seal{
+  position:absolute;top:8px;right:10px;width:44px;height:44px;border-radius:50%;
+  border:2.5px solid var(--red);color:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:800;transform:rotate(-14deg);
+  background:rgba(255,255,255,.85);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.9),inset 0 0 0 3.5px rgba(199,62,58,.45);
+}
+.ai-strip{
+  display:flex;align-items:center;gap:8px;margin-top:2px;
+  background:var(--ink);color:var(--cream);border-radius:var(--radius-sm);
+  padding:11px 13px;font-size:11.5px;line-height:1.5;
+}
+.ai-strip svg{width:20px;height:20px;flex:none}
+.ai-strip b{color:var(--pink)}
+.voice-bar{
+  margin-top:12px;display:flex;align-items:center;gap:10px;
+  background:#fff;border:1.5px dashed rgba(199,62,58,.4);border-radius:999px;
+  padding:10px 16px;font-size:11.5px;color:var(--ink-60);
+}
+.voice-bar svg{width:16px;height:16px;flex:none}
+.wave{display:flex;align-items:center;gap:2.5px;margin-left:auto}
+.wave i{width:2.5px;border-radius:2px;background:var(--pink);display:block;animation:waveB 1.1s ease-in-out infinite}
+.wave i:nth-child(1){height:6px;animation-delay:0s}
+.wave i:nth-child(2){height:12px;animation-delay:.15s}
+.wave i:nth-child(3){height:8px;animation-delay:.3s}
+.wave i:nth-child(4){height:14px;animation-delay:.45s}
+.wave i:nth-child(5){height:5px;animation-delay:.6s}
+@keyframes waveB{0%,100%{transform:scaleY(.6)}50%{transform:scaleY(1.3)}}
+.float-tag{
+  position:absolute;background:#fff;border:1.5px solid var(--ink-12);border-radius:999px;
+  padding:8px 16px;font-size:12px;font-weight:700;box-shadow:var(--shadow-card);
+  display:flex;align-items:center;gap:7px;letter-spacing:.5px;z-index:3;
+}
+.float-tag svg{width:15px;height:15px}
+.ft-1{top:84px;left:calc(50% - 218px);color:var(--red)}
+.ft-2{bottom:120px;right:calc(50% - 224px);color:var(--ink)}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ft-1{animation:floaty 4.5s ease-in-out infinite}
+.ft-2{animation:floaty 5.2s ease-in-out infinite reverse}
+
+/* ============ RIBBON MARQUEE ============ */
+.ribbon{
+  background:var(--red);color:var(--cream);
+  padding:13px 0;overflow:hidden;white-space:nowrap;
+  transform:rotate(-1.2deg) scale(1.02);margin:26px 0;
+  box-shadow:0 6px 18px rgba(199,62,58,.25);
+}
+.ribbon-track{display:inline-flex;align-items:center;animation:marq 26s linear infinite;will-change:transform}
+.ribbon span{
+  font-size:14px;font-weight:700;letter-spacing:3px;padding:0 18px;
+  display:inline-flex;align-items:center;gap:18px;
+}
+.ribbon svg{width:16px;height:16px;opacity:.85}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============ SECTION HEADINGS ============ */
+.sec{padding:88px 0}
+.sec-head{max-width:620px;margin-bottom:52px}
+.sec-eyebrow{
+  font-size:12.5px;font-weight:700;letter-spacing:3px;color:var(--red);
+  text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.sec-eyebrow::before{content:"";width:26px;height:2px;background:var(--red);border-radius:2px}
+.sec h2{font-size:clamp(26px,5.4vw,40px);line-height:1.35;font-weight:800;letter-spacing:1px}
+.sec-sub{margin-top:14px;color:var(--ink-60);font-size:15.5px;max-width:520px}
+
+/* ============ PAIN (INK SECTION) ============ */
+.pain{background:var(--ink);color:var(--cream);border-radius:0}
+.pain .sec-eyebrow{color:var(--pink)}
+.pain .sec-eyebrow::before{background:var(--pink)}
+.pain .sec-sub{color:rgba(255,248,240,.6)}
+.pain-quotes{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:56px}
+.pq{
+  border-left:3px solid var(--pink);padding:6px 0 6px 20px;
+}
+.pq p{font-size:clamp(17px,3.4vw,21px);font-weight:600;line-height:1.65;letter-spacing:.5px}
+.pq small{display:block;margin-top:8px;font-size:12.5px;color:rgba(255,248,240,.45);letter-spacing:1px}
+.data-cards{display:grid;grid-template-columns:1fr;gap:16px}
+.dc{
+  background:rgba(255,248,240,.06);border:1px solid rgba(255,248,240,.14);
+  border-radius:var(--radius-md);padding:26px 24px;
+  transition:transform .3s,border-color .3s;
+}
+.dc:hover{transform:translateY(-4px);border-color:rgba(244,167,185,.5)}
+.dc-num{font-size:40px;font-weight:800;color:var(--pink);line-height:1.1;letter-spacing:1px}
+.dc-num em{font-style:normal;font-size:18px;font-weight:700;margin-left:2px}
+.dc-txt{margin-top:10px;font-size:14px;line-height:1.7;color:rgba(255,248,240,.82)}
+.dc-src{margin-top:14px;font-size:11px;letter-spacing:1.5px;color:rgba(255,248,240,.38);display:flex;align-items:center;gap:6px}
+.dc-src::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--pink);opacity:.6}
+
+/* ============ STORY / HOW ============ */
+.story-steps{display:grid;grid-template-columns:1fr;gap:20px;counter-reset:step}
+.step{
+  background:#fff;border:1.5px solid var(--ink-12);border-radius:var(--radius-lg);
+  padding:34px 28px;position:relative;overflow:hidden;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+}
+.step:hover{transform:translateY(-6px);box-shadow:var(--shadow-card);border-color:var(--pink)}
+.step::before{
+  counter-increment:step;content:"0" counter(step);
+  position:absolute;top:18px;right:22px;
+  font-size:52px;font-weight:800;color:var(--pink-mist);line-height:1;letter-spacing:2px;
+}
+.step-icon{width:60px;height:60px;margin-bottom:20px}
+.step h3{font-size:19px;font-weight:800;letter-spacing:1px;margin-bottom:8px}
+.step h3 small{font-size:11px;color:var(--ink-40);font-weight:600;letter-spacing:2px;margin-left:8px;text-transform:uppercase}
+.step p{font-size:14px;color:var(--ink-60);line-height:1.75}
+.step p b{color:var(--red);font-weight:700}
+
+/* ============ FEATURES ============ */
+.features{background:linear-gradient(180deg,var(--cream),var(--pink-mist) 120%)}
+.feat-grid{display:grid;grid-template-columns:1fr;gap:20px}
+.feat{
+  background:#fff;border:1.5px solid var(--ink-12);border-radius:var(--radius-lg);
+  padding:30px 26px;transition:transform .3s,box-shadow .3s,border-color .3s;
+  display:flex;flex-direction:column;
+}
+.feat:hover{transform:translateY(-6px);box-shadow:var(--shadow-card);border-color:var(--pink)}
+.feat-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.feat-icon{width:52px;height:52px}
+.pill{
+  font-size:10.5px;font-weight:800;letter-spacing:1.5px;
+  padding:5px 12px;border-radius:999px;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:6px;flex:none;
+}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%}
+.pill-live{background:rgba(199,62,58,.09);color:var(--red);border:1px solid rgba(199,62,58,.28)}
+.pill-live::before{background:var(--red)}
+.pill-plan{background:transparent;color:var(--ink-40);border:1.5px dashed var(--ink-12)}
+.pill-plan::before{background:var(--ink-40)}
+.feat h3{font-size:19px;font-weight:800;letter-spacing:1px}
+.feat h3 small{display:block;font-size:11px;font-weight:600;letter-spacing:2px;color:var(--ink-40);margin-top:3px;text-transform:uppercase}
+.feat p{margin-top:10px;font-size:14px;color:var(--ink-60);line-height:1.75;flex:1}
+.feat-demo{
+  margin-top:18px;background:var(--cream);border:1px solid var(--ink-12);
+  border-radius:var(--radius-sm);padding:14px 15px;font-size:12px;
+}
+.ai-plan-title{display:flex;align-items:center;gap:8px;font-weight:800;font-size:12.5px;margin-bottom:10px;letter-spacing:.5px}
+.ai-plan-title svg{width:16px;height:16px}
+.ai-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:#fff;border:1px solid var(--ink-12);border-radius:9px;
+  padding:8px 11px;margin-bottom:7px;
+}
+.ai-row b{font-size:12px;font-weight:700}
+.ai-row span{font-size:10.5px;color:var(--ink-60)}
+.ai-row .price{font-size:12px;font-weight:800;color:var(--red);flex:none}
+.ai-badge{
+  display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
+  color:var(--red);letter-spacing:1px;margin-top:5px;
+}
+.ai-badge svg{width:12px;height:12px}
+.demo-progress-line{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:11.5px;color:var(--ink-60)}
+.demo-progress-line .bar{flex:1;height:6px;border-radius:99px;background:var(--pink-mist);overflow:hidden}
+.demo-progress-line .bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pink),var(--red))}
+.demo-progress-line b{font-size:11px;color:var(--red);flex:none;font-weight:800}
+.demo-stamp-line{display:flex;align-items:center;gap:12px}
+.demo-stamp-line .mini-seal{position:static;transform:rotate(-12deg);flex:none;width:48px;height:48px;font-size:13px}
+.demo-stamp-line p{font-size:11.5px;color:var(--ink-60);line-height:1.6;flex:1;margin:0}
+.pendant-demo{display:flex;align-items:center;gap:14px}
+.pendant-demo p{font-size:11.5px;color:var(--ink-60);margin:0;flex:1}
+
+/* ============ TESTIMONIALS ============ */
+.tst-grid{display:grid;grid-template-columns:1fr;gap:18px}
+.tst{
+  background:#fff;border:1.5px solid var(--ink-12);border-radius:var(--radius-md);
+  padding:26px 24px;position:relative;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+}
+.tst:hover{transform:translateY(-5px);box-shadow:var(--shadow-card);border-color:var(--pink)}
+.tst-quote-mark{
+  position:absolute;top:16px;right:20px;font-size:46px;font-weight:800;
+  color:var(--pink-mist);line-height:1;font-family:Georgia,serif;
+}
+.tst p{font-size:14.5px;font-weight:600;line-height:1.75;position:relative;z-index:1}
+.tst-who{display:flex;align-items:center;gap:11px;margin-top:18px}
+.tst-ava{
+  width:38px;height:38px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:800;font-size:14px;letter-spacing:0;
+}
+.tst-who b{font-size:13px;font-weight:700;display:block;line-height:1.4}
+.tst-who small{font-size:11px;color:var(--ink-40);letter-spacing:.5px}
+.tst-note{
+  margin-top:26px;font-size:11.5px;color:var(--ink-40);letter-spacing:1px;
+  display:flex;align-items:center;gap:8px;
+}
+.tst-note::before{content:"※";color:var(--pink);font-size:13px}
+
+/* ============ ROADMAP ============ */
+.roadmap{background:var(--ink);color:var(--cream)}
+.roadmap .sec-eyebrow{color:var(--pink)}
+.roadmap .sec-eyebrow::before{background:var(--pink)}
+.roadmap .sec-sub{color:rgba(255,248,240,.6)}
+.rm-line{position:relative;padding-left:30px}
+.rm-line::before{
+  content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;
+  background:linear-gradient(180deg,var(--pink),var(--red));border-radius:2px;opacity:.6;
+}
+.rm-item{position:relative;padding-bottom:44px}
+.rm-item:last-child{padding-bottom:0}
+.rm-item::before{
+  content:"";position:absolute;left:-28px;top:8px;width:14px;height:14px;border-radius:50%;
+  background:var(--ink);border:3px solid var(--pink);
+}
+.rm-item.rm-now::before{background:var(--pink);box-shadow:0 0 0 6px rgba(244,167,185,.2)}
+.rm-v{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:800;letter-spacing:2px;color:var(--pink);
+  margin-bottom:8px;
+}
+.rm-v .tag{
+  font-size:10px;padding:3px 10px;border-radius:999px;letter-spacing:1.5px;
+  border:1px solid rgba(244,167,185,.5);color:var(--pink);
+}
+.rm-item h3{font-size:20px;font-weight:800;letter-spacing:1px}
+.rm-item p{margin-top:8px;font-size:14px;color:rgba(255,248,240,.68);max-width:440px;line-height:1.75}
+.rm-flex{display:grid;grid-template-columns:1fr;gap:48px;align-items:center}
+.pendant-stage{display:flex;justify-content:center;padding:20px 0}
+.pendant-wrap{position:relative;width:250px;height:300px}
+.pendant-chain{position:absolute;inset:0}
+.pendant-charm{
+  position:absolute;left:50%;top:150px;transform:translateX(-50%);
+  width:130px;height:130px;border-radius:38px;
+  background:linear-gradient(150deg,#FFF8F0,#FBDDE5);
+  border:2px solid rgba(244,167,185,.8);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 16px 44px rgba(244,167,185,.28),inset 0 2px 6px rgba(255,255,255,.9);
+  animation:pendantSwing 5s ease-in-out infinite;transform-origin:50% -150px;
+}
+@keyframes pendantSwing{
+  0%,100%{transform:translateX(-50%) rotate(-3deg)}
+  50%{transform:translateX(-50%) rotate(3deg)}
+}
+.pendant-charm svg{width:74px;height:74px}
+.pendant-cap{
+  position:absolute;left:50%;top:136px;transform:translateX(-50%);
+  width:16px;height:16px;border-radius:50%;
+  border:3px solid var(--pink);background:var(--ink);z-index:2;
+}
+.pendant-label{
+  text-align:center;font-size:11.5px;letter-spacing:2px;color:rgba(255,248,240,.5);
+  margin-top:6px;
+}
+
+/* ============ FINAL CTA ============ */
+.final{padding:110px 0 96px;text-align:center;overflow:hidden}
+.final .pinky-big{width:120px;height:120px;margin:0 auto 26px}
+.final h2{font-size:clamp(30px,6.5vw,50px);font-weight:800;letter-spacing:2px;line-height:1.3}
+.final h2 .accent{color:var(--red)}
+.final p{margin-top:16px;color:var(--ink-60);font-size:16px}
+.final .hero-ctas{justify-content:center}
+.final-seal{
+  position:absolute;width:120px;height:120px;border-radius:50%;
+  border:3px solid rgba(199,62,58,.5);color:rgba(199,62,58,.55);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:17px;font-weight:800;letter-spacing:3px;transform:rotate(-16deg);
+  box-shadow:inset 0 0 0 3px rgba(255,248,240,1),inset 0 0 0 5px rgba(199,62,58,.3);
+  right:6%;top:40px;pointer-events:none;
+}
+.final-seal small{font-size:9px;letter-spacing:2px;margin-top:3px;font-weight:700}
+
+/* ============ FOOTER ============ */
+footer{
+  border-top:1px solid var(--ink-12);padding:36px 0 44px;
+  font-size:12.5px;color:var(--ink-40);
+}
+.foot-inner{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.foot-brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:14px}
+.foot-brand svg{width:22px;height:22px}
+.foot-meta{letter-spacing:1px;line-height:2}
+.foot-meta a{color:var(--red);font-weight:600;border-bottom:1px solid rgba(199,62,58,.3)}
+
+/* ============ DESKTOP ≥880px ============ */
+@media (min-width:880px){
+  .hero{padding:84px 0 56px}
+  .hero-inner{grid-template-columns:1.05fr .95fr;gap:30px}
+  .phone{transform:rotate(3deg)}
+  .phone-stage{padding:10px 0}
+  .pain-quotes{grid-template-columns:repeat(3,1fr);gap:36px}
+  .data-cards{grid-template-columns:repeat(3,1fr)}
+  .story-steps{grid-template-columns:repeat(3,1fr)}
+  .feat-grid{grid-template-columns:repeat(6,1fr)}
+  .feat-a{grid-column:span 2}
+  .feat-b{grid-column:span 2}
+  .feat-c{grid-column:span 2}
+  .feat-d{grid-column:span 3}
+  .feat-e{grid-column:span 3}
+  .tst-grid{grid-template-columns:repeat(3,1fr)}
+  .rm-flex{grid-template-columns:1.1fr .9fr}
+  .sec{padding:110px 0}
+}
+@media (max-width:520px){
+  .ft-1{left:2px;top:64px}
+  .ft-2{right:2px;bottom:100px}
+  .final-seal{width:92px;height:92px;font-size:14px;right:2%;top:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- ====== SVG DEFS ====== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- 拉勾勾 logo:两只勾在一起的小指 -->
+    <g id="pinkyHook">
+      <path d="M30 92 C30 66 32 40 54 34 C68 30 78 38 76 50 C74 61 62 64 56 55"
+            fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+      <path d="M70 8 C70 34 68 60 46 66 C32 70 22 62 24 50 C26 39 38 36 44 45"
+            fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+      <path d="M24 96 L36 96" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+      <path d="M64 4 L76 4" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+    </g>
+    <symbol id="logoPinky" viewBox="0 0 100 100">
+      <use href="#pinkyHook" color="#33272A"/>
+      <path d="M12 38 L18 44 M14 50 L8 50 M88 62 L82 56 M86 50 L92 50" stroke="#C73E3A" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="logoPinkyCream" viewBox="0 0 100 100">
+      <use href="#pinkyHook" color="#FFF8F0"/>
+      <path d="M12 38 L18 44 M14 50 L8 50 M88 62 L82 56 M86 50 L92 50" stroke="#F4A7B9" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="logoPinkyRed" viewBox="0 0 100 100">
+      <use href="#pinkyHook" color="#C73E3A"/>
+      <path d="M12 38 L18 44 M14 50 L8 50 M88 62 L82 56 M86 50 L92 50" stroke="#F4A7B9" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <!-- 打勾 -->
+    <symbol id="icoCheck" viewBox="0 0 24 24">
+      <path d="M4 12.5 L9.5 18 L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- 进行中(圆环) -->
+    <symbol id="icoDoing" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="34 20" stroke-linecap="round"/>
+      <circle cx="12" cy="12" r="2.4" fill="currentColor"/>
+    </symbol>
+    <!-- 印章 -->
+    <symbol id="icoSeal" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/>
+      <path d="M8 12.5 L11 15.5 L16.5 9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- 麦克风 -->
+    <symbol id="icoMic" viewBox="0 0 24 24">
+      <rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2.2"/>
+      <path d="M5.5 11.5 C5.5 15.5 8.4 18 12 18 C15.6 18 18.5 15.5 18.5 11.5 M12 18 L12 21.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <!-- AI 火花 -->
+    <symbol id="icoSpark" viewBox="0 0 24 24">
+      <path d="M12 3 L13.8 9.2 L20 11 L13.8 12.8 L12 19 L10.2 12.8 L4 11 L10.2 9.2 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M18.5 16.5 L19.2 18.8 L21.5 19.5 L19.2 20.2 L18.5 22.5 L17.8 20.2 L15.5 19.5 L17.8 18.8 Z" fill="currentColor"/>
+    </symbol>
+    <!-- 箭头 -->
+    <symbol id="icoArrow" viewBox="0 0 24 24">
+      <path d="M4 12 L19 12 M13.5 6 L19.5 12 L13.5 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- 挂坠 -->
+    <symbol id="icoPendant" viewBox="0 0 24 24">
+      <path d="M7 3 C7 3 4 6 4 9 M17 3 C17 3 20 6 20 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="12" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="2"/>
+      <rect x="6" y="9.5" width="12" height="11" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M10.5 17 C10 15.5 10.5 13 12 12.8 C13.6 12.6 14 14.4 12.8 15 M13.5 12 C14 13.5 13.5 16 12 16.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ====== HEADER ====== -->
+<header>
+  <div class="wrap nav">
+    <a class="brand hookable" href="#top">
+      <svg class="pinky-mark" width="30" height="30"><use href="#logoPinky"/></svg>
+      <span class="brand-txt">拉勾勾<span class="en">Pinky Promise</span></span>
+    </a>
+    <a class="nav-cta" href="https://echoecho-aqp.pages.dev" target="_blank" rel="noopener">
+      免下载,直接用
+    </a>
+  </div>
+</header>
+
+<!-- ====== HERO ====== -->
+<section class="hero" id="top">
+  <div class="hero-blob"></div>
+  <div class="hero-blob-2"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow reveal"><span class="dot"></span>双向情侣备忘录 · 网页版已上线</span>
+      <h1 class="reveal" style="transition-delay:.08s">拉过勾的事,<br><span class="accent">不许忘。</span></h1>
+      <p class="hero-sub reveal" style="transition-delay:.16s">
+        小时候拉过勾的事,谁都不敢赖账。<br>
+        在拉勾勾,她随口说一句,他那边就变成一张任务卡——
+        <strong>收到、在办、办妥</strong>,最后盖上一枚"说到做到"的红章。
+      </p>
+      <div class="hero-ctas reveal" style="transition-delay:.24s">
+        <a class="btn-main hookable" href="https://echoecho-aqp.pages.dev" target="_blank" rel="noopener">
+          <svg class="pinky-mark" viewBox="0 0 100 100" style="width:20px;height:20px"><use href="#pinkyHook" color="#FFF8F0"/></svg>
+          免下载,直接用
+        </a>
+        <a class="btn-ghost" href="#story">这个勾,怎么拉</a>
+      </div>
+      <p class="hero-note reveal" style="transition-delay:.3s">网页直接打开 · 无需安装 · 两个人,一分钟上手</p>
+    </div>
+    <div class="phone-stage reveal" style="transition-delay:.2s">
+      <div class="float-tag ft-1"><svg><use href="#icoCheck"/></svg>他勾回去了</div>
+      <div class="float-tag ft-2"><svg style="color:#C73E3A"><use href="#icoSeal"/></svg>办妥,已盖章</div>
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="app-bar">
+            <span class="app-bar-title"><svg><use href="#logoPinky"/></svg>拉勾勾</span>
+            <span class="app-bar-day">今天 · 3 个勾</span>
+          </div>
+
+          <div class="task-card">
+            <div class="task-from"><span class="ava">小</span>小满 · 语音 · 刚刚</div>
+            <div class="task-txt">姨妈来了,想喝红糖姜茶,下班带一杯</div>
+            <div class="task-meta">
+              <span class="chip chip-recv"><svg><use href="#icoCheck"/></svg>收到</span>
+              <span class="task-time">拉勾成立</span>
+            </div>
+          </div>
+
+          <div class="task-card">
+            <div class="task-from"><span class="ava">小</span>小满 · 文字 · 上午 10:24</div>
+            <div class="task-txt">15 号房东上门抄网费,那天你在家</div>
+            <div class="task-meta">
+              <span class="chip chip-doing"><svg><use href="#icoDoing"/></svg>在办</span>
+              <span class="task-time">已调好请假</span>
+            </div>
+            <div class="progress"><i></i></div>
+            <div class="progress-num">65%</div>
+          </div>
+
+          <div class="task-card">
+            <div class="mini-seal">妥</div>
+            <div class="task-from"><span class="ava">小</span>小满 · 语音 · 昨天</div>
+            <div class="task-txt">纪念日订黄鹤楼旁那家日料</div>
+            <div class="task-meta">
+              <span class="chip chip-done"><svg><use href="#icoCheck"/></svg>办妥</span>
+              <span class="task-time">昨天 21:07</span>
+            </div>
+            <div class="task-done-note">交待:订好了周六 18:30 靠窗位,发你订单截图了,穿好看点。</div>
+          </div>
+
+          <div class="ai-strip">
+            <svg style="color:#F4A7B9"><use href="#icoSpark"/></svg>
+            <span><b>AI 僚机</b>:检测到"日料店"没定过,已生成 3 家备选方案页,点开就能选。</span>
+          </div>
+
+          <div class="voice-bar">
+            <svg style="color:#C73E3A"><use href="#icoMic"/></svg>
+            长按说话,一句话变任务卡
+            <span class="wave"><i></i><i></i><i></i><i></i><i></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== RIBBON ====== -->
+<div class="ribbon" aria-hidden="true">
+  <div class="ribbon-track" id="ribbonTrack">
+    <span>拉钩上吊<svg viewBox="0 0 100 100"><use href="#pinkyHook" color="#FFF8F0"/></svg>一百年<svg viewBox="0 0 24 24"><use href="#icoCheck"/></svg>不许变<svg viewBox="0 0 24 24"><use href="#icoSeal"/></svg>说到做到<svg viewBox="0 0 100 100"><use href="#pinkyHook" color="#FFF8F0"/></svg>PINKY&nbsp;PROMISE<svg viewBox="0 0 24 24"><use href="#icoCheck"/></svg></span>
+  </div>
+</div>
+
+<!-- ====== PAIN ====== -->
+<section class="pain sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">为什么需要拉一个勾</div>
+      <h2>微信里的话,<br>会被刷走。</h2>
+      <p class="sec-sub">你说过的每一句"记得哦",都在 99+ 的消息流里往下沉。回了"好的"不等于记住了,已读不回更是最伤的那种沉默。</p>
+    </div>
+
+    <div class="pain-quotes">
+      <div class="pq reveal">
+        <p>"他明明回复了'好的',但那两个字根本没进他脑子里。"</p>
+        <small>恋爱 3 个月 · 她说</small>
+      </div>
+      <div class="pq reveal" style="transition-delay:.1s">
+        <p>"我不是要一份礼物,我是想感觉这个家是两个人在一起维护的。"</p>
+        <small>同居 2 年 · 她说</small>
+      </div>
+      <div class="pq reveal" style="transition-delay:.2s">
+        <p>"我确实'看过'那条消息,但'看过'没有变成'要做的事'。"</p>
+        <small>恋爱 2 年 · 他说</small>
+      </div>
+    </div>
+
+    <div class="data-cards">
+      <div class="dc reveal">
+        <div class="dc-num">16<em>位</em></div>
+        <p class="dc-txt">两侧视角的深度画像访谈:8 位"交待的人"+ 8 位"办事的人"。共同结论——忘,大多不是不爱,是消息没有变成任务。</p>
+        <div class="dc-src">内测调研 · 情景模拟画像</div>
+      </div>
+      <div class="dc reveal" style="transition-delay:.1s">
+        <div class="dc-num">1<em>个字</em></div>
+        <p class="dc-txt">"收到"。被访者反复强调:哪怕对方只先点一下"收到",也远远好过已读不回——沉默才是最伤感情的。</p>
+        <div class="dc-src">内测调研 · 发起方共性需求</div>
+      </div>
+      <div class="dc reveal" style="transition-delay:.2s">
+        <div class="dc-num">催 → 看</div>
+        <p class="dc-txt">进度%最大的价值,是省掉"我要不要再问一遍"的心理成本:把开口催,变成扫一眼。不催了,也就不吵了。</p>
+        <div class="dc-src">内测调研 · 双方共识</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== STORY:每条消息就是一次拉勾 ====== -->
+<section class="sec" id="story">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">品牌的由来</div>
+      <h2>每条消息,<br>就是一次拉勾。</h2>
+      <p class="sec-sub">"拉钩上吊,一百年不许变。"小孩子的契约最认真——不用合同,不用截图留证,一个小指头就够了。我们把这个仪式,搬进了两个人的日常。</p>
+    </div>
+    <div class="story-steps">
+      <div class="step reveal hookable">
+        <svg class="step-icon pinky-mark" viewBox="0 0 100 100">
+          <path d="M30 92 C30 66 32 40 54 34 C68 30 78 38 76 50" fill="none" stroke="#C73E3A" stroke-width="7" stroke-linecap="round"/>
+          <path d="M24 96 L36 96" stroke="#C73E3A" stroke-width="7" stroke-linecap="round"/>
+          <path d="M84 28 L90 22 M88 40 L96 40 M76 20 L78 12" stroke="#F4A7B9" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <h3>她伸出小指<small>许愿</small></h3>
+        <p>语音或文字,随口一句"帮我带杯姜茶"。<b>不用打开待办 App 填表格</b>——话音落下,他那边已经生成一张任务卡。</p>
+      </div>
+      <div class="step reveal hookable" style="transition-delay:.12s">
+        <svg class="step-icon pinky-mark" viewBox="0 0 100 100"><use href="#logoPinky"/></svg>
+        <h3>他勾回去<small>承诺成立</small></h3>
+        <p>点一下"收到",这个勾就算拉上了。<b>一个字的确认,胜过已读不回</b>。接着"在办 65%",她扫一眼就安心,不用开口催。</p>
+      </div>
+      <div class="step reveal hookable" style="transition-delay:.24s">
+        <svg class="step-icon" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="36" fill="none" stroke="#C73E3A" stroke-width="6"/>
+          <circle cx="50" cy="50" r="44" fill="none" stroke="#C73E3A" stroke-width="2.5" opacity=".45"/>
+          <path d="M34 52 L45 63 L68 38" fill="none" stroke="#C73E3A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3>办妥,盖章<small>说到做到</small></h3>
+        <p>附上一句交待和凭证,盖上<b>"说到做到"的红印章</b>。不是打卡完成 KPI,是给这段关系又添一枚可以回看的信物。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FEATURES ====== -->
+<section class="sec features" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">功能</div>
+      <h2>勾,是这样一步步<br>兑现的。</h2>
+      <p class="sec-sub">它不做监工,不做证据本,不做 KPI 看板——只做两个人之间,那个轻轻的、但作数的勾。</p>
+    </div>
+    <div class="feat-grid">
+
+      <div class="feat feat-a reveal hookable">
+        <div class="feat-top">
+          <svg class="feat-icon pinky-mark" viewBox="0 0 100 100"><use href="#logoPinkyRed"/></svg>
+          <span class="pill pill-live">已上线</span>
+        </div>
+        <h3>拉勾<small>一句话,变任务卡</small></h3>
+        <p>语音或文字随口一说,自动生成带状态的任务卡。不需要对方"手动转录进待办"——转录那一步,恰恰是所有共享清单死掉的地方。</p>
+      </div>
+
+      <div class="feat feat-b reveal hookable" style="transition-delay:.08s">
+        <div class="feat-top">
+          <svg class="feat-icon" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="34" fill="none" stroke="#C73E3A" stroke-width="6" stroke-dasharray="150 70" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="9" fill="#F4A7B9"/>
+          </svg>
+          <span class="pill pill-live">已上线</span>
+        </div>
+        <h3>勾着呢<small>在办 + 进度%</small></h3>
+        <p>他点"收到",勾就成立;推进到哪一步,进度条替他说。她把"要不要催"变成"扫一眼",他把"被追问"变成"被看见"。</p>
+        <div class="feat-demo">
+          <div class="demo-progress-line"><span>订日料</span><span class="bar"><i style="width:65%"></i></span><b>65%</b></div>
+          <div class="demo-progress-line"><span>修晾衣架</span><span class="bar"><i style="width:30%"></i></span><b>30%</b></div>
+        </div>
+      </div>
+
+      <div class="feat feat-c reveal hookable" style="transition-delay:.16s">
+        <div class="feat-top">
+          <svg class="feat-icon" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="36" fill="none" stroke="#C73E3A" stroke-width="6"/>
+            <circle cx="50" cy="50" r="44" fill="none" stroke="#C73E3A" stroke-width="2.5" opacity=".45"/>
+            <path d="M34 52 L45 63 L68 38" fill="none" stroke="#C73E3A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="pill pill-live">已上线</span>
+        </div>
+        <h3>盖章<small>办妥 + 交待</small></h3>
+        <p>办妥不是默默勾掉,而是附一句交待、一张凭证,郑重其事地盖章。给办事的人一份"我做到了"的正反馈——这比提醒本身更稀缺。</p>
+        <div class="feat-demo demo-stamp-line">
+          <div class="mini-seal">妥</div>
+          <p>"订好了周六 18:30 靠窗位,订单截图发你了。"——盖章的那一下,是他一天里难得的成就感。</p>
+        </div>
+      </div>
+
+      <div class="feat feat-d reveal hookable" style="transition-delay:.1s">
+        <div class="feat-top">
+          <svg class="feat-icon" viewBox="0 0 100 100">
+            <path d="M50 12 L58 40 L86 48 L58 56 L50 84 L42 56 L14 48 L42 40 Z" fill="none" stroke="#C73E3A" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M78 70 L81 79 L90 82 L81 85 L78 94 L75 85 L66 82 L75 79 Z" fill="#F4A7B9"/>
+          </svg>
+          <span class="pill pill-live">已上线</span>
+        </div>
+        <h3>AI 僚机<small>不止提醒,直接出方案</small></h3>
+        <p>很多"忘了",其实是"不知道从哪下手"。任何一条交待,僚机都能自动生成一页完整方案——选购对比、步骤清单、附近哪里买。把"想起来"和"办成"之间的路,也铺好。</p>
+        <div class="feat-demo">
+          <div class="ai-plan-title"><svg style="color:#C73E3A"><use href="#icoSpark"/></svg>她说:"想买洗衣机" → 僚机方案页</div>
+          <div class="ai-row"><div><b>滚筒 A · 10kg 洗烘一体</b><br><span>小户型阳台放得下,除菌螨</span></div><span class="price">¥3,299</span></div>
+          <div class="ai-row"><div><b>滚筒 B · 超薄嵌入式</b><br><span>预算敏感首选,噪音更低</span></div><span class="price">¥2,499</span></div>
+          <div class="ai-row"><div><b>波轮 C · 大容量家用</b><br><span>预算入门,适合过渡期</span></div><span class="price">¥1,199</span></div>
+          <span class="ai-badge"><svg><use href="#icoArrow"/></svg>完整对比方案页已生成,选好直接下单</span>
+        </div>
+      </div>
+
+      <div class="feat feat-e reveal hookable" style="transition-delay:.18s">
+        <div class="feat-top">
+          <svg class="feat-icon" viewBox="0 0 100 100">
+            <rect x="30" y="12" width="26" height="46" rx="13" fill="none" stroke="#C73E3A" stroke-width="5.5"/>
+            <path d="M16 46 C16 64 28 74 43 74 C58 74 70 64 70 46 M43 74 L43 90" fill="none" stroke="#C73E3A" stroke-width="5.5" stroke-linecap="round"/>
+            <path d="M80 20 C86 26 88 34 86 42" fill="none" stroke="#F4A7B9" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M74 28 C77 31 78 35 77 39" fill="none" stroke="#F4A7B9" stroke-width="4.5" stroke-linecap="round"/>
+          </svg>
+          <span style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><span class="pill pill-live">语音已上线</span><span class="pill pill-plan">挂坠规划中</span></span>
+        </div>
+        <h3>语音 &amp; 挂坠<small>动动嘴,到贴身</small></h3>
+        <p>手上沾着面粉、正在带娃、走在路上——长按说话就能拉勾,打字从来不该是门槛。将来,还有一枚两只小指造型的"拉勾勾挂坠":她那头有新的交待,你贴身的小指会轻轻动一下。</p>
+        <div class="feat-demo pendant-demo">
+          <svg viewBox="0 0 24 24" style="width:44px;height:44px;color:#C73E3A;flex:none"><use href="#icoPendant"/></svg>
+          <p>硬件挂坠 · 概念预研中,详见下方路线图 v2.0</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== TESTIMONIALS ====== -->
+<section class="sec" id="voices">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">体验官说</div>
+      <h2>拉过这个勾的人,<br>后来怎么样了。</h2>
+    </div>
+    <div class="tst-grid">
+      <div class="tst reveal">
+        <span class="tst-quote-mark">"</span>
+        <p>他回"好的"的那两个字,现在终于是真的进了脑子——因为他得点一下"收到",这个勾才算拉上。</p>
+        <div class="tst-who">
+          <span class="tst-ava" style="background:#F4A7B9">满</span>
+          <span><b>小满 · 22 岁</b><small>恋爱 3 个月 · 武汉</small></span>
+        </div>
+      </div>
+      <div class="tst reveal" style="transition-delay:.08s">
+        <span class="tst-quote-mark">"</span>
+        <p>冰箱门上的便利贴正式退休了。临期酸奶这种小事,现在他先"收到"、再"办妥",我不用再当家里唯一的管理员。</p>
+        <div class="tst-who">
+          <span class="tst-ava" style="background:#C73E3A">桐</span>
+          <span><b>雨桐 · 26 岁</b><small>同居 2 年 · 上海</small></span>
+        </div>
+      </div>
+      <div class="tst reveal" style="transition-delay:.16s">
+        <span class="tst-quote-mark">"</span>
+        <p>异地最怕的是猜。现在我看到"在办 60%",就知道他没忘、在弄,不用把"你到底记没记得"问出口。</p>
+        <div class="tst-who">
+          <span class="tst-ava" style="background:#33272A">萱</span>
+          <span><b>晓萱 · 23 岁</b><small>异地 1 年半 · 北京—深圳</small></span>
+        </div>
+      </div>
+      <div class="tst reveal" style="transition-delay:.06s">
+        <span class="tst-quote-mark">"</span>
+        <p>收到=已阅,在办=in review,办妥=merged。作为程序员,这套流程我太熟了——只是这回 reviewer 是女朋友。</p>
+        <div class="tst-who">
+          <span class="tst-ava" style="background:#33272A">屿</span>
+          <span><b>陈屿 · 28 岁</b><small>后端工程师 · 恋爱 2 年</small></span>
+        </div>
+      </div>
+      <div class="tst reveal" style="transition-delay:.14s">
+        <span class="tst-quote-mark">"</span>
+        <p>酒局上答应老婆的事十有八九会忘。现在第二天一早,僚机给我一张"昨晚欠了什么"的清单,一条条办妥盖章,回家不用挨骂。</p>
+        <div class="tst-who">
+          <span class="tst-ava" style="background:#C73E3A">K</span>
+          <span><b>老 K · 32 岁</b><small>销售 · 已婚 4 年</small></span>
+        </div>
+      </div>
+      <div class="tst reveal" style="transition-delay:.22s">
+        <span class="tst-quote-mark">"</span>
+        <p>我这记性,靠"更用心"三个字救不了。把记忆交给它,盖下"办妥"章的那一下,是我一天里难得的"我做到了"。</p>
+        <div class="tst-who">
+          <span class="tst-ava" style="background:#F4A7B9">鹏</span>
+          <span><b>大鹏 · 38 岁</b><small>结婚 10 年 · 自称"金鱼脑"</small></span>
+        </div>
+      </div>
+    </div>
+    <p class="tst-note reveal">内测体验官故事,情景演绎;化名呈现,基于内测调研画像整理,非真实用户实拍。</p>
+  </div>
+</section>
+
+<!-- ====== ROADMAP ====== -->
+<section class="roadmap sec" id="roadmap">
+  <div class="wrap rm-flex">
+    <div>
+      <div class="sec-head reveal" style="margin-bottom:44px">
+        <div class="sec-eyebrow">路线图</div>
+        <h2>一个勾,<br>会长成什么样。</h2>
+        <p class="sec-sub">网页版今天就能用。后面的每一步,也都提前拉个勾。</p>
+      </div>
+      <div class="rm-line">
+        <div class="rm-item rm-now reveal">
+          <div class="rm-v">v1.1 <span class="tag">下一步</span></div>
+          <h3>强提醒</h3>
+          <p>到点自动、体面地提醒对方——不用她再开口发第二遍。按对方的忙碌节奏挑"合适的时机",提醒而不打扰。</p>
+        </div>
+        <div class="rm-item reveal" style="transition-delay:.1s">
+          <div class="rm-v">v1.2 <span class="tag">规划中</span></div>
+          <h3>原生 App</h3>
+          <p>iOS / Android 原生应用:系统级推送、锁屏小组件、离线可用。把拉勾勾装进两个人的手机桌面。</p>
+        </div>
+        <div class="rm-item reveal" style="transition-delay:.2s">
+          <div class="rm-v">v2.0 <span class="tag">概念预研</span></div>
+          <h3>拉勾勾挂坠</h3>
+          <p>两只小指勾在一起的贴身吊坠。她那头有新的交待或刚刚盖章,你的挂坠轻轻一颤——不看手机,也知道"这个勾,还勾着"。</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.15s">
+      <div class="pendant-stage">
+        <div class="pendant-wrap">
+          <svg class="pendant-chain" viewBox="0 0 250 300" fill="none" aria-hidden="true">
+            <path d="M30 0 C30 90 70 142 125 146 C180 142 220 90 220 0"
+                  stroke="#F4A7B9" stroke-width="3.5" stroke-dasharray="2 9" stroke-linecap="round"/>
+          </svg>
+          <div class="pendant-cap"></div>
+          <div class="pendant-charm hookable">
+            <svg class="pinky-mark" viewBox="0 0 100 100"><use href="#logoPinky"/></svg>
+          </div>
+        </div>
+      </div>
+      <p class="pendant-label">拉勾勾挂坠 · 概念示意 · v2.0</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FINAL CTA ====== -->
+<section class="final">
+  <div class="final-seal reveal">说到做到<small>PINKY PROMISE</small></div>
+  <div class="wrap">
+    <div class="hookable reveal">
+      <svg class="pinky-big pinky-mark" viewBox="0 0 100 100"><use href="#logoPinky"/></svg>
+    </div>
+    <h2 class="reveal" style="transition-delay:.08s">现在,<span class="accent">伸出小指。</span></h2>
+    <p class="reveal" style="transition-delay:.14s">免下载、免安装,打开网页,把今天的第一件小事拉个勾。</p>
+    <div class="hero-ctas reveal" style="transition-delay:.2s;margin-top:36px">
+      <a class="btn-main hookable" href="https://echoecho-aqp.pages.dev" target="_blank" rel="noopener">
+        <svg class="pinky-mark" viewBox="0 0 100 100" style="width:20px;height:20px"><use href="#pinkyHook" color="#FFF8F0"/></svg>
+        免下载,直接用
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand hookable">
+      <svg class="pinky-mark"><use href="#logoPinky"/></svg>
+      拉勾勾 <span style="color:var(--ink-40);font-weight:500">Pinky Promise</span>
+    </div>
+    <div class="foot-meta">
+      品牌提案 B · Pinky Promise · 概念落地页<br>
+      产品网页版:<a href="https://echoecho-aqp.pages.dev" target="_blank" rel="noopener">echoecho-aqp.pages.dev</a> · 页面内数据卡与体验官留言来自内测调研之情景模拟,非定量结论。
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // 滚动渐现
+  var els=document.querySelectorAll('.reveal');
+  if(/[?&]shot/.test(location.search)){
+    els.forEach(function(el){el.classList.add('in');});
+    var m=location.search.match(/[?&]y=(\d+)/);
+    if(m){document.body.style.marginTop='-'+m[1]+'px';}
+  }else if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+      });
+    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }else{
+    els.forEach(function(el){el.classList.add('in');});
+  }
+  // 缎带无缝滚动:复制一份内容
+  var track=document.getElementById('ribbonTrack');
+  if(track){track.innerHTML+=track.innerHTML;}
+})();
+</script>
+<script>/*reveal-fallback*/setTimeout(function(){document.querySelectorAll(".reveal").forEach(function(e){e.classList.add("in","visible","show","active","revealed")})},1500)</script>
+</body>
+</html>

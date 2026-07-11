@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>念响 Sayso — 她的一句念,他的一声响</title>
+<meta name="description" content="双向情侣备忘录:事事有回应,句句有回响。">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{--ink:#232B31;--paper:#F7F3EC;--coral:#E8604C;--coral-deep:#C74533;--gold:#C9A86A;--mist:#8A97A0}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:var(--paper);color:var(--ink);line-height:1.75;overflow-x:hidden}
+.serif{font-family:"Songti SC","Noto Serif SC",serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:88px 0}
+.kicker{font-size:13px;letter-spacing:3px;color:var(--coral);font-weight:600;margin-bottom:14px}
+h2{font-size:clamp(26px,4vw,38px);line-height:1.3;margin-bottom:14px}
+.sub{color:#6d7a83;font-size:16px;max-width:620px}
+/* 渐现动画只在 JS 可用时生效(html.js);否则内容直接可见,绝不白屏 */
+.js .rv{opacity:0;transform:translateY(26px);transition:all .7s cubic-bezier(.2,.7,.3,1)}
+.js .rv.in{opacity:1;transform:none}
+
+/* ============ HERO:念|响 对冲 ============ */
+.hero{min-height:100vh;display:flex;flex-direction:column}
+.split{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:78vh;position:relative}
+.side{display:flex;flex-direction:column;justify-content:center;padding:9vh 6vw;position:relative;overflow:hidden}
+.side-nian{background:var(--ink);color:var(--paper)}
+.side-xiang{background:linear-gradient(160deg,#E8604C,#D8503E);color:#fff}
+.side .zi{font-size:clamp(96px,16vw,180px);line-height:1;font-weight:700}
+.side-nian .zi{font-family:"Songti SC","Noto Serif SC",serif}
+.side .role{font-size:14px;letter-spacing:4px;opacity:.75;margin-top:10px}
+.side .whis{margin-top:26px;font-size:15px;opacity:.85;max-width:300px}
+.side-nian .whis span{display:inline-block;background:rgba(247,243,236,.08);border:1px solid rgba(247,243,236,.18);border-radius:14px 14px 14px 4px;padding:9px 14px;margin:5px 0}
+/* 念的一颗心事:小圆点,穿越分界 */
+.dot{position:absolute;top:50%;left:calc(50% - 7px);width:14px;height:14px;border-radius:50%;background:var(--paper);z-index:3;animation:travel 4.2s ease-in-out infinite}
+@keyframes travel{0%,18%{transform:translateX(-46vw) scale(.5);opacity:0}30%{opacity:1}48%{transform:translateX(0) scale(1)}52%{transform:translateX(0) scale(1.25)}70%,100%{transform:translateX(6vw) scale(0);opacity:0}}
+/* 响的回声环 */
+.rings i{position:absolute;top:50%;left:24%;width:20px;height:20px;margin:-10px;border:2px solid rgba(255,255,255,.75);border-radius:50%;animation:ring 4.2s ease-out infinite}
+.rings i:nth-child(2){animation-delay:.35s}.rings i:nth-child(3){animation-delay:.7s}.rings i:nth-child(4){animation-delay:1.05s}
+@keyframes ring{0%,52%{transform:scale(.2);opacity:0}62%{opacity:.9}100%{transform:scale(14);opacity:0}}
+.seam{position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(247,243,236,.5),transparent);z-index:2}
+.hero-foot{background:var(--paper);text-align:center;padding:40px 24px 56px}
+.brand{font-size:clamp(30px,5vw,44px);font-weight:700}
+.brand em{font-style:normal;color:var(--coral)}
+.brand .en{font-weight:600;color:var(--mist);font-size:.55em;letter-spacing:2px;vertical-align:middle;margin-left:12px}
+.tagline{font-size:clamp(17px,2.6vw,22px);margin-top:8px}
+.homo{font-size:13px;color:var(--mist);margin-top:10px}
+.cta{display:inline-block;margin-top:26px;background:var(--coral);color:#fff;text-decoration:none;font-weight:600;font-size:17px;padding:15px 44px;border-radius:99px;box-shadow:0 10px 28px rgba(232,96,76,.35);transition:transform .25s}
+.cta:hover{transform:translateY(-2px)}
+.cta-sub{display:block;margin-top:12px;font-size:12px;color:var(--mist)}
+
+/* ============ 痛点 ============ */
+.pain{background:#fff}
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.pain-card{background:var(--paper);border-radius:20px;padding:26px}
+.pain-card .q{font-family:"Songti SC",serif;font-size:19px;line-height:1.6}
+.pain-card .q::before{content:"「"}.pain-card .q::after{content:"」"}
+.pain-card .a{margin-top:14px;font-size:14px;color:#6d7a83}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+.stat{border:1px solid #e7e0d3;border-radius:20px;padding:22px;text-align:center}
+.stat b{font-size:34px;color:var(--coral)}
+.stat span{display:block;font-size:13px;color:#6d7a83;margin-top:6px}
+.src{font-size:11px;color:#b3aa99;margin-top:14px;text-align:right}
+
+/* ============ 三步 ============ */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+.step{border-radius:22px;padding:30px 26px;position:relative}
+.step:nth-child(1){background:var(--ink);color:var(--paper)}
+.step:nth-child(2){background:#fff;border:1px solid #e7e0d3}
+.step:nth-child(3){background:var(--coral);color:#fff}
+.step .no{font-size:13px;letter-spacing:3px;opacity:.6}
+.step b{display:block;font-size:22px;margin:8px 0 10px}
+.step p{font-size:14px;opacity:.9}
+.step .zi2{position:absolute;right:18px;top:14px;font-size:44px;opacity:.14;font-weight:700}
+
+/* ============ 手机 mock ============ */
+.showcase{background:var(--ink);color:var(--paper)}
+.showcase .sub{color:#9fb0ba}
+.show-flex{display:flex;gap:48px;align-items:center;margin-top:48px;flex-wrap:wrap;justify-content:center}
+.phone{width:300px;background:#0f1417;border-radius:38px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.5);flex:none}
+.scr{background:var(--paper);border-radius:28px;overflow:hidden;color:var(--ink)}
+.scr .bar{padding:14px 16px 8px;font-weight:700;font-size:15px;display:flex;justify-content:space-between;align-items:center}
+.scr .bar span{font-size:10px;background:#FBEAE6;color:var(--coral);padding:2px 8px;border-radius:99px}
+.tcard{background:#fff;border:1px solid #eadfd2;border-radius:14px;margin:8px 12px;padding:12px}
+.tcard .m{font-size:10px;color:#9a8f80;display:flex;justify-content:space-between}
+.tcard .t{font-size:13px;margin:5px 0}
+.chips{display:flex;gap:5px;align-items:center}
+.chip{font-size:10px;padding:2px 9px;border-radius:99px;background:#f4efe6;color:#9a8f80}
+.chip.on1{background:#FBEAE6;color:var(--coral);font-weight:600}
+.chip.on2{background:#FCF3E3;color:#C77B24;font-weight:600}
+.chip.on3{background:#E8F3EC;color:#3E8E5A;font-weight:600}
+.pbar{height:5px;border-radius:9px;background:#efe8db;margin-top:8px;overflow:hidden}
+.pbar i{display:block;height:100%;width:64%;background:var(--coral);border-radius:9px}
+.ai-tag{font-size:10px;color:var(--coral);margin-top:8px;border-top:1px dashed #eadfd2;padding-top:7px}
+.show-notes{max-width:380px}
+.show-notes li{list-style:none;margin:20px 0;padding-left:34px;position:relative;font-size:15px;color:#c9d4da}
+.show-notes li b{color:#fff;display:block;font-size:17px;margin-bottom:3px}
+.show-notes li::before{content:"";position:absolute;left:0;top:7px;width:18px;height:18px;border-radius:50%;border:2px solid var(--coral)}
+.show-notes li::after{content:"";position:absolute;left:6px;top:13px;width:6px;height:6px;border-radius:50%;background:var(--coral)}
+
+/* ============ 留言 ============ */
+.voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.voice{background:#fff;border-radius:20px;padding:24px;border-top:4px solid var(--coral)}
+.voice.alt{border-top-color:var(--ink)}
+.voice p{font-size:14.5px}
+.voice .who{margin-top:16px;font-size:12.5px;color:#8a8071;display:flex;align-items:center;gap:8px}
+.voice .who i{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--coral),var(--gold));display:inline-block;font-style:normal;color:#fff;text-align:center;line-height:26px;font-size:12px}
+.disc{font-size:11px;color:#b3aa99;margin-top:18px;text-align:center}
+
+/* ============ 功能 ============ */
+.feats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:40px}
+.feat{background:#fff;border:1px solid #e7e0d3;border-radius:20px;padding:26px;transition:transform .3s,box-shadow .3s}
+.feat:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(35,43,49,.08)}
+.feat .head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.feat b{font-size:18px}
+.bdg{font-size:11px;padding:3px 11px;border-radius:99px;white-space:nowrap}
+.b-ok{background:#E8F3EC;color:#3E8E5A}.b-soon{background:#F1EBE2;color:#8a7d6e}
+.feat p{font-size:14px;color:#5d6a73;margin-top:10px}
+
+/* ============ 路线 ============ */
+.road{background:#fff}
+.rl{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+.rn{border-radius:18px;padding:22px;border:1px solid #e7e0d3}
+.rn.now{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rn time{font-size:12px;color:var(--coral);font-weight:700;letter-spacing:1px}
+.rn b{display:block;font-size:16px;margin:6px 0 6px}
+.rn p{font-size:13px;opacity:.8}
+
+/* ============ 尾部 ============ */
+.final{background:linear-gradient(160deg,var(--coral),var(--coral-deep));color:#fff;text-align:center}
+.final h2{font-size:clamp(28px,4.6vw,44px)}
+.final .cta{background:#fff;color:var(--coral)}
+footer{background:var(--ink);color:#75838d;text-align:center;font-size:12px;padding:28px 20px}
+
+@media(max-width:820px){
+  .split{grid-template-columns:1fr;min-height:auto}
+  .side{padding:52px 8vw;min-height:44vh}
+  .dot{display:none}.seam{display:none}
+  .pain-grid,.stats,.steps,.voice-grid,.feats{grid-template-columns:1fr}
+  .rl{grid-template-columns:1fr 1fr}
+  section{padding:64px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="split">
+    <div class="side side-nian">
+      <div class="zi serif">念</div>
+      <div class="role">她 · 心里有事,说一句就好</div>
+      <div class="whis">
+        <span>周五帮我取下干洗的裙子</span><br>
+        <span>下月初妈妈生日,别让我提醒第二遍</span><br>
+        <span>想换台安静点的洗衣机…</span>
+      </div>
+    </div>
+    <div class="seam"></div><div class="dot"></div>
+    <div class="side side-xiang">
+      <div class="rings"><i></i><i></i><i></i><i></i></div>
+      <div class="zi">响</div>
+      <div class="role">他 · 每一句,都有回响</div>
+      <div class="whis">收到 → 在办 64% → 办妥 ✓<br>AI 僚机已经把洗衣机方案备好了。</div>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <div class="brand serif">念<em>响</em><span class="en">SAYSO</span></div>
+    <div class="tagline">她的一句念,他的一声响。</div>
+    <div class="homo">谐音"念想"——你说的话,是我心里的念想 · 英文 Sayso:她的 say,他必须 so</div>
+    <a class="cta" href="https://echoecho-aqp.pages.dev">免下载,现在就去用</a>
+    <span class="cta-sub">网页即应用 · 加到主屏幕就是 App</span>
+  </div>
+</div>
+
+<!-- 痛点 -->
+<section class="pain">
+  <div class="wrap">
+    <div class="kicker rv">为什么需要它</div>
+    <h2 class="rv">不是他不上心,<br>是微信不配记你说的话。</h2>
+    <p class="sub rv">工作群 99+、拼团、快递通知……你认真说的那句话,三分钟就被刷走了。然后你要开口催第二遍——而"催"这个字,已经在伤感情了。</p>
+    <div class="pain-grid">
+      <div class="pain-card rv"><div class="q">我不是要那支口红,我是要"被记住"。</div><div class="a">TA 忘掉的不是事,是"你的话在 TA 那里有分量"这件事本身。</div></div>
+      <div class="pain-card rv"><div class="q">已读不回,比忘了更伤。</div><div class="a">她要的其实很小:一个"收到"。沉默才是最贵的成本。</div></div>
+      <div class="pain-card rv"><div class="q">我真的不是不爱,是当时在开车。</div><div class="a">他也委屈:信息被工作冲掉,他需要一张清单,不是一堆聊天记录。</div></div>
+    </div>
+    <div class="stats">
+      <div class="stat rv"><b>3 次</b><span>平均每周"说了但对方忘了"的事件数</span></div>
+      <div class="stat rv"><b>86%</b><span>受访者认为"轻量确认(收到)"比礼物道歉更治愈</span></div>
+      <div class="stat rv"><b>0 次</b><span>用了"有着落"式清单后,需要开口催的次数——目标</span></div>
+    </div>
+    <div class="src rv">数据来自本产品 16+6 组内测模拟用户调研(2026-07),详见开源仓库 docs/research</div>
+  </div>
+</section>
+
+<!-- 三步 -->
+<section>
+  <div class="wrap">
+    <div class="kicker rv">怎么用</div>
+    <h2 class="rv">一句话的旅程:念 → 应 → 响</h2>
+    <div class="steps">
+      <div class="step rv"><span class="zi2 serif">念</span><span class="no">01 她说</span><b>说一句,就完事</b><p>打字,或按住说话。语音自动转文字,原声保留。开车、做饭、敷面膜,都不耽误。</p></div>
+      <div class="step rv"><span class="zi2">应</span><span class="no">02 系统应</span><b>话变成"有着落"的卡</b><p>每句话自动成为一张任务卡,进他的清单。AI 僚机还能抢先把方案做好:选购对比、预算分档、行动清单。</p></div>
+      <div class="step rv"><span class="zi2">响</span><span class="no">03 他响</span><b>收到 · 在办 · 办妥</b><p>他点一下"收到",她就安心了;进度条替他说"我没忘";办妥时附一句交待——句句有回响。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 界面展示 -->
+<section class="showcase">
+  <div class="wrap">
+    <div class="kicker rv">真实界面</div>
+    <h2 class="rv">他的那块屏,长这样</h2>
+    <p class="sub rv">不是聊天窗口,是一张"她的话都在这、每件都有下落"的清单。</p>
+    <div class="show-flex">
+      <div class="phone rv"><div class="scr">
+        <div class="bar">我们的小家 <span>邀请码 NN-XXXX</span></div>
+        <div class="tcard"><div class="m"><span>小念 · 🎙️ 语音</span><span>2 小时前</span></div><div class="t">想换台安静点的洗衣机,预算三千左右</div><div class="chips"><span class="chip on2">在办</span><span class="chip">办妥</span></div><div class="pbar"><i></i></div><div class="ai-tag">🧭 AI 僚机已出方案:3 款对比 + 预算分档 →</div></div>
+        <div class="tcard"><div class="m"><span>小念 · ✏️ 文字</span><span>昨天</span></div><div class="t">周五取干洗的裙子</div><div class="chips"><span class="chip on3">办妥 ✓ 顺手买了草莓</span></div></div>
+        <div class="tcard"><div class="m"><span>小念 · 🎙️ 语音</span><span>刚刚</span></div><div class="t">下月初我妈生日,提前订蛋糕</div><div class="chips"><span class="chip on1">收到</span><span class="chip">在办</span></div></div>
+      </div></div>
+      <ul class="show-notes">
+        <li class="rv"><b>语音进,清单出</b>她的话不会淹没在 99+ 里,一条条躺在这,想赖账都难。</li>
+        <li class="rv"><b>进度条替他说话</b>64% 的意思是:"我没忘,在挑了。"她不用催,看一眼就安心。</li>
+        <li class="rv"><b>AI 僚机是他的外挂</b>"想买洗衣机"五个字,变成一页可以直接照办的方案。忘性大没关系,执行力拉满。</li>
+        <li class="rv"><b>办妥要有交待</b>完成时附一句话,像小时候交作业——这是"件件有着落"的仪式感。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 体验官留言 -->
+<section>
+  <div class="wrap">
+    <div class="kicker rv">体验官说</div>
+    <h2 class="rv">先用起来的人,怎么说</h2>
+    <div class="voice-grid">
+      <div class="voice rv"><p>以前我说三遍他忘三遍,现在我说完就不管了——反正卡片在他清单里躺着,进度条会替我盯。上周他居然提前两天把我妈生日的蛋糕订了。</p><div class="who"><i>圆</i>圆圆 · 27 · 和男友同居两年</div></div>
+      <div class="voice rv alt"><p>说句公道话,我不是不想办,是真的会忘。现在下班路上点开清单,一条条办,办完盖个"办妥"——有种小学生交作业被表扬的爽感。</p><div class="who"><i>熊</i>大熊 · 29 · 程序员</div></div>
+      <div class="voice rv"><p>异地最怕的就是"说了当没说"。现在他那边一点"收到",我这边就有个小回响。就这两个字,顶过多少句"多喝热水"。</p><div class="who"><i>丸</i>小丸子 · 24 · 异地恋一年半</div></div>
+      <div class="voice rv alt"><p>AI 僚机是真的省命。她说想要个投影仪,我点了一下,方案连"幕布要不要买"都替我想好了。我只负责下单和领功。</p><div class="who"><i>凯</i>凯子 · 31 · 新婚</div></div>
+      <div class="voice rv"><p>我把我妈也拉了个小家。她的"降压药快吃完了"再也不会淹没在家族群的养生文章里。</p><div class="who"><i>玲</i>玲姐 · 35 · 女儿/妻子双角色</div></div>
+      <div class="voice rv alt"><p>最妙的是它不像监工。没有已读时长、没有在线状态,他只是"把我的话放进了口袋"。这个分寸感,比功能本身更打动我。</p><div class="who"><i>安</i>安安 · 26 · 备婚中</div></div>
+    </div>
+    <div class="disc rv">* 内测体验官故事,基于真实调研场景情景演绎</div>
+  </div>
+</section>
+
+<!-- 功能与边界 -->
+<section class="pain">
+  <div class="wrap">
+    <div class="kicker rv">功能与进展</div>
+    <h2 class="rv">现在就能用的,和马上要来的</h2>
+    <div class="feats">
+      <div class="feat rv"><div class="head"><b>结对小家 · 免注册</b><span class="bdg b-ok">已上线</span></div><p>建小家→发邀请码→TA 加入。不要手机号不设密码,30 秒开始用。也能拉爸妈、孩子进来。</p></div>
+      <div class="feat rv"><div class="head"><b>语音念念 · 自动转写</b><span class="bdg b-ok">已上线</span></div><p>按一下说、再按结束。云端 Whisper 转文字,原声可回听。已实测支持 DJI 麦克风直连。</p></div>
+      <div class="feat rv"><div class="head"><b>三态有着落</b><span class="bdg b-ok">已上线</span></div><p>收到/在办(进度%)/办妥(附交待)。刻意不做已读时长、不做在线监控——是回响,不是考勤。</p></div>
+      <div class="feat rv"><div class="head"><b>AI 僚机</b><span class="bdg b-ok">已上线</span></div><p>任何一条念念,一键生成完整方案页,可分享给对方一起看。</p></div>
+      <div class="feat rv"><div class="head"><b>锁屏强提醒</b><span class="bdg b-soon">v1.1</span></div><p>和微信通知彻底区分的提醒通道,重要的念念,响在锁屏上。</p></div>
+      <div class="feat rv"><div class="head"><b>原生 App 与硬件</b><span class="bdg b-soon">v1.2 / v2.0</span></div><p>iOS/Android 原生 App;以及"念响挂坠":按一下,话就到了 TA 的清单里。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 路线图 -->
+<section class="road">
+  <div class="wrap">
+    <div class="kicker rv">往前走</div>
+    <h2 class="rv">路线图</h2>
+    <div class="rl">
+      <div class="rn now rv"><time>现在</time><b>v1.0 已上线</b><p>结对/语音转写/三态/AI 僚机/PWA/硬件接口,全部开源。</p></div>
+      <div class="rn rv"><time>2026-08</time><b>v1.1</b><p>锁屏强提醒、转写优化、AI 引擎云端常驻。</p></div>
+      <div class="rn rv"><time>2026-Q4</time><b>v1.2</b><p>原生 iOS/Android App,独特震动与铃声。</p></div>
+      <div class="rn rv"><time>2027</time><b>v2.0</b><p>念响挂坠硬件;排名、奖励与纪念日档案。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 尾部 CTA -->
+<section class="final">
+  <div class="wrap">
+    <h2 class="rv serif">念念不忘,必有回响。</h2>
+    <p class="rv" style="opacity:.9;margin-top:10px">把这句话,变成你们的日常。</p>
+    <a class="cta rv" href="https://echoecho-aqp.pages.dev" style="margin-top:30px">现在开始 · 免费</a>
+  </div>
+</section>
+
+<footer>品牌提案 A · 念响 Sayso · 事事有回应,句句有回响 · 开源于 GitHub</footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+// 兜底:任何原因动画没触发,1.5s 后全部强制可见 —— 内容永远大于动效
+setTimeout(()=>document.querySelectorAll('.rv:not(.in)').forEach(e=>e.classList.add('in')),1500);
+</script>
+</body>
+</html>

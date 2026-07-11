@@ -107,6 +107,7 @@ header .sp{font-size:19px;font-weight:700}
   <div class="tabs">
     <button data-f="all" class="on">全部</button><button data-f="mine">我发出的</button><button data-f="todo">我收到的</button>
   </div>
+  <input id="q" placeholder="搜历史念念…" style="margin-bottom:12px;padding:10px 14px;font-size:14px">
   <div id="list"></div>
 </div>
 
@@ -129,7 +130,7 @@ const auth=()=>{try{return JSON.parse(localStorage.ee_auth||'null')}catch(e){ret
 const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200)};
 const ago=ts=>{const d=Date.now()-ts;if(d<60e3)return'刚刚';if(d<3600e3)return Math.floor(d/60e3)+' 分钟前';if(d<86400e3)return Math.floor(d/3600e3)+' 小时前';return new Date(ts).toLocaleDateString('zh-CN',{month:'numeric',day:'numeric'})+'日'};
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let ME=null,MEMBERS=[],ITEMS=[],FILTER='all',lastSeen=Number(localStorage.ee_seen||0);
+let ME=null,MEMBERS=[],ITEMS=[],FILTER='all',Q='',PREV={},lastSeen=Number(localStorage.ee_seen||0);
 
 // ---------- onboarding ----------
 $('#segNew').onclick=()=>{$('#segNew').classList.add('on');$('#segJoin').classList.remove('on');$('#fNew').style.display='';$('#fJoin').style.display='none'};
@@ -162,6 +163,16 @@ async function refresh(){
   if(fresh.length&&lastSeen&&'Notification'in window&&Notification.permission==='granted')
     new Notification('念念 · '+nick(fresh[0].from_member),{body:fresh[0].text.slice(0,60)});
   if(r.items.length){lastSeen=Math.max(lastSeen,...r.items.map(i=>i.created_at));localStorage.ee_seen=lastSeen}
+  // 回响仪式:我发出的念念被办妥 → 温柔通知,不是冷冰勾选
+  for(const i of r.items){
+    if(i.from_member===ME.id&&PREV[i.id]&&PREV[i.id]!=='done'&&i.status==='done'){
+      const doer=(MEMBERS.find(m=>m.id!==ME.id)||{}).nickname||'TA';
+      const msg=`${doer} 把「${i.text.slice(0,18)}」办妥了`+(i.note?`:${i.note.slice(0,20)}`:'');
+      toast('🌸 有回响:'+msg);
+      if('Notification'in window&&Notification.permission==='granted')new Notification('🌸 有回响',{body:msg});
+    }
+    PREV[i.id]=i.status;
+  }
   ITEMS=r.items;render();
 }
 const nick=id=>(MEMBERS.find(m=>m.id===id)||{}).nickname||'TA';
@@ -172,9 +183,10 @@ function render(){
     `<div class="stat"><b>${mine.length?Math.round(done/mine.length*100)+'%':'—'}</b><span>我的念念办妥率</span></div>`+
     `<div class="stat"><b>${todo.filter(i=>i.status!=='done').length}</b><span>待我回响</span></div>`+
     `<div class="stat"><b>${ITEMS.filter(i=>i.research==='done').length}</b><span>AI 僚机方案</span></div>`;
-  const list=FILTER==='mine'?mine:FILTER==='todo'?todo:ITEMS;
+  let list=FILTER==='mine'?mine:FILTER==='todo'?todo:ITEMS;
+  if(Q)list=list.filter(i=>(i.text+(i.note||'')).toLowerCase().includes(Q));
   $('#list').innerHTML=list.length?list.map(card).join(''):
-    '<div class="empty">还没有念念。<br>说一句,让它句句有回响。</div>';
+    `<div class="empty">${Q?'没搜到「'+esc(Q)+'」相关的念念':'还没有念念。<br>说一句,让它句句有回响。'}</div>`;
 }
 function card(i){
   const isMine=i.from_member===ME.id;
@@ -200,11 +212,22 @@ function card(i){
 window.setStatus=async(id,st)=>{
   let body={status:st};
   if(st==='done'){const n=prompt('办妥啦!给 TA 留一句交待(可选):');if(n)body.note=n}
-  await API({path:'/items/'+id,m:'PATCH',body});refresh();
+  await API({path:'/items/'+id,m:'PATCH',body});
+  if(st==='done')celebrate();
+  refresh();
 };
+// 回响仪式(执行方侧):办妥的瞬间要有一点仪式感
+function celebrate(){
+  const d=document.createElement('div');
+  d.style.cssText='position:fixed;inset:0;z-index:98;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(250,246,240,.88);backdrop-filter:blur(4px);animation:fadeIn .25s';
+  d.innerHTML=`<svg width="90" height="90" viewBox="0 0 56 56"><circle cx="28" cy="28" r="8" fill="#3E8E5A"/><circle cx="28" cy="28" r="16" fill="none" stroke="#3E8E5A" stroke-width="2.5" opacity=".45"><animate attributeName="r" from="10" to="24" dur="1s" repeatCount="2"/><animate attributeName="opacity" from=".6" to="0" dur="1s" repeatCount="2"/></circle></svg>
+  <div style="font-size:22px;font-weight:700;margin-top:14px">办妥 ✓</div>
+  <div style="font-size:14px;color:#8a7d6e;margin-top:6px">你做到了。TA 那边,已经有回响了。</div>`;
+  document.body.appendChild(d);setTimeout(()=>d.remove(),1900);
+}
 window.setProgress=async(id,v)=>{await API({path:'/items/'+id,m:'PATCH',body:{progress:Number(v),status:'doing'}});refresh()};
 window.wantResearch=async id=>{await API({path:'/items/'+id,m:'PATCH',body:{research:'wanted'}});toast('已叫 AI 僚机,出方案后自动出现');refresh()};
-window.openPage=async id=>{const r=await API({path:'/page/'+id,raw:true});const h=await r.text();const w=open('about:blank');w.document.write(h);w.document.close()};
+window.openPage=async id=>{const r=await API({path:'/items/'+id+'/sharelink'});if(r.url)open(r.url);else toast(r.error||'方案还没好')};
 window.playVoice=async(k,btn)=>{btn.textContent='…';const r=await API({path:'/audio/'+k,raw:true});const b=await r.blob();new Audio(URL.createObjectURL(b)).play();btn.textContent='▶ 听原声'};
 
 // ---------- 发送 ----------
@@ -228,6 +251,7 @@ $('#mic').onclick=async()=>{
     rec.start();$('#mic').classList.add('rec');toast('录音中,再点一下结束');
   }catch(e){toast('需要麦克风权限')}
 };
+$('#q').oninput=e=>{Q=e.target.value.trim().toLowerCase();render()};
 // tabs
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));

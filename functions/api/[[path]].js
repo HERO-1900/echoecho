@@ -25,6 +25,22 @@ async function transcribe(env, buf) {
   return (res && res.text || '').trim();
 }
 
+// 方案页分享签名:HMAC(ENGINE_TOKEN, 'pub:'+id) 前 8 字节 hex —— 无需改表即可生成不可猜的公开链接
+async function pubSig(env, id) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(env.ENGINE_TOKEN), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode('pub:' + id));
+  return [...new Uint8Array(mac)].slice(0, 8).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+// 底部工具条:返回主界面 + 系统分享/复制链接
+const PAGE_BAR = `
+<div style="position:fixed;left:0;right:0;bottom:0;z-index:9999;background:rgba(44,58,66,.94);backdrop-filter:blur(8px);display:flex;gap:12px;justify-content:center;align-items:center;padding:10px 16px calc(env(safe-area-inset-bottom) + 10px)">
+  <a href="/" style="color:#fff;text-decoration:none;font-size:14px;padding:9px 22px;border:1px solid rgba(255,255,255,.45);border-radius:99px">← 回到主界面</a>
+  <button onclick="navigator.share?navigator.share({title:document.title,url:location.href}):navigator.clipboard.writeText(location.href).then(()=>this.textContent='链接已复制 ✓')" style="background:#E8604C;color:#fff;border:0;font-size:14px;font-weight:600;padding:10px 24px;border-radius:99px;cursor:pointer">分享这份方案</button>
+  <button id="ee-echo-btn" style="display:none;background:#fff;color:#E8604C;border:0;font-size:14px;font-weight:600;padding:10px 24px;border-radius:99px;cursor:pointer">回响给 TA:就按这个来</button>
+</div><div style="height:74px"></div>
+<script>(function(){try{var a=JSON.parse(localStorage.ee_auth||'null');if(!a||!a.token)return;var b=document.getElementById('ee-echo-btn');b.style.display='inline-block';b.onclick=function(){b.disabled=true;fetch('/api/items',{method:'POST',headers:{'content-type':'application/json',authorization:'Bearer '+a.token},body:JSON.stringify({text:'📎 方案我看完了,就按这个来 → '+document.title+' '+location.href})}).then(function(r){return r.json()}).then(function(j){b.textContent=j.ok?'已回响给 TA ✓':'发送失败,再试一次';b.disabled=false})}}catch(e){}})()</script>`;
+const withBar = html => /<\/body>/i.test(html) ? html.replace(/<\/body>/i, PAGE_BAR + '</body>') : html + PAGE_BAR;
+
 async function createItem(env, { space_id, from_member, kind, text, audio_key }) {
   const id = uid(), now = Date.now();
   await env.DB.prepare(
@@ -118,6 +134,15 @@ export async function onRequest({ request, env, params }) {
       return J({ ok: true, id, transcript: text });
     }
 
+    // ---------- 方案页公开分享(签名链接,无需登录)----------
+    const mPub = path.match(/^\/pub\/([a-z0-9]+)\/([a-f0-9]{16})$/);
+    if (mPub && method === 'GET') {
+      if (mPub[2] !== await pubSig(env, mPub[1])) return J({ error: 'bad link' }, 403);
+      const it = await env.DB.prepare('SELECT research_html FROM ee_items WHERE id=?').bind(mPub[1]).first();
+      if (!it || !it.research_html) return J({ error: 'not ready' }, 404);
+      return new Response(withBar(it.research_html), { headers: { 'content-type': 'text/html; charset=utf-8' } });
+    }
+
     // ---------- 以下都要成员登录 ----------
     const me = await auth(env, request);
     if (!me) return J({ error: 'unauthorized' }, 401);
@@ -176,11 +201,17 @@ export async function onRequest({ request, env, params }) {
       return new Response(obj.body, { headers: { 'content-type': obj.httpMetadata?.contentType || 'audio/webm' } });
     }
 
-    const mPage = path.match(/^\/page\/([a-z0-9]+)$/); // AI 僚机方案页
+    const mPage = path.match(/^\/page\/([a-z0-9]+)$/); // AI 僚机方案页(登录态,同样带工具条)
     if (mPage && method === 'GET') {
       const it = await env.DB.prepare('SELECT research_html FROM ee_items WHERE id=? AND space_id=?').bind(mPage[1], me.space_id).first();
       if (!it || !it.research_html) return J({ error: 'not ready' }, 404);
-      return new Response(it.research_html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
+      return new Response(withBar(it.research_html), { headers: { 'content-type': 'text/html; charset=utf-8' } });
+    }
+    const mLink = path.match(/^\/items\/([a-z0-9]+)\/sharelink$/); // 拿本条方案的公开分享链接
+    if (mLink && method === 'GET') {
+      const it = await env.DB.prepare('SELECT id FROM ee_items WHERE id=? AND space_id=?').bind(mLink[1], me.space_id).first();
+      if (!it) return J({ error: 'not found' }, 404);
+      return J({ url: new URL(request.url).origin + '/api/pub/' + it.id + '/' + await pubSig(env, it.id) });
     }
 
     if (path === '/devices' && method === 'POST') {
