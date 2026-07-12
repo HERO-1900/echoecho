@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>爸妈听话 OKParents · 小时候你教我听话,现在换我啰嗦你</title>
+<meta name="description" content="双向家庭备忘录:子女说一句,爸妈端变成一天三顿的大字提醒卡;爸妈的念叨,也在子女端有着落。不监控、不居高临下,只是把牵挂说得理直气壮。">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+/* ============ RESET & TOKENS ============ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F6EFDD;            /* 米黄 · 老信纸 */
+  --cream-deep:#EFE5CC;
+  --paper:#FDFAF2;
+  --date:#9E3B33;             /* 枣红 */
+  --date-deep:#7E2C26;
+  --date-mist:rgba(158,59,51,.09);
+  --pine:#2F4B3C;             /* 墨绿 */
+  --pine-deep:#24392E;
+  --pine-mist:rgba(47,75,60,.09);
+  --ink:#33302A;
+  --ink-70:rgba(51,48,42,.72);
+  --ink-50:rgba(51,48,42,.5);
+  --ink-14:rgba(51,48,42,.14);
+  --gold:#C8973E;
+  --radius-lg:22px;
+  --radius-md:16px;
+  --radius-sm:10px;
+  --shadow-card:0 6px 22px rgba(64,52,34,.09),0 2px 6px rgba(64,52,34,.06);
+  --shadow-pop:0 18px 44px rgba(126,44,38,.15),0 4px 12px rgba(64,52,34,.08);
+  --font:"PingFang SC","Hiragino Sans GB","Source Han Sans SC","Noto Sans CJK SC","Microsoft YaHei",-apple-system,sans-serif;
+  --font-display:"Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC","SimSun",serif;
+  --font-kai:"Kaiti SC","STKaiti","KaiTi","Songti SC",serif;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font);
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+section{position:relative}
+strong{font-weight:700}
+
+/* 毛线纹理:极淡斜纹,盖在米黄底上 */
+.knit{position:relative}
+.knit::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(45deg,rgba(51,48,42,.028) 0 2px,transparent 2px 9px);
+}
+.knit>*{position:relative;z-index:1}
+
+/* ============ REVEAL(渐现)============ */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  *{animation-duration:.01s!important;animation-iteration-count:1!important}
+}
+
+/* ============ HEADER ============ */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(246,239,221,.88);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--ink-14);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:1px}
+.brand svg{width:34px;height:34px;flex:none}
+.brand .en{display:block;font-size:10px;font-weight:600;color:var(--ink-50);letter-spacing:2.2px;line-height:1.3;text-transform:uppercase}
+.brand-txt{line-height:1.2;font-family:var(--font-display)}
+.nav-cta{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--date);color:var(--paper);
+  padding:9px 18px;border-radius:999px;
+  font-size:14px;font-weight:600;letter-spacing:.5px;
+  transition:transform .25s,box-shadow .25s,background .25s;
+  box-shadow:0 3px 10px rgba(158,59,51,.3);
+}
+.nav-cta:hover{transform:translateY(-2px);background:var(--date-deep);box-shadow:0 8px 20px rgba(158,59,51,.36)}
+
+/* ============ HERO ============ */
+.hero{padding:60px 0 52px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px;font-weight:600;letter-spacing:2.4px;color:var(--pine);
+  border:1.5px solid rgba(47,75,60,.35);border-radius:999px;
+  padding:6px 16px;margin-bottom:24px;background:rgba(253,250,242,.6);
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--date)}
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(34px,7.4vw,58px);
+  line-height:1.34;font-weight:900;letter-spacing:2px;
+}
+.hero h1 .muted{color:var(--ink-50);font-size:.72em;font-weight:700;display:block;margin-bottom:10px;letter-spacing:3px}
+.hero h1 .accent{color:var(--date);position:relative;display:inline-block}
+.hero h1 .accent::after{
+  content:"";position:absolute;left:1px;right:1px;bottom:6px;height:.24em;
+  background:rgba(200,151,62,.32);z-index:-1;border-radius:3px;
+}
+.hero-sub{margin-top:22px;font-size:clamp(15px,2.4vw,17.5px);color:var(--ink-70);max-width:520px}
+.hero-sub b{color:var(--date-deep);font-weight:700}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+.btn-main{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--date);color:var(--paper);
+  padding:14px 28px;border-radius:999px;
+  font-size:16px;font-weight:700;letter-spacing:1px;
+  box-shadow:var(--shadow-pop);
+  transition:transform .25s,box-shadow .25s,background .25s;
+}
+.btn-main:hover{transform:translateY(-3px);background:var(--date-deep)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid rgba(47,75,60,.4);color:var(--pine);
+  padding:13px 24px;border-radius:999px;font-size:15px;font-weight:600;
+  transition:background .25s,transform .25s;background:rgba(253,250,242,.5);
+}
+.btn-ghost:hover{background:var(--pine-mist);transform:translateY(-2px)}
+
+/* HERO 视觉:老挂历卡 */
+.hero-visual{position:relative;max-width:420px;margin:0 auto;width:100%}
+.calendar{
+  background:var(--paper);border-radius:var(--radius-md);
+  box-shadow:var(--shadow-pop);overflow:hidden;
+  border:1px solid var(--ink-14);
+  transform:rotate(-1.4deg);
+}
+.calendar-rings{display:flex;justify-content:center;gap:38px;padding:12px 0 0;background:var(--date)}
+.calendar-rings i{width:10px;height:22px;border:3px solid #E8D9B8;border-radius:6px;display:block;background:transparent;margin-top:-14px}
+.calendar-head{
+  background:var(--date);color:#F6E8D2;text-align:center;
+  padding:6px 16px 14px;font-family:var(--font-display);
+  letter-spacing:4px;font-weight:800;font-size:15px;
+}
+.calendar-head small{display:block;font-family:var(--font);font-size:10px;letter-spacing:3px;opacity:.75;margin-top:2px}
+.calendar-body{padding:24px 24px 20px;text-align:center}
+.calendar-date{font-family:var(--font-display);font-size:64px;font-weight:900;line-height:1;color:var(--ink)}
+.calendar-week{font-size:13px;letter-spacing:4px;color:var(--ink-50);margin-top:6px}
+.calendar-note{
+  margin:18px auto 0;max-width:280px;
+  background:var(--cream);border:1.5px dashed rgba(158,59,51,.45);
+  border-radius:var(--radius-sm);padding:14px 16px;
+  font-family:var(--font-kai);font-size:19px;line-height:1.6;color:var(--date-deep);
+}
+.calendar-note small{display:block;font-family:var(--font);font-size:11.5px;color:var(--ink-50);margin-top:6px;letter-spacing:1px}
+.calendar-foot{display:flex;align-items:center;justify-content:center;gap:8px;padding:0 0 22px;color:var(--pine);font-size:12.5px;letter-spacing:2px}
+.hero-cup{position:absolute;right:-14px;bottom:-30px;width:110px;transform:rotate(4deg);filter:drop-shadow(0 10px 18px rgba(64,52,34,.18))}
+.hero-yarn{position:absolute;left:-26px;top:-24px;width:76px;transform:rotate(-14deg);opacity:.9}
+
+/* ============ 命名定稿 ============ */
+.naming{padding:26px 0 64px}
+.naming-card{
+  background:var(--paper);border:1px solid var(--ink-14);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);padding:30px 26px;
+  display:grid;grid-template-columns:1fr;gap:22px;
+}
+.naming-main .tag{
+  display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;
+  letter-spacing:2.5px;color:var(--paper);background:var(--pine);
+  padding:4px 12px;border-radius:999px;margin-bottom:14px;
+}
+.naming-name{font-family:var(--font-display);font-size:clamp(30px,5.5vw,40px);font-weight:900;letter-spacing:4px;line-height:1.3}
+.naming-name .en{font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:3px;color:var(--gold);display:block;margin-top:4px}
+.naming-line{margin-top:12px;color:var(--ink-70);font-size:15px;max-width:480px}
+.naming-line b{color:var(--date-deep)}
+.naming-side{border-top:1.5px dashed var(--ink-14);padding-top:18px}
+.naming-side h4{font-size:12.5px;letter-spacing:2.5px;color:var(--ink-50);font-weight:700;margin-bottom:12px}
+.alt{display:flex;align-items:baseline;gap:10px;padding:7px 0;font-size:14.5px;color:var(--ink-70)}
+.alt .n{font-family:var(--font-display);font-weight:800;letter-spacing:2px;color:var(--ink);text-decoration:line-through;text-decoration-color:rgba(158,59,51,.55);text-decoration-thickness:2px}
+.alt .why{font-size:13px;color:var(--ink-50)}
+.naming-vow{
+  margin-top:16px;background:var(--date-mist);border-radius:var(--radius-sm);
+  padding:12px 16px;font-family:var(--font-kai);font-size:16.5px;color:var(--date-deep);line-height:1.65;
+}
+
+/* ============ 通用 SECTION 标题 ============ */
+.sec-head{text-align:center;margin-bottom:44px}
+.sec-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
+  letter-spacing:3px;color:var(--date);margin-bottom:14px;
+}
+.sec-eyebrow::before,.sec-eyebrow::after{content:"";width:26px;height:1.5px;background:rgba(158,59,51,.4)}
+.sec-head h2{font-family:var(--font-display);font-size:clamp(26px,5vw,38px);font-weight:900;letter-spacing:2px;line-height:1.4}
+.sec-head p{margin-top:12px;color:var(--ink-70);font-size:15.5px;max-width:560px;margin-left:auto;margin-right:auto}
+
+/* ============ 场景四格 ============ */
+.scenes{padding:64px 0 72px}
+.scene-grid{display:grid;grid-template-columns:1fr;gap:18px}
+.scene{
+  background:var(--paper);border:1px solid var(--ink-14);border-radius:var(--radius-lg);
+  padding:26px 24px;box-shadow:var(--shadow-card);
+  transition:transform .3s,box-shadow .3s;
+}
+.scene:hover{transform:translateY(-4px);box-shadow:var(--shadow-pop)}
+.scene .icon{
+  width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;
+}
+.scene .icon svg{width:30px;height:30px}
+.scene .icon.red{background:var(--date-mist)}
+.scene .icon.green{background:var(--pine-mist)}
+.scene h3{font-family:var(--font-display);font-size:20px;font-weight:800;letter-spacing:1px;margin-bottom:8px}
+.scene .num{font-family:var(--font-display);font-size:13px;color:var(--gold);font-weight:800;letter-spacing:2px;display:block;margin-bottom:6px}
+.scene p{font-size:14.5px;color:var(--ink-70)}
+.scene .say{
+  margin-top:14px;background:var(--cream);border-radius:var(--radius-sm);
+  padding:10px 14px;font-family:var(--font-kai);font-size:15.5px;color:var(--ink);
+  border-left:3px solid var(--date);
+}
+.scene .say small{display:block;font-family:var(--font);font-size:11.5px;color:var(--ink-50);margin-top:4px;letter-spacing:1px}
+
+/* ============ 双端对比(核心)============ */
+.duo{padding:72px 0 80px;background:var(--cream-deep)}
+.duo-grid{display:grid;grid-template-columns:1fr;gap:52px;align-items:start}
+.duo-col{text-align:center}
+.duo-label{
+  display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;
+  font-size:13px;font-weight:700;letter-spacing:2.5px;padding:7px 18px;border-radius:999px;
+}
+.duo-label.parent{background:var(--date);color:#F6E8D2}
+.duo-label.child{background:var(--pine);color:#DDEAE0}
+.duo-desc{font-size:14px;color:var(--ink-70);max-width:340px;margin:18px auto 0}
+
+/* 手机壳(通用) */
+.phone{
+  width:100%;max-width:330px;margin:0 auto;
+  background:#2B2620;border-radius:44px;padding:12px;
+  box-shadow:0 24px 56px rgba(43,38,32,.28),0 6px 16px rgba(43,38,32,.18);
+  text-align:left;
+}
+.screen{border-radius:34px;overflow:hidden;position:relative}
+.statusbar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px 6px;font-size:12px;font-weight:600;letter-spacing:.5px}
+
+/* —— 父母端:真适老 —— */
+.p-screen{background:#FFFDF6;color:#26221B}
+.p-screen .statusbar{font-size:15px;font-weight:700;color:#26221B}
+.p-body{padding:10px 18px 18px}
+.p-step{font-size:17px;font-weight:700;color:var(--pine);letter-spacing:1px;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.p-step i{width:10px;height:10px;border-radius:50%;background:var(--pine);display:block}
+.p-card{
+  background:#FFF;border:2.5px solid #26221B;border-radius:18px;
+  padding:20px 18px;box-shadow:0 4px 0 #26221B;
+}
+.p-card .from{font-size:16px;color:#5A5348;margin-bottom:8px;font-weight:600}
+.p-card .big{font-family:var(--font-display);font-size:31px;font-weight:900;line-height:1.35;letter-spacing:1px}
+.p-card .big em{font-style:normal;color:var(--date)}
+.p-card .hint{font-size:16.5px;color:#5A5348;margin-top:10px;line-height:1.5}
+.p-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--pine);color:#FFF;border-radius:16px;
+  font-size:23px;font-weight:800;letter-spacing:2px;
+  padding:17px 10px;margin-top:16px;box-shadow:0 4px 0 var(--pine-deep);
+}
+.p-btn svg{width:24px;height:24px}
+.p-later{text-align:center;font-size:16.5px;color:#5A5348;padding:13px 0 4px;text-decoration:underline;text-underline-offset:4px}
+.p-voice{
+  margin:14px auto 4px;width:104px;height:104px;border-radius:50%;
+  background:var(--date);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  color:#FFF;font-size:15px;font-weight:700;letter-spacing:2px;
+  box-shadow:0 5px 0 var(--date-deep),0 14px 26px rgba(158,59,51,.35);
+  position:relative;
+}
+.p-voice svg{width:32px;height:32px}
+.p-voice::after{
+  content:"";position:absolute;inset:-9px;border-radius:50%;
+  border:2.5px solid rgba(158,59,51,.4);animation:voicePulse 2.2s ease-out infinite;
+}
+@keyframes voicePulse{0%{transform:scale(.92);opacity:.9}70%{transform:scale(1.12);opacity:0}100%{opacity:0}}
+.p-voice-hint{text-align:center;font-size:15px;color:#5A5348;padding-bottom:14px;margin-top:8px}
+
+/* —— 子女端:现代 —— */
+.c-screen{background:#FAF8F4;color:#2E2A24}
+.c-screen .statusbar{color:#2E2A24}
+.c-body{padding:8px 14px 16px}
+.c-title{font-size:17px;font-weight:800;padding:4px 4px 10px;display:flex;align-items:center;justify-content:space-between}
+.c-title .chip{font-size:11px;font-weight:700;color:var(--pine);background:var(--pine-mist);border-radius:999px;padding:3px 10px;letter-spacing:1px}
+.c-row{
+  display:flex;align-items:flex-start;gap:10px;background:#FFF;border-radius:14px;
+  padding:12px 13px;margin-bottom:9px;box-shadow:0 1px 4px rgba(46,42,36,.07);
+  font-size:13px;
+}
+.c-row .st{width:22px;height:22px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.c-row .st.ok{background:var(--pine)}
+.c-row .st.ok svg{width:12px;height:12px}
+.c-row .st.wait{border:2px dashed rgba(46,42,36,.35)}
+.c-row b{font-size:13.5px;display:block}
+.c-row .meta{font-size:11.5px;color:rgba(46,42,36,.55);margin-top:2px}
+.c-task{
+  background:linear-gradient(135deg,#FFF,#FBF3EA);border:1.5px solid rgba(158,59,51,.3);
+  border-radius:14px;padding:13px;margin:12px 0 9px;
+}
+.c-task .from{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;color:var(--date);letter-spacing:1px;margin-bottom:7px}
+.c-task .from i{width:7px;height:7px;border-radius:50%;background:var(--date);display:block}
+.c-task .kai{font-family:var(--font-kai);font-size:16px;line-height:1.55}
+.c-task .act{
+  margin-top:10px;display:inline-flex;align-items:center;gap:6px;
+  background:var(--date);color:#FFF;font-size:12px;font-weight:700;
+  border-radius:999px;padding:6px 14px;letter-spacing:1px;
+}
+.c-quiet{
+  display:flex;gap:9px;align-items:center;background:rgba(200,151,62,.14);
+  border-radius:12px;padding:10px 12px;font-size:12px;color:#7A5D25;line-height:1.5;
+}
+.c-quiet svg{width:18px;height:18px;flex:none}
+
+/* 适老标注 */
+.callouts{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:20px;max-width:340px;margin-left:auto;margin-right:auto}
+.callout{
+  font-size:12px;font-weight:700;letter-spacing:1px;color:var(--date-deep);
+  background:var(--paper);border:1.5px dashed rgba(158,59,51,.45);
+  border-radius:999px;padding:5px 13px;
+}
+.callout.g{color:var(--pine);border-color:rgba(47,75,60,.45)}
+.duo-vs{
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:900;font-size:17px;letter-spacing:2px;color:var(--ink-50);
+}
+.duo-vs span{
+  width:56px;height:56px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink-14);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);
+}
+
+/* ============ 特调功能 ============ */
+.features{padding:72px 0}
+.feat-grid{display:grid;grid-template-columns:1fr;gap:18px}
+.feat{
+  background:var(--paper);border:1px solid var(--ink-14);border-radius:var(--radius-lg);
+  padding:26px 24px;box-shadow:var(--shadow-card);
+}
+.feat h3{font-family:var(--font-display);font-size:19px;font-weight:800;letter-spacing:1px;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.feat h3 svg{width:26px;height:26px;flex:none}
+.feat p{font-size:14.5px;color:var(--ink-70)}
+.feat .demo{
+  margin-top:14px;border-radius:var(--radius-sm);overflow:hidden;
+  border:1px solid var(--ink-14);font-size:13.5px;
+}
+.feat .demo .row{padding:11px 14px;line-height:1.6}
+.feat .demo .row.doc{background:var(--cream);color:var(--ink-70);font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+.feat .demo .row.plain{background:#FFF;font-family:var(--font-kai);font-size:16px;color:var(--pine-deep)}
+.feat .demo .row small{display:block;font-family:var(--font);font-size:10.5px;letter-spacing:2px;color:var(--ink-50);margin-bottom:4px}
+
+/* ============ 安全与隐私(墨绿暗段)============ */
+.privacy{padding:76px 0;background:var(--pine-deep);color:#EAE6D8}
+.privacy::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0 2px,transparent 2px 10px);
+}
+.privacy .wrap{position:relative}
+.privacy .sec-eyebrow{color:var(--gold)}
+.privacy .sec-eyebrow::before,.privacy .sec-eyebrow::after{background:rgba(200,151,62,.5)}
+.privacy .sec-head h2{color:#F6EFDD}
+.privacy .sec-head p{color:rgba(234,230,216,.75)}
+.priv-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:8px}
+.priv{
+  background:rgba(255,255,255,.05);border:1px solid rgba(234,230,216,.16);
+  border-radius:var(--radius-md);padding:22px 22px;
+}
+.priv .no{
+  font-family:var(--font-display);font-size:22px;font-weight:900;letter-spacing:2px;
+  display:flex;align-items:center;gap:10px;margin-bottom:8px;
+}
+.priv .no .x{
+  width:30px;height:30px;border-radius:50%;flex:none;
+  border:2px solid rgba(234,230,216,.5);display:flex;align-items:center;justify-content:center;
+}
+.priv .no .x svg{width:14px;height:14px}
+.priv p{font-size:14px;color:rgba(234,230,216,.72)}
+.priv.only{background:rgba(200,151,62,.13);border-color:rgba(200,151,62,.4)}
+.priv.only .no .x{border-color:var(--gold);background:var(--gold)}
+.priv.only .no{color:#F2D9A4}
+.priv-note{
+  margin-top:26px;text-align:center;font-family:var(--font-kai);
+  font-size:clamp(17px,3vw,21px);color:#F6EFDD;line-height:1.8;
+}
+.priv-note small{display:block;font-family:var(--font);font-size:12px;color:rgba(234,230,216,.55);letter-spacing:2px;margin-top:8px}
+
+/* ============ 体验官留言 ============ */
+.voices{padding:72px 0}
+.voice-grid{display:grid;grid-template-columns:1fr;gap:18px}
+.voice{
+  background:var(--paper);border:1px solid var(--ink-14);border-radius:var(--radius-lg);
+  padding:26px 24px;box-shadow:var(--shadow-card);position:relative;
+}
+.voice::before{
+  content:"„";font-family:var(--font-display);font-size:64px;line-height:.4;
+  color:rgba(158,59,51,.25);position:absolute;top:26px;left:22px;
+}
+.voice p{font-family:var(--font-kai);font-size:17.5px;line-height:1.85;padding-top:18px}
+.voice .who{margin-top:16px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-50)}
+.voice .who i{
+  width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:900;font-size:15px;font-style:normal;
+}
+.voice .who i.r{background:var(--date-mist);color:var(--date)}
+.voice .who i.g{background:var(--pine-mist);color:var(--pine)}
+.voice.parent{background:linear-gradient(160deg,#FDFAF2,#F9F0DE);border:1.5px solid rgba(200,151,62,.45)}
+.voice .badge{
+  position:absolute;top:-11px;right:18px;background:var(--gold);color:#FFF;
+  font-size:11px;font-weight:700;letter-spacing:2px;border-radius:999px;padding:4px 12px;
+}
+
+/* ============ 路线图 ============ */
+.roadmap{padding:72px 0 80px;background:var(--cream-deep)}
+.road-grid{display:grid;grid-template-columns:1fr;gap:18px}
+.road{
+  background:var(--paper);border:1px solid var(--ink-14);border-radius:var(--radius-lg);
+  padding:26px 24px;box-shadow:var(--shadow-card);text-align:center;
+}
+.road .stage{
+  display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:2.5px;
+  color:var(--pine);background:var(--pine-mist);border-radius:999px;padding:4px 14px;margin-bottom:16px;
+}
+.road .art{width:120px;height:96px;margin:0 auto 14px}
+.road h3{font-family:var(--font-display);font-size:19px;font-weight:800;letter-spacing:1px;margin-bottom:8px}
+.road p{font-size:14px;color:var(--ink-70)}
+.road.now .stage{color:var(--date);background:var(--date-mist)}
+
+/* ============ FINAL CTA ============ */
+.final{padding:84px 0 76px;background:var(--date-deep);color:#F6E8D2;text-align:center;overflow:hidden}
+.final::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 2px,transparent 2px 10px);
+}
+.final .wrap{position:relative}
+.final-stamp{
+  width:96px;height:96px;margin:0 auto 26px;border:3px solid rgba(246,232,210,.75);
+  border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:var(--font-kai);font-size:20px;line-height:1.35;letter-spacing:2px;
+  transform:rotate(-8deg);color:#F6E8D2;
+}
+.final-stamp small{font-size:9px;font-family:var(--font);letter-spacing:2px;opacity:.7}
+.final h2{font-family:var(--font-display);font-size:clamp(28px,5.6vw,44px);font-weight:900;letter-spacing:3px;line-height:1.5}
+.final h2 .accent{color:#F2C879}
+.final p{margin:18px auto 0;max-width:460px;font-size:15.5px;color:rgba(246,232,210,.8)}
+.final .btn-main{background:#F6E8D2;color:var(--date-deep);margin-top:34px;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+.final .btn-main:hover{background:#FFF}
+
+/* ============ FOOTER ============ */
+footer{background:#241E18;color:rgba(240,232,214,.62);padding:36px 0 44px;font-size:12.5px;line-height:1.9}
+.foot-inner{display:flex;flex-direction:column;gap:16px}
+.foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;font-size:16px;letter-spacing:2px;color:#F0E8D6}
+.foot-brand svg{width:28px;height:28px}
+.foot-meta a{text-decoration:underline;text-underline-offset:3px}
+
+/* ============ 响应式 ============ */
+@media (min-width:760px){
+  .hero{padding:84px 0 72px}
+  .hero-grid{grid-template-columns:1.08fr .92fr;gap:56px}
+  .naming-card{grid-template-columns:1.2fr 1fr;gap:36px;padding:38px 40px}
+  .naming-side{border-top:0;border-left:1.5px dashed var(--ink-14);padding-top:0;padding-left:32px}
+  .scene-grid{grid-template-columns:1fr 1fr}
+  .duo-grid{grid-template-columns:1fr auto 1fr;gap:24px}
+  .duo-vs{padding-top:210px}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .priv-grid{grid-template-columns:1fr 1fr 1fr 1fr}
+  .voice-grid{grid-template-columns:1fr 1fr 1fr}
+  .road-grid{grid-template-columns:1fr 1fr 1fr}
+}
+@media (max-width:759px){
+  .duo-vs{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ====== 共享 SVG 符号:搪瓷杯 / 毛线球 / 图标 ====== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- 搪瓷杯:白杯枣红口沿 + 墨绿小花点 -->
+    <symbol id="cup" viewBox="0 0 100 100">
+      <path d="M22 30h48v42a8 8 0 0 1-8 8H30a8 8 0 0 1-8-8V30z" fill="#FDFAF2" stroke="#33302A" stroke-width="3.5"/>
+      <path d="M20 30h52" stroke="#9E3B33" stroke-width="7" stroke-linecap="round"/>
+      <path d="M70 40h8a9 9 0 0 1 0 18h-8" fill="none" stroke="#33302A" stroke-width="3.5"/>
+      <circle cx="40" cy="52" r="5" fill="#9E3B33"/>
+      <circle cx="52" cy="60" r="3.4" fill="#2F4B3C"/>
+      <path d="M40 44v-3M40 63v-3M32 52h-3M51 52h-3" stroke="#2F4B3C" stroke-width="2.6" stroke-linecap="round"/>
+    </symbol>
+    <!-- 毛线球 + 针 -->
+    <symbol id="yarn" viewBox="0 0 100 100">
+      <circle cx="46" cy="56" r="26" fill="#9E3B33"/>
+      <path d="M24 50c10-8 32-8 44 0M26 66c12-8 28-8 40 0M38 32c-6 10-6 34 2 48M56 32c8 10 8 34 0 48" fill="none" stroke="#F6EFDD" stroke-width="2.6" stroke-linecap="round" opacity=".75"/>
+      <path d="M20 88 78 22M34 92 88 34" stroke="#2F4B3C" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="78" cy="22" r="5" fill="#2F4B3C"/><circle cx="88" cy="34" r="5" fill="#2F4B3C"/>
+    </symbol>
+    <!-- 药片 -->
+    <symbol id="icoPill" viewBox="0 0 48 48">
+      <rect x="6" y="16" width="36" height="16" rx="8" fill="none" stroke="#9E3B33" stroke-width="3.4"/>
+      <path d="M24 16v16" stroke="#9E3B33" stroke-width="3.4"/>
+      <path d="M11 24h6M31 21l4 6" stroke="#9E3B33" stroke-width="2.6" stroke-linecap="round"/>
+    </symbol>
+    <!-- 挂历/复诊 -->
+    <symbol id="icoCal" viewBox="0 0 48 48">
+      <rect x="8" y="10" width="32" height="30" rx="5" fill="none" stroke="#2F4B3C" stroke-width="3.4"/>
+      <path d="M8 20h32M17 5v9M31 5v9" stroke="#2F4B3C" stroke-width="3.4" stroke-linecap="round"/>
+      <circle cx="18" cy="29" r="3.2" fill="#9E3B33"/>
+      <path d="M26 29h8M18 35h16" stroke="#2F4B3C" stroke-width="2.6" stroke-linecap="round"/>
+    </symbol>
+    <!-- 糕点(反向念叨) -->
+    <symbol id="icoCake" viewBox="0 0 48 48">
+      <path d="M10 26h28v10a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6V26z" fill="none" stroke="#9E3B33" stroke-width="3.4"/>
+      <path d="M10 26c3-8 25-8 28 0" fill="none" stroke="#9E3B33" stroke-width="3.4" stroke-linecap="round"/>
+      <path d="M24 12v6" stroke="#2F4B3C" stroke-width="3.2" stroke-linecap="round"/>
+      <circle cx="24" cy="10" r="2.6" fill="#C8973E"/>
+      <path d="M17 33h14" stroke="#C8973E" stroke-width="2.8" stroke-linecap="round"/>
+    </symbol>
+    <!-- 电话(异常安静) -->
+    <symbol id="icoPhone" viewBox="0 0 48 48">
+      <path d="M14 8c3 0 6 5 6 8 0 2.4-3 3.6-3 6 0 4 5 9 9 9 2.4 0 3.6-3 6-3 3 0 8 3 8 6s-4 7-8 7C18 41 7 30 7 16c0-4 4-8 7-8z" fill="none" stroke="#2F4B3C" stroke-width="3.4" stroke-linejoin="round"/>
+      <path d="M30 9c5 1 8 4 9 9" stroke="#9E3B33" stroke-width="3" stroke-linecap="round"/>
+      <path d="M31 16c2.4.6 4 2.2 4.6 4.6" stroke="#9E3B33" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <!-- 对勾 -->
+    <symbol id="icoCheck" viewBox="0 0 24 24">
+      <path d="M4.5 12.5 10 18 19.5 6.5" fill="none" stroke="#FFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <!-- 话筒 -->
+    <symbol id="icoMic" viewBox="0 0 24 24">
+      <rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="#FFF" stroke-width="2.2"/>
+      <path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M8.5 21.5h7" fill="none" stroke="#FFF" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <!-- 铃/提醒 -->
+    <symbol id="icoBell" viewBox="0 0 24 24">
+      <path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2.5H4L6 16z" fill="none" stroke="#7A5D25" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M10 21a2 2 0 0 0 4 0" fill="none" stroke="#7A5D25" stroke-width="2"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ====== HEADER ====== -->
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 100 100"><use href="#cup"/></svg>
+      <span class="brand-txt">爸妈听话<span class="en">OKParents · 提案 E</span></span>
+    </a>
+    <a class="nav-cta" href="https://echoecho-aqp.pages.dev" target="_blank" rel="noopener">先啰嗦一句试试</a>
+  </div>
+</header>
+
+<!-- ====== HERO ====== -->
+<section class="hero knit" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow reveal"><span class="dot"></span>品牌提案 E · 关怀系列 · 双向家庭备忘录</span>
+        <h1 class="reveal" style="transition-delay:.06s">
+          <span class="muted">小时候,你教我听话。</span>
+          现在,换<span class="accent">我啰嗦你</span>。
+        </h1>
+        <p class="hero-sub reveal" style="transition-delay:.12s">
+          你随口说一句「妈,记得吃降压药」,她的手机上,就多了一张<b>一天三顿的大字提醒卡</b>。
+          她念叨一句「想吃你上次买的那个糕」,你这边,就多了一张待办卡。<br>
+          <b>牵挂第一次变成了双向的、有着落的东西。</b>
+        </p>
+        <div class="hero-ctas reveal" style="transition-delay:.18s">
+          <a class="btn-main" href="https://echoecho-aqp.pages.dev" target="_blank" rel="noopener">免下载 · 现在就啰嗦一句</a>
+          <a class="btn-ghost" href="#duo">看看爸妈那头长什么样 ↓</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal" style="transition-delay:.2s">
+        <svg class="hero-yarn" viewBox="0 0 100 100" aria-hidden="true"><use href="#yarn"/></svg>
+        <div class="calendar">
+          <div class="calendar-rings"><i></i><i></i></div>
+          <div class="calendar-head">爸妈听话 · 家庭挂历<small>OKPARENTS FAMILY CALENDAR</small></div>
+          <div class="calendar-body">
+            <div class="calendar-date">12</div>
+            <div class="calendar-week">七月 · 星期日 · 宜惦记</div>
+            <div class="calendar-note">
+              妈,早饭后那粒白色小药片,<br>别忘了。
+              <small>—— 闺女说的 · 今天第 1 / 3 次啰嗦</small>
+            </div>
+          </div>
+          <div class="calendar-foot">
+            <svg width="14" height="14" viewBox="0 0 24 24"><path d="M4.5 12.5 10 18 19.5 6.5" fill="none" stroke="#2F4B3C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            昨天 3 次提醒,妈妈都看到了
+          </div>
+        </div>
+        <svg class="hero-cup" viewBox="0 0 100 100" aria-hidden="true"><use href="#cup"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 命名定稿 ====== -->
+<section class="naming">
+  <div class="wrap">
+    <div class="naming-card reveal">
+      <div class="naming-main">
+        <span class="tag">命名定稿</span>
+        <div class="naming-name">「爸妈听话」<span class="en">OKParents</span></div>
+        <p class="naming-line">
+          小时候,「听话」是他们对我们说得最多的两个字。现在角色反过来了——
+          <b>这里的「听话」,不是命令,是撒娇</b>:是我们终于长大到,可以把牵挂说得理直气壮。
+          英文名 OKParents 里的「OK」,就是爸妈按下「看到了」的那一下。
+        </p>
+        <div class="naming-vow">分寸线只有一条:我们做的是「换我来啰嗦你了」,<br>永远不做「你要听我的」。</div>
+      </div>
+      <div class="naming-side">
+        <h4>落选候选 · 为什么不是它们</h4>
+        <div class="alt"><span class="n">乖乖爸妈</span><span class="why">像在哄小孩,少了「轮到我了」的反转</span></div>
+        <div class="alt"><span class="n">宝贝爸妈</span><span class="why">甜是甜,但撑不起吃药复诊的严肃事</span></div>
+        <div class="alt"><span class="n">爸妈听话</span><span class="why" style="color:var(--date);font-weight:700">✓ 反差梗 + 一秒讲清角色互换</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 场景四格 ====== -->
+<section class="scenes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">四件小事</span>
+      <h2>啰嗦,是有具体形状的</h2>
+      <p>不是一个功能清单,是四个每周都在你家发生的时刻。</p>
+    </div>
+    <div class="scene-grid">
+      <div class="scene reveal">
+        <span class="num">壹 · 吃药打卡</span>
+        <div class="icon red"><svg viewBox="0 0 48 48"><use href="#icoPill"/></svg></div>
+        <h3>说一次,顶一年</h3>
+        <p>你说一句,她的手机每天饭后自动弹出大字卡。她按下「吃过了」,你这边亮一盏小绿灯。</p>
+        <div class="say">「妈,记得吃降压药,早晚各一粒。」<small>你说一次 → 每天两张大字卡,自动的</small></div>
+      </div>
+      <div class="scene reveal" style="transition-delay:.06s">
+        <span class="num">贰 · 复诊挂号</span>
+        <div class="icon green"><svg viewBox="0 0 48 48"><use href="#icoCal"/></svg></div>
+        <h3>提前三天开始惦记</h3>
+        <p>挂号成功那一刻,爸妈端就有了倒计时:提前三天、前一晚、当天早上,各提醒一次,附上科室楼层。</p>
+        <div class="say">「周四上午 9:20,心内科,王主任,门诊楼 3 层。」<small>大字卡自动带上「儿子陪你去」四个字</small></div>
+      </div>
+      <div class="scene reveal" style="transition-delay:.12s">
+        <span class="num">叁 · 反向念叨</span>
+        <div class="icon red"><svg viewBox="0 0 48 48"><use href="#icoCake"/></svg></div>
+        <h3>爸妈的念叨,也值得有着落</h3>
+        <p>爸对着大话筒说一句,你手机上就多一张任务卡。办妥了点一下,他那头会看到「儿子记下了,办妥了」。</p>
+        <div class="say">「想吃你上次买的那个桂花糕。」<small>爸的一句话 → 你的一张待办卡 → 周末的一盒糕</small></div>
+      </div>
+      <div class="scene reveal" style="transition-delay:.18s">
+        <span class="num">肆 · 异常安静</span>
+        <div class="icon green"><svg viewBox="0 0 48 48"><use href="#icoPhone"/></svg></div>
+        <h3>安静得反常,就去个电话吧</h3>
+        <p>爸妈连续 24 小时没有确认任何提醒,你会收到一句轻轻的提示。不定位、不报警,只是提醒你:该打个电话了。</p>
+        <div class="say">「妈今天一直没看提醒,去个电话吧。」<small>大多数时候,只是老花镜找不到了</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 双端对比(核心)====== -->
+<section class="duo knit" id="duo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">一件事 · 两块屏</span>
+      <h2>同一句啰嗦,两代人各看各的舒服</h2>
+      <p>爸妈端只做一件事:让这一刻的字够大、够清楚、按一下就完。子女端才是那个操心的后台。</p>
+    </div>
+    <div class="duo-grid">
+      <!-- 父母端 -->
+      <div class="duo-col reveal">
+        <span class="duo-label parent">爸妈端 · 大字模式</span>
+        <div class="phone">
+          <div class="screen p-screen">
+            <div class="statusbar"><span>早上 8:00</span><span>电量足</span></div>
+            <div class="p-body">
+              <div class="p-step"><i></i>今天第 1 件事</div>
+              <div class="p-card">
+                <div class="from">闺女的啰嗦 · 早饭后</div>
+                <div class="big">该吃<em>降压药</em>了<br>白色小药片 · 1 粒</div>
+                <div class="hint">吃完早饭,喝口温水送下去</div>
+              </div>
+              <div class="p-btn"><svg viewBox="0 0 24 24"><use href="#icoCheck"/></svg>吃过了</div>
+              <div class="p-later">过 10 分钟再提醒我</div>
+              <div class="p-voice"><svg viewBox="0 0 24 24"><use href="#icoMic"/></svg>按住说话</div>
+              <div class="p-voice-hint">想闺女了,按住这个红圈说就行</div>
+            </div>
+          </div>
+        </div>
+        <div class="callouts">
+          <span class="callout">大字 ≥20pt</span>
+          <span class="callout">单屏只有一件事</span>
+          <span class="callout g">高对比 · 不闪不晃</span>
+          <span class="callout g">不会打字,按住就说</span>
+        </div>
+        <p class="duo-desc">没有信息流、没有红点矩阵、没有广告。一屏一件事,看完就能按。</p>
+      </div>
+      <div class="duo-vs reveal"><span>同步</span></div>
+      <!-- 子女端 -->
+      <div class="duo-col reveal" style="transition-delay:.1s">
+        <span class="duo-label child">子女端 · 操心后台</span>
+        <div class="phone">
+          <div class="screen c-screen">
+            <div class="statusbar"><span>8:41</span><span>●●●</span></div>
+            <div class="c-body">
+              <div class="c-title">妈妈的一天<span class="chip">今日 2/3 已看到</span></div>
+              <div class="c-row">
+                <span class="st ok"><svg viewBox="0 0 24 24"><use href="#icoCheck"/></svg></span>
+                <span><b>早饭后 · 降压药</b><span class="meta">8:12 妈妈按了「吃过了」</span></span>
+              </div>
+              <div class="c-row">
+                <span class="st ok"><svg viewBox="0 0 24 24"><use href="#icoCheck"/></svg></span>
+                <span><b>上午 · 血压测量</b><span class="meta">8:30 已看到 · 高压 128</span></span>
+              </div>
+              <div class="c-row">
+                <span class="st wait"></span>
+                <span><b>周四 · 心内科复诊</b><span class="meta">还有 3 天 · 已开启倒计时提醒</span></span>
+              </div>
+              <div class="c-task">
+                <div class="from"><i></i>爸的念叨 · 语音转文字</div>
+                <div class="kai">「想吃你上次买的那个桂花糕。」</div>
+                <div class="act">+ 转成我的待办</div>
+              </div>
+              <div class="c-quiet">
+                <svg viewBox="0 0 24 24"><use href="#icoBell"/></svg>
+                <span>异常安静守护已开启:连续 24 小时无确认时,轻轻提醒你去个电话。</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="callouts">
+          <span class="callout g">状态一眼看全</span>
+          <span class="callout g">念叨自动变任务卡</span>
+          <span class="callout">只报「看没看到」</span>
+        </div>
+        <p class="duo-desc">你看到的不是监控数据,是「今天都好」四个字的具体证据。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 特调功能 ====== -->
+<section class="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">为这个家特调</span>
+      <h2>四个只有「爸妈听话」会做的功能</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat reveal">
+        <h3><svg viewBox="0 0 48 48"><use href="#icoPill"/></svg>AI 医嘱翻译官</h3>
+        <p>拍一张医嘱或药盒,AI 把它翻成爸妈一听就懂的大白话,再自动排成大字卡。</p>
+        <div class="demo">
+          <div class="row doc"><small>医嘱原文</small>缬沙坦胶囊 80mg,qd,晨起顿服;忌与柚类同服。</div>
+          <div class="row plain"><small>爸妈端大字卡</small>每天早上起来吃一粒。这几天先别吃柚子。</div>
+        </div>
+      </div>
+      <div class="feat reveal" style="transition-delay:.06s">
+        <h3><svg viewBox="0 0 48 48"><use href="#icoCake"/></svg>念叨收件箱</h3>
+        <p>爸妈按住大红圈随口一说,语音自动转成文字,落进你的收件箱。每一句念叨都能被「办妥」,而不是挂了电话就散了。</p>
+      </div>
+      <div class="feat reveal" style="transition-delay:.12s">
+        <h3><svg viewBox="0 0 48 48"><use href="#icoCal"/></svg>一天三顿小卡片</h3>
+        <p>提醒跟着饭点走,不按小时轰炸:早饭后、午饭后、晚饭后各一张,像一天三次不请自来的惦记。看过一张,下一张才会来。</p>
+      </div>
+      <div class="feat reveal" style="transition-delay:.18s">
+        <h3><svg viewBox="0 0 48 48"><use href="#icoPhone"/></svg>安静侦测</h3>
+        <p>不是电子围栏,也不是摄像头。只看一件事:提醒是不是一直没人碰。反常的安静持续 24 小时,你会收到一句「去个电话吧」。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 安全与隐私 ====== -->
+<section class="privacy">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">先说清楚边界</span>
+      <h2>关心不是监控</h2>
+      <p>给爸妈装 App 之前,你最该问的是:它到底看得见什么。我们的答案短得可以背下来。</p>
+    </div>
+    <div class="priv-grid">
+      <div class="priv reveal">
+        <div class="no"><span class="x"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="#EAE6D8" stroke-width="3" stroke-linecap="round"/></svg></span>不看位置</div>
+        <p>没有定位权限,没有轨迹地图。爸妈去哪儿遛弯,是他们自己的事。</p>
+      </div>
+      <div class="priv reveal" style="transition-delay:.06s">
+        <div class="no"><span class="x"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="#EAE6D8" stroke-width="3" stroke-linecap="round"/></svg></span>不听通话</div>
+        <p>不读通话记录,不碰麦克风后台。语音只在爸妈按住红圈的那几秒工作。</p>
+      </div>
+      <div class="priv reveal" style="transition-delay:.12s">
+        <div class="no"><span class="x"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="#EAE6D8" stroke-width="3" stroke-linecap="round"/></svg></span>不翻相册</div>
+        <p>不索取相册和通讯录。医嘱照片单张拍、单张传,用完即走。</p>
+      </div>
+      <div class="priv only reveal" style="transition-delay:.18s">
+        <div class="no"><span class="x"><svg viewBox="0 0 24 24"><use href="#icoCheck"/></svg></span>只看一件事</div>
+        <p>「提醒有没有被看到」——这是子女端能知道的全部,也是安心需要的全部。</p>
+      </div>
+    </div>
+    <p class="priv-note reveal">
+      「爸妈听话」听的从来不是话,是回音。<br>你说了,他们看到了;他们说了,你办妥了。
+      <small>三不一只 · 写进产品红线,不随版本更改</small>
+    </p>
+  </div>
+</section>
+
+<!-- ====== 体验官留言 ====== -->
+<section class="voices knit">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">内测体验官留言</span>
+      <h2>先啰嗦起来的几家人</h2>
+    </div>
+    <div class="voice-grid">
+      <div class="voice parent reveal">
+        <span class="badge">父母视角</span>
+        <p>闺女的啰嗦变成一天三顿的小卡片,比电话温柔。她不用再掐着点打来问「药吃了没」,我按一下,她就放心了。</p>
+        <div class="who"><i class="r">母</i>王阿姨 · 67 岁 · 高血压五年</div>
+      </div>
+      <div class="voice reveal" style="transition-delay:.08s">
+        <p>以前我妈的「想吃那个糕」说完就散在风里。现在它变成我手机里一张待办卡,周末拎着糕上门的时候,才发现被惦记着办妥,是双向的事。</p>
+        <div class="who"><i class="g">女</i>阿真 · 30 岁 · 异地女儿</div>
+      </div>
+      <div class="voice reveal" style="transition-delay:.16s">
+        <p>最戳我的是那条「爸今天一直没看提醒」。打过去,是老花镜掉沙发缝里了。虚惊一场,但我第一次觉得,隔着一千公里也够得着他。</p>
+        <div class="who"><i class="g">子</i>大凯 · 34 岁 · 北漂儿子</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 路线图 ====== -->
+<section class="roadmap">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">往后的打算</span>
+      <h2>从一块屏,啰嗦进整个家</h2>
+      <p>手机只是起点。惦记应该出现在爸妈每天路过的地方。</p>
+    </div>
+    <div class="road-grid">
+      <div class="road now reveal">
+        <span class="stage">现在 · 网页版</span>
+        <svg class="art" viewBox="0 0 120 96" aria-hidden="true">
+          <rect x="38" y="8" width="44" height="80" rx="10" fill="none" stroke="#33302A" stroke-width="3.4"/>
+          <path d="M46 30h28M46 42h28M46 54h18" stroke="#9E3B33" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="60" cy="72" r="7" fill="#9E3B33"/>
+        </svg>
+        <h3>双向备忘录</h3>
+        <p>免下载、免安装。大字卡、念叨收件箱、安静侦测,今天就能给爸妈用起来。</p>
+      </div>
+      <div class="road reveal" style="transition-delay:.08s">
+        <span class="stage">下一步 · 硬件预告</span>
+        <svg class="art" viewBox="0 0 120 96" aria-hidden="true">
+          <rect x="22" y="34" width="76" height="44" rx="10" fill="none" stroke="#33302A" stroke-width="3.4"/>
+          <circle cx="60" cy="56" r="14" fill="#9E3B33"/>
+          <circle cx="60" cy="56" r="20" fill="none" stroke="#9E3B33" stroke-width="2.4" opacity=".45"/>
+          <path d="M40 22c6-8 34-8 40 0" stroke="#2F4B3C" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <h3>床头一键呼叫盒</h3>
+        <p>一个大红按钮放在床头柜上。按一下,子女手机响。不用解锁,不用找 App,半夜也够得着。</p>
+      </div>
+      <div class="road reveal" style="transition-delay:.16s">
+        <span class="stage">在路上 · 硬件预告</span>
+        <svg class="art" viewBox="0 0 120 96" aria-hidden="true">
+          <rect x="30" y="14" width="60" height="68" rx="8" fill="none" stroke="#33302A" stroke-width="3.4"/>
+          <rect x="38" y="24" width="44" height="30" rx="4" fill="none" stroke="#2F4B3C" stroke-width="3"/>
+          <path d="M44 34h22M44 42h14" stroke="#2F4B3C" stroke-width="3.4" stroke-linecap="round"/>
+          <circle cx="60" cy="66" r="5" fill="#C8973E"/>
+        </svg>
+        <h3>冰箱贴提醒屏</h3>
+        <p>贴在冰箱门上的小墨水屏,今天的三张卡片就在拿鸡蛋的路上。不用充电焦虑,一贴半年。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FINAL CTA ====== -->
+<section class="final">
+  <div class="wrap">
+    <div class="final-stamp reveal">已惦记<small>OKPARENTS</small></div>
+    <h2 class="reveal" style="transition-delay:.06s">这一次,<br><span class="accent">换你把「听话」说出口。</span></h2>
+    <p class="reveal" style="transition-delay:.12s">免下载、免安装。打开网页,把今天想啰嗦的第一句话,变成爸妈明早的第一张大字卡。</p>
+    <a class="btn-main reveal" style="transition-delay:.18s" href="https://echoecho-aqp.pages.dev" target="_blank" rel="noopener">现在就啰嗦一句 →</a>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <svg viewBox="0 0 100 100"><use href="#cup"/></svg>
+      爸妈听话 <span style="opacity:.55;font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:2px">OKPARENTS</span>
+    </div>
+    <div class="foot-meta">
+      品牌提案 E · 关怀系列 · 概念落地页<br>
+      产品网页版:<a href="https://echoecho-aqp.pages.dev" target="_blank" rel="noopener">echoecho-aqp.pages.dev</a> · 页面内界面为概念演示,体验官留言为内测体验官故事 · 情景演绎,非定量结论。
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // 滚动渐现(js 门控在 <head>,此处 IO 触发)
+  var els=document.querySelectorAll('.reveal');
+  if(/[?&]shot/.test(location.search)){
+    els.forEach(function(el){el.classList.add('in');});
+    var m=location.search.match(/[?&]y=(\d+)/);
+    if(m){document.body.style.marginTop='-'+m[1]+'px';}
+  }else if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+      });
+    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }else{
+    els.forEach(function(el){el.classList.add('in');});
+  }
+})();
+</script>
+<script>/*reveal-fallback:1.5s 兜底,防任何原因的白屏*/setTimeout(function(){document.querySelectorAll(".reveal").forEach(function(e){e.classList.add("in","visible","show","active","revealed")})},1500)</script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>毒舌修勾 · App 主界面设计稿 390×844</title>
+<!--
+  静态高保真设计稿(非真实功能)· 品牌线 D「毒舌修勾 RoastPup」
+  共享信息架构:顶部小家名+统计条 / 中部任务卡(收到/在办+进度/办妥+通缉卡) / 底部输入条+大语音键
+  视觉基因取自 /public/gtm/roastpup.html:荧光柠檬 #D6F740 · 黑白 3px 粗描边 · 便利贴歪贴 · 点阵底 · 硬阴影 4px 4px 0
+-->
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --lime:#D6F740;
+  --ink:#0A0A0A;
+  --paper:#FFFFFF;
+  --paper-warm:#FAFAF2;
+  --gray:#6B6B6B;
+  --border:3px solid var(--ink);
+  --heavy:"PingFang SC","Hiragino Sans GB","Source Han Sans SC","Noto Sans CJK SC","Microsoft YaHei",-apple-system,sans-serif;
+  --mono:"SF Mono","JetBrains Mono","Menlo","Courier New",monospace;
+}
+html,body{background:#E8E8DC}
+body{display:flex;justify-content:center;padding:30px 0;font-family:var(--heavy);-webkit-font-smoothing:antialiased}
+svg{display:block}
+
+/* ============ 屏幕画板 390×844 ============ */
+.screen{
+  position:relative;width:390px;height:844px;flex:none;overflow:hidden;
+  border-radius:48px;border:4px solid var(--ink);
+  background:
+    radial-gradient(circle at 14% 6%,rgba(214,247,64,.4) 0,transparent 26%),
+    radial-gradient(circle at 90% 92%,rgba(214,247,64,.3) 0,transparent 24%),
+    radial-gradient(rgba(10,10,10,.09) 1.4px,transparent 1.4px) 0 0/22px 22px,
+    var(--paper-warm);
+  color:var(--ink);
+  box-shadow:12px 12px 0 var(--ink);
+  display:flex;flex-direction:column;
+}
+
+/* ============ 状态栏 + 灵动岛 ============ */
+.sb{position:relative;height:54px;flex:none}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:124px;height:36px;border-radius:20px;background:var(--ink)}
+.sb-side{position:absolute;top:12px;height:36px;display:flex;align-items:center;gap:6px}
+.sb-time{left:30px;font-size:15px;font-weight:900;letter-spacing:.4px}
+.sb-icons{right:24px;color:var(--ink)}
+.sb-icons svg{height:12px}
+
+/* ============ 顶部:小家名 ============ */
+.head{flex:none;padding:6px 18px 0;display:flex;align-items:center;justify-content:space-between}
+.head-left{display:flex;align-items:center;gap:10px}
+.logo-paw{width:38px;height:38px;background:var(--ink);border-radius:11px;display:grid;place-items:center;transform:rotate(-6deg);flex:none}
+.logo-paw svg{width:22px;height:22px;color:var(--lime)}
+.home-name{font-weight:900;font-size:19px;line-height:1.2}
+.home-name small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:rgba(10,10,10,.55);font-weight:700;margin-top:2px}
+.cookie-jar{
+  display:flex;align-items:center;gap:6px;background:var(--paper);
+  border:2.5px solid var(--ink);border-radius:999px;padding:5px 11px;
+  font-weight:900;font-size:13px;transform:rotate(2deg);
+  box-shadow:3px 3px 0 rgba(10,10,10,.2);
+}
+.cookie-jar svg{width:17px;height:17px}
+
+/* ============ 统计条:黑底弹幕式 ============ */
+.stats{
+  flex:none;margin:10px 16px 0;background:var(--ink);color:var(--lime);
+  border-radius:14px;border:var(--border);box-shadow:4px 4px 0 rgba(10,10,10,.25);
+  padding:8px 14px;display:flex;align-items:center;justify-content:space-between;
+  transform:rotate(-.6deg);
+}
+.stat{text-align:center;line-height:1.15}
+.stat b{display:block;font-size:18px;font-weight:900}
+.stat span{font-size:10px;font-weight:800;letter-spacing:.08em;color:rgba(214,247,64,.72)}
+.stat-div{width:2px;height:26px;background:rgba(214,247,64,.35);border-radius:2px}
+
+/* ============ 任务卡列表(便利贴歪贴) ============ */
+.list-cap{flex:none;display:flex;align-items:center;gap:8px;padding:10px 20px 4px}
+.list-cap .tag{background:var(--ink);color:var(--lime);font-weight:900;font-size:11px;letter-spacing:.16em;padding:4px 11px;border-radius:999px;transform:rotate(-2deg)}
+.list-cap .line{flex:1;height:3px;background:repeating-linear-gradient(90deg,var(--ink) 0 8px,transparent 8px 16px);border-radius:2px;opacity:.5}
+.cards{flex:1;padding:9px 18px 0;display:flex;flex-direction:column;gap:11px;min-height:0;overflow:hidden}
+.note{
+  position:relative;background:var(--paper);
+  border:var(--border);padding:10px 13px 9px;flex:none;
+  border-radius:14px 18px 12px 20px;
+  box-shadow:4px 4px 0 var(--ink);
+}
+.note.r-l{transform:rotate(-1.4deg)}
+.note.r-r{transform:rotate(1.2deg)}
+.note--lime{background:var(--lime)}
+/* 胶带 */
+.tape{position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-3deg);width:64px;height:16px;background:rgba(214,247,64,.85);border:2px solid rgba(10,10,10,.35)}
+.tape--white{background:rgba(255,255,255,.85)}
+.note .who{font-size:9.5px;font-weight:900;letter-spacing:.16em;color:var(--gray);display:flex;align-items:center;gap:6px}
+.note .who .st{background:var(--ink);color:var(--lime);font-size:9.5px;font-weight:900;padding:2px 8px;border-radius:999px;letter-spacing:.1em}
+.note .txt{font-size:13.5px;font-weight:800;line-height:1.5;margin-top:4px}
+.note .pup{margin-top:6px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.note .bark{font-size:12px;font-weight:900;background:var(--ink);color:var(--lime);border-radius:10px;padding:5px 10px;transform:rotate(-1deg);display:inline-flex;align-items:center;gap:6px}
+.note .bark svg{width:13px;height:13px;flex:none}
+.note .bark--flip{background:var(--lime);color:var(--ink);border:2.5px solid var(--ink)}
+/* 斑马进度条 */
+.prog{height:12px;border:2.5px solid var(--ink);border-radius:999px;background:var(--paper);overflow:hidden;margin-top:7px;position:relative}
+.prog i{display:block;height:100%;width:47%;background:repeating-linear-gradient(-45deg,var(--ink) 0 6px,var(--lime) 6px 12px)}
+.prog-cap{display:flex;justify-content:space-between;margin-top:4px;font-size:10px;font-weight:900;letter-spacing:.06em;color:var(--gray)}
+.prog-cap b{color:var(--ink)}
+/* 通缉卡 */
+.wanted{
+  position:relative;background:var(--paper);border:4px solid var(--ink);
+  border-radius:8px;box-shadow:5px 5px 0 var(--ink);
+  padding:9px 13px 9px;flex:none;transform:rotate(-1.8deg);
+  text-align:center;
+}
+.wanted .wt{font-size:17px;font-weight:900;letter-spacing:.4em;text-indent:.4em;border-bottom:3px solid var(--ink);padding-bottom:4px}
+.wanted .wt-en{font-family:var(--mono);font-size:8.5px;letter-spacing:.4em;text-indent:.4em;color:var(--gray);margin-top:3px;font-weight:700}
+.wanted-body{display:flex;gap:11px;align-items:center;margin-top:7px;text-align:left}
+.wanted .mug{border:3px solid var(--ink);border-radius:6px;background:var(--lime);padding:5px 7px;flex:none}
+.wanted .crime{font-size:12.5px;font-weight:900;line-height:1.55}
+.wanted .crime .big{background:var(--ink);color:var(--lime);padding:1px 7px;border-radius:5px;display:inline-block;transform:rotate(-1.5deg);font-size:14px}
+.wanted .bounty{font-size:10px;font-weight:800;color:var(--gray);margin-top:4px}
+.wanted .bounty b{color:var(--ink)}
+.wanted .stamp{
+  position:absolute;right:8px;top:30px;border:3px solid var(--ink);border-radius:8px;
+  font-weight:900;font-size:11px;letter-spacing:.2em;padding:2px 8px;
+  transform:rotate(-14deg);opacity:.85;background:rgba(255,255,255,.75);
+}
+
+/* ============ 底部:输入条 + 大语音键 ============ */
+.dock{flex:none;padding:10px 16px 5px;background:var(--lime);border-top:var(--border);position:relative;z-index:5}
+.dock-row{display:flex;align-items:center;gap:12px}
+.input{
+  flex:1;height:46px;display:flex;align-items:center;gap:10px;padding:0 16px;
+  background:var(--paper);border:var(--border);border-radius:999px;
+  box-shadow:3px 3px 0 rgba(10,10,10,.25);
+}
+.input svg{width:17px;height:17px;flex:none}
+.input .ph{font-size:13.5px;font-weight:800;color:rgba(10,10,10,.4)}
+.voice{
+  width:60px;height:60px;flex:none;border-radius:50%;display:grid;place-items:center;
+  background:var(--ink);border:var(--border);box-shadow:4px 4px 0 rgba(10,10,10,.3);
+  transform:rotate(3deg);
+}
+.voice svg{width:26px;height:26px;color:var(--lime)}
+.dock-hint{text-align:center;font-size:9.5px;font-weight:900;letter-spacing:.22em;color:rgba(10,10,10,.55);margin-top:6px}
+.home-ind{width:120px;height:5px;border-radius:99px;background:var(--ink);margin:6px auto 0;opacity:.8}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="rPaw" fill="currentColor">
+    <circle cx="7" cy="7" r="2.6"/><circle cx="12" cy="5" r="2.6"/><circle cx="17" cy="7" r="2.6"/>
+    <path d="M12 10c-3.6 0-6.5 2.7-6.5 5.6 0 2 1.6 3.4 3.4 3.4 1.2 0 2.1-.5 3.1-.5s1.9.5 3.1.5c1.8 0 3.4-1.4 3.4-3.4C18.5 12.7 15.6 10 12 10z"/>
+  </g>
+  <g id="rCookie" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+    <circle cx="12" cy="12" r="9"/>
+    <circle cx="9" cy="9" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1.2" fill="currentColor" stroke="none"/>
+    <circle cx="10" cy="15" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15" r="1.2" fill="currentColor" stroke="none"/>
+  </g>
+  <g id="rBone" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7.5 9 a2.4 2.4 0 1 0 -2 4 a2.4 2.4 0 1 0 2 4 l9 -2 a2.4 2.4 0 1 0 2 -4 a2.4 2.4 0 1 0 -2 -4 l-9 2 Z"/>
+  </g>
+  <g id="rPen" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 20 l1.2 -4.4 L16.4 4.4 a2 2 0 0 1 2.8 0 l.4 .4 a2 2 0 0 1 0 2.8 L8.4 18.8 Z"/>
+  </g>
+  <g id="rMic" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11 a6.5 6.5 0 0 0 13 0 M12 17.5 V21 M8.5 21 h7"/>
+  </g>
+</defs></svg>
+
+<div class="screen">
+
+  <!-- 状态栏 -->
+  <div class="sb">
+    <div class="island"></div>
+    <div class="sb-side sb-time">21:36</div>
+    <div class="sb-side sb-icons">
+      <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+      <svg viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 12 L11.6 8.3 A5 5 0 0 0 5.4 8.3 Z"/><path d="M2.8 5.2 A8.6 8.6 0 0 1 14.2 5.2 L12.4 7.3 A5.9 5.9 0 0 0 4.6 7.3 Z"/><path d="M0 2 A12.8 12.8 0 0 1 17 2 L15.2 4.1 A10.1 10.1 0 0 0 1.8 4.1 Z"/></svg>
+      <svg viewBox="0 0 27 12" fill="none" stroke="currentColor"><rect x=".7" y=".7" width="21" height="10.6" rx="3" opacity=".55"/><rect x="2.5" y="2.5" width="14" height="7" rx="1.6" fill="currentColor" stroke="none"/><path d="M24 4 a2.6 2.6 0 0 1 0 4" opacity=".55"/></svg>
+    </div>
+  </div>
+
+  <!-- 顶部小家名 -->
+  <div class="head">
+    <div class="head-left">
+      <span class="logo-paw"><svg viewBox="0 0 24 24"><use href="#rPaw"/></svg></span>
+      <div class="home-name">朵朵 & 大鹏 · 修勾分局<small>ROASTPUP BRANCH NO.042</small></div>
+    </div>
+    <span class="cookie-jar"><svg viewBox="0 0 24 24"><use href="#rCookie"/></svg>×12</span>
+  </div>
+
+  <!-- 统计条 -->
+  <div class="stats">
+    <div class="stat"><b>5/7</b><span>本周交作业</span></div>
+    <div class="stat-div"></div>
+    <div class="stat"><b>×3</b><span>已阴阳怪气</span></div>
+    <div class="stat-div"></div>
+    <div class="stat"><b>1 次</b><span>鸽王立案</span></div>
+  </div>
+
+  <!-- 任务卡列表 -->
+  <div class="list-cap"><span class="tag">今日任务 · 修勾监工中</span><span class="line"></span></div>
+  <div class="cards">
+
+    <!-- 收到 -->
+    <div class="note r-l">
+      <span class="tape"></span>
+      <div class="who"><span class="st">收到</span>她说 · 刚刚</div>
+      <div class="txt">周五纪念日,餐厅你订!别又忘了。</div>
+      <div class="pup">
+        <span class="bark"><svg viewBox="0 0 24 24"><use href="#rBone"/></svg>汪,知道了知道了别催。</span>
+      </div>
+    </div>
+
+    <!-- 在办 + 进度 -->
+    <div class="note note--lime r-r">
+      <span class="tape tape--white"></span>
+      <div class="who"><span class="st">在办</span>修勾直播 · 34 分钟前</div>
+      <div class="txt">给猫买化毛膏,顺手带两袋冻干。</div>
+      <div class="prog"><i></i></div>
+      <div class="prog-cap"><b>修勾搬砖中 47%</b><span>监工退散</span></div>
+    </div>
+
+    <!-- 鸽王行为预警 · 通缉卡 -->
+    <div class="wanted">
+      <div class="wt">通 缉</div>
+      <div class="wt-en">WANTED · DEAD TIRED OR ALIVE</div>
+      <span class="stamp">已 立 案</span>
+      <div class="wanted-body">
+        <div class="mug">
+          <svg width="70" height="56" viewBox="0 0 150 120" fill="none" stroke="#0A0A0A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="瞪眼柴犬通缉照">
+            <path d="M38 38 L28 12 L56 24" fill="#FAFAF2"/><path d="M112 38 L122 12 L94 24" fill="#FAFAF2"/>
+            <ellipse cx="75" cy="68" rx="44" ry="38" fill="#FAFAF2"/>
+            <path d="M52 56 L68 62"/><path d="M98 56 L82 62"/>
+            <circle cx="62" cy="70" r="3.5" fill="#0A0A0A" stroke="none"/><circle cx="88" cy="70" r="3.5" fill="#0A0A0A" stroke="none"/>
+            <ellipse cx="75" cy="84" rx="6" ry="4.5" fill="#0A0A0A" stroke="none"/><path d="M75 88 L75 95 M67 97 Q75 102 83 97"/>
+          </svg>
+        </div>
+        <div>
+          <div class="crime">「修水龙头」<span class="big">已鸽 2 天</span><br>鸽王行为预警</div>
+          <div class="bounty">悬赏:<b>一杯奶茶</b> · 举报热线:你对象本人</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 办妥 -->
+    <div class="note r-l">
+      <span class="tape"></span>
+      <div class="who"><span class="st">办妥</span>修勾报喜 · 昨天</div>
+      <div class="txt">妈的生日礼物已下单,丝巾 + 手写卡,周三到。</div>
+      <div class="pup">
+        <span class="bark bark--flip"><svg viewBox="0 0 24 24"><use href="#rCookie"/></svg>交作业!求小饼干</span>
+        <span class="bark"><svg viewBox="0 0 24 24"><use href="#rCookie"/></svg>赏 +2</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 底部输入条 + 大语音键 -->
+  <div class="dock">
+    <div class="dock-row">
+      <div class="input">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A"><use href="#rPen"/></svg>
+        <span class="ph">说,让狗记着…</span>
+      </div>
+      <div class="voice"><svg viewBox="0 0 24 24"><use href="#rMic"/></svg></div>
+    </div>
+    <div class="dock-hint">长按狗头 · 语音下单</div>
+    <div class="home-ind"></div>
+  </div>
+
+</div>
+</body>
+</html>

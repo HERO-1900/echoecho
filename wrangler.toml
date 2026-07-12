@@ -6,12 +6,11 @@ compatibility_date = "2026-06-01"
 #   ENGINE_TOKEN  — 本地调研 runner 与云端的握手口令
 #   LLM_BASE / LLM_KEY / LLM_MODEL — (可选,BYOK)OpenAI 兼容端点,配置后云端可直接出调研
 
-# 临时妥协(2026-07-05 夜):当前 API token 无 D1 创建权限,暂时复用 rabbitholes-pool 库,
-# 全部表带 ee_ 前缀与 rabbitholes 完全隔离。待 token 加 D1:Edit 权限后迁移到独立库 echoecho。
+# 独立库(2026-07-12 迁移完成,数据自 rabbitholes-pool 的 ee_* 表整体迁入;表名保留 ee_ 前缀以零改动切换)
 [[d1_databases]]
 binding = "DB"
-database_name = "rabbitholes-pool"
-database_id = "625ce208-261e-448d-80a4-fad05c802110"
+database_name = "echoecho"
+database_id = "2b6ce813-9d61-43f6-984c-d8ad6e521bf6"
 
 [[r2_buckets]]
 binding = "AUDIO"

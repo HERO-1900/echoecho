@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>毒舌修勾 RoastPup · 你对象不听话?让狗来管</title>
+<meta name="description" content="双向备忘录的 meme 互怼特调:一只嘴很欠但办事靠谱的柴犬管家,替她催他、替他求饶。收到=汪知道了别催,办妥=交作业求小饼干,鸽了=通缉令伺候。">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+/* ============ RESET & TOKENS ============ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --lime:#D6F740;
+  --lime-dim:#C2E52E;
+  --ink:#0A0A0A;
+  --paper:#FFFFFF;
+  --paper-warm:#FAFAF2;
+  --gray:#6B6B6B;
+  --border:3px solid var(--ink);
+  --shadow:6px 6px 0 var(--ink);
+  --shadow-sm:4px 4px 0 var(--ink);
+  --heavy:"PingFang SC","Hiragino Sans GB","Source Han Sans SC","Noto Sans CJK SC","Microsoft YaHei",-apple-system,sans-serif;
+  --mono:"SF Mono","JetBrains Mono","Menlo","Courier New",monospace;
+}
+html{scroll-behavior:smooth;background:var(--paper-warm)}
+body{
+  font-family:var(--heavy);
+  background:
+    radial-gradient(circle at 12% 8%,rgba(214,247,64,.35) 0,transparent 24%),
+    radial-gradient(circle at 88% 90%,rgba(214,247,64,.25) 0,transparent 22%),
+    var(--paper-warm);
+  color:var(--ink);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+section{position:relative}
+::selection{background:var(--ink);color:var(--lime)}
+
+/* dotted zine 背景网点 */
+.dotted{background-image:radial-gradient(rgba(10,10,10,.10) 1.4px,transparent 1.4px);background-size:22px 22px}
+
+/* ============ REVEAL(js 门控,无 JS 直接可见) ============ */
+.js .reveal{opacity:0;transform:translateY(24px) rotate(var(--r,0deg));transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+.js .reveal.in{opacity:1;transform:translateY(0) rotate(var(--r,0deg))}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1;transform:rotate(var(--r,0deg));transition:none}
+  *{animation-duration:.01s!important;animation-iteration-count:1!important}
+}
+
+/* ============ 贴纸通用件 ============ */
+.sticker{
+  background:var(--paper);
+  border:var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  padding:22px;
+  position:relative;
+}
+.sticker--lime{background:var(--lime)}
+.sticker--ink{background:var(--ink);color:var(--paper)}
+.tag{
+  display:inline-block;
+  background:var(--ink);color:var(--lime);
+  font-weight:900;font-size:12px;letter-spacing:.18em;
+  padding:5px 12px;border-radius:999px;
+  transform:rotate(-2deg);
+}
+.tag--outline{background:var(--paper);color:var(--ink);border:2.5px solid var(--ink)}
+.sec-head{margin-bottom:34px}
+.sec-title{
+  font-size:clamp(30px,5.6vw,52px);
+  font-weight:900;line-height:1.18;letter-spacing:.01em;
+  margin-top:12px;
+}
+.sec-title .hl{background:linear-gradient(transparent 58%,var(--lime) 58%);padding:0 2px}
+.sec-sub{color:var(--gray);font-size:15px;margin-top:10px;max-width:560px}
+
+/* 手绘涂鸦箭头 */
+.doodle-arrow{width:64px;height:auto;stroke:var(--ink);fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+
+/* ============ MARQUEE 弹幕条 ============ */
+.marquee{
+  background:var(--ink);color:var(--lime);
+  border-top:var(--border);border-bottom:var(--border);
+  overflow:hidden;white-space:nowrap;
+  padding:10px 0;font-weight:900;font-size:14px;letter-spacing:.12em;
+}
+.marquee--flip{background:var(--lime);color:var(--ink)}
+.marquee__inner{display:inline-block;animation:marq 26s linear infinite;will-change:transform}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee span{margin:0 26px;display:inline-block}
+
+/* ============ HEADER ============ */
+header{
+  position:sticky;top:0;z-index:50;
+  background:var(--lime);
+  border-bottom:var(--border);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;max-width:1060px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px}
+.logo .paw{width:34px;height:34px;background:var(--ink);border-radius:10px;display:grid;place-items:center;transform:rotate(-6deg)}
+.logo .en{font-size:11px;letter-spacing:.22em;color:rgba(10,10,10,.65);font-weight:800}
+.nav-cta{
+  background:var(--ink);color:var(--lime);
+  font-weight:900;font-size:13px;
+  padding:9px 18px;border-radius:999px;border:var(--border);
+  box-shadow:3px 3px 0 rgba(10,10,10,.25);
+  transition:transform .15s;
+  cursor:pointer;
+}
+.nav-cta:hover{transform:translate(-1px,-1px) rotate(-1deg)}
+
+/* ============ HERO ============ */
+.hero{padding:56px 0 72px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:44px;align-items:center}
+@media(min-width:880px){.hero-grid{grid-template-columns:1.05fr .95fr}}
+.hero h1{
+  font-size:clamp(38px,7.6vw,72px);
+  font-weight:900;line-height:1.12;letter-spacing:.01em;
+  margin:18px 0 14px;
+}
+.hero h1 .strike{position:relative;white-space:nowrap}
+.hero h1 .strike::after{
+  content:"";position:absolute;left:-2%;right:-2%;top:54%;
+  height:6px;background:var(--ink);transform:rotate(-2deg);border-radius:3px;
+}
+.hero h1 .dog{
+  display:inline-block;background:var(--ink);color:var(--lime);
+  padding:2px 14px;border-radius:14px;transform:rotate(-2deg);
+  box-shadow:var(--shadow-sm);
+}
+.hero-lead{font-size:16px;color:var(--gray);max-width:480px}
+.hero-lead b{color:var(--ink)}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+.btn-main{
+  background:var(--ink);color:var(--lime);font-weight:900;font-size:16px;
+  padding:14px 28px;border-radius:14px;border:var(--border);
+  box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .15s;
+}
+.btn-main:hover{transform:translate(-2px,-2px) rotate(-1deg)}
+.btn-ghost{
+  background:var(--paper);color:var(--ink);font-weight:900;font-size:16px;
+  padding:14px 24px;border-radius:14px;border:var(--border);
+  box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .15s;
+}
+.btn-ghost:hover{transform:translate(-2px,-2px) rotate(1deg)}
+.hero-note{font-size:12px;color:var(--gray);margin-top:14px}
+
+/* 手机 mockup */
+.phone-zone{position:relative;display:flex;justify-content:center;padding:10px 0}
+.phone{
+  width:min(340px,88vw);
+  background:var(--paper);
+  border:4px solid var(--ink);
+  border-radius:36px;
+  box-shadow:10px 10px 0 var(--ink);
+  padding:14px 14px 18px;
+  transform:rotate(1.6deg);
+  position:relative;z-index:2;
+}
+.phone-notch{width:110px;height:22px;background:var(--ink);border-radius:999px;margin:2px auto 12px}
+.phone-title{
+  display:flex;align-items:center;gap:8px;
+  font-weight:900;font-size:14px;margin-bottom:12px;padding:0 4px;
+}
+.phone-title .dot{width:9px;height:9px;border-radius:50%;background:var(--lime);border:2px solid var(--ink)}
+.chat{display:flex;flex-direction:column;gap:10px}
+.bubble{
+  border:2.5px solid var(--ink);border-radius:14px;
+  padding:10px 13px;font-size:13px;line-height:1.55;
+  max-width:88%;box-shadow:3px 3px 0 rgba(10,10,10,.16);
+  background:var(--paper);
+}
+.bubble .who{font-size:10px;font-weight:900;letter-spacing:.14em;color:var(--gray);display:block;margin-bottom:3px}
+.bubble--her{align-self:flex-start;background:var(--paper)}
+.bubble--pup{align-self:flex-end;background:var(--lime)}
+.bubble--alert{align-self:flex-end;background:var(--ink);color:var(--paper)}
+.bubble--alert .who{color:var(--lime)}
+.bubble .st{
+  display:inline-block;background:var(--ink);color:var(--lime);
+  font-size:10px;font-weight:900;padding:2px 8px;border-radius:999px;
+  margin-right:6px;letter-spacing:.08em;vertical-align:1px;
+}
+.bubble--alert .st{background:var(--lime);color:var(--ink)}
+.prog{
+  height:12px;border:2.5px solid var(--ink);border-radius:999px;
+  background:var(--paper);overflow:hidden;margin-top:7px;
+}
+.prog i{display:block;height:100%;width:47%;background:repeating-linear-gradient(-45deg,var(--ink) 0 6px,var(--lime) 6px 12px)}
+/* 手机旁飘的贴纸 */
+.float-sticker{
+  position:absolute;background:var(--lime);border:var(--border);border-radius:12px;
+  font-weight:900;font-size:12px;padding:7px 12px;box-shadow:var(--shadow-sm);z-index:3;
+}
+.fs-1{top:2%;left:0;transform:rotate(-8deg)}
+.fs-2{bottom:6%;right:0;transform:rotate(6deg);background:var(--paper)}
+
+/* ============ 痛点(双视角互怼) ============ */
+.pain{padding:72px 0}
+.pain-grid{display:grid;grid-template-columns:1fr;gap:26px;position:relative}
+@media(min-width:760px){.pain-grid{grid-template-columns:1fr 1fr}}
+.pain-card{--r:-1.2deg;transform:rotate(var(--r))}
+.pain-card:last-child{--r:1.4deg}
+.pain-card .role{
+  display:inline-block;background:var(--ink);color:var(--paper);
+  font-weight:900;font-size:12px;letter-spacing:.16em;
+  padding:4px 12px;border-radius:999px;margin-bottom:12px;
+}
+.pain-card h3{font-size:21px;font-weight:900;line-height:1.4;margin-bottom:10px}
+.pain-card p{font-size:14px;color:var(--gray)}
+.pain-card p b{color:var(--ink)}
+.pain-vs{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-6deg);
+  background:var(--lime);border:var(--border);border-radius:50%;
+  width:64px;height:64px;display:none;place-items:center;
+  font-weight:900;font-size:17px;box-shadow:var(--shadow-sm);z-index:4;
+}
+@media(min-width:760px){.pain-vs{display:grid}}
+.pain-punch{
+  margin-top:30px;text-align:center;font-weight:900;
+  font-size:clamp(19px,3.4vw,26px);
+}
+.pain-punch .hl{background:linear-gradient(transparent 55%,var(--lime) 55%)}
+
+/* ============ 三步玩法 ============ */
+.steps{padding:72px 0;background:var(--ink);color:var(--paper)}
+.steps .sec-sub{color:rgba(255,255,255,.6)}
+.steps .sec-title .hl{background:linear-gradient(transparent 58%,rgba(214,247,64,.4) 58%);color:var(--lime)}
+.steps-grid{display:grid;grid-template-columns:1fr;gap:40px;counter-reset:step}
+@media(min-width:820px){.steps-grid{grid-template-columns:repeat(3,1fr);gap:26px}}
+.step{
+  background:var(--paper);color:var(--ink);
+  border:var(--border);border-radius:16px;
+  box-shadow:6px 6px 0 var(--lime);
+  padding:24px 20px 22px;position:relative;
+}
+.step:nth-child(1){--r:-1.4deg;transform:rotate(var(--r))}
+.step:nth-child(2){--r:1deg;transform:rotate(var(--r))}
+.step:nth-child(3){--r:-.8deg;transform:rotate(var(--r))}
+.step .num{
+  position:absolute;top:-20px;left:16px;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--lime);border:var(--border);
+  display:grid;place-items:center;font-weight:900;font-size:19px;
+  transform:rotate(-6deg);
+}
+.step h3{font-size:19px;font-weight:900;margin:14px 0 8px}
+.step p{font-size:14px;color:var(--gray)}
+.step .quote{
+  margin-top:14px;background:var(--lime);border:2.5px solid var(--ink);
+  border-radius:10px;padding:9px 12px;font-size:13px;font-weight:800;
+  transform:rotate(-1deg);
+}
+.step-arrow{display:none;position:absolute;z-index:3}
+@media(min-width:820px){
+  .step-arrow{display:block;top:34%}
+  .sa-1{left:calc(33.33% - 30px)}
+  .sa-2{left:calc(66.66% - 30px)}
+}
+
+/* ============ 特调功能 ============ */
+.features{padding:76px 0}
+.feat-hero-grid{display:grid;grid-template-columns:1fr;gap:30px;margin-bottom:30px}
+@media(min-width:860px){.feat-hero-grid{grid-template-columns:1fr 1fr}}
+
+/* 通缉令海报 */
+.wanted-zone{display:flex;justify-content:center;padding:16px 0}
+.wanted{
+  width:min(330px,86vw);
+  background:var(--paper);
+  border:4px solid var(--ink);
+  border-radius:8px;
+  box-shadow:10px 10px 0 var(--ink);
+  transform:rotate(-2.4deg);
+  padding:22px 20px 20px;
+  text-align:center;position:relative;
+}
+.wanted::before,.wanted::after{
+  content:"";position:absolute;top:-12px;width:58px;height:22px;
+  background:rgba(214,247,64,.85);border:2px solid rgba(10,10,10,.35);
+  transform:rotate(-4deg);
+}
+.wanted::before{left:22px}
+.wanted::after{right:22px;transform:rotate(5deg)}
+.wanted .wt{
+  font-size:34px;font-weight:900;letter-spacing:.34em;text-indent:.34em;
+  border-bottom:3px solid var(--ink);padding-bottom:8px;margin-bottom:4px;
+}
+.wanted .wt-en{font-family:var(--mono);font-size:11px;letter-spacing:.5em;text-indent:.5em;color:var(--gray);margin-bottom:14px}
+.wanted .mug{
+  border:3px solid var(--ink);border-radius:6px;background:var(--lime);
+  padding:12px 0 6px;margin-bottom:12px;
+}
+.wanted .mug svg{margin:0 auto}
+.wanted .crime{font-size:15px;font-weight:900;line-height:1.6}
+.wanted .crime .big{font-size:22px;background:var(--ink);color:var(--lime);padding:0 8px;border-radius:6px;display:inline-block;transform:rotate(-1.5deg)}
+.wanted .bounty{
+  margin-top:12px;border-top:2px dashed var(--ink);padding-top:10px;
+  font-size:13px;font-weight:800;color:var(--gray);
+}
+.wanted .bounty b{color:var(--ink)}
+.wanted .stamp{
+  position:absolute;right:10px;bottom:52px;
+  border:3px solid var(--ink);color:var(--ink);border-radius:8px;
+  font-weight:900;font-size:13px;letter-spacing:.2em;padding:3px 9px;
+  transform:rotate(-14deg);opacity:.8;background:rgba(255,255,255,.7);
+}
+
+/* 小饼干补偿协议 */
+.cookie-deal{--r:1.6deg;transform:rotate(var(--r));align-self:center}
+.cookie-deal h3{font-size:22px;font-weight:900;margin-bottom:4px}
+.cookie-deal .sub-en{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--gray);margin-bottom:14px}
+.deal-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.deal-list li{
+  display:flex;align-items:center;gap:12px;
+  border:2.5px solid var(--ink);border-radius:12px;
+  background:var(--paper);padding:11px 14px;font-size:14px;font-weight:800;
+  box-shadow:3px 3px 0 rgba(10,10,10,.15);
+}
+.deal-list .box{
+  width:22px;height:22px;flex:none;border:2.5px solid var(--ink);
+  border-radius:6px;background:var(--paper);display:grid;place-items:center;
+  font-size:14px;font-weight:900;
+}
+.deal-list li.done .box{background:var(--lime)}
+.deal-list li .price{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--gray);white-space:nowrap}
+.deal-note{margin-top:12px;font-size:12px;color:var(--gray)}
+
+/* 功能小卡 */
+.feat-grid{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:640px){.feat-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:980px){.feat-grid{grid-template-columns:repeat(4,1fr)}}
+.feat{
+  padding:20px 18px;
+}
+.feat:nth-child(odd){--r:-.9deg;transform:rotate(var(--r))}
+.feat:nth-child(even){--r:.9deg;transform:rotate(var(--r))}
+.feat .ic{
+  width:46px;height:46px;border:var(--border);border-radius:12px;
+  background:var(--lime);display:grid;place-items:center;margin-bottom:12px;
+  transform:rotate(-4deg);
+}
+.feat h4{font-size:16px;font-weight:900;margin-bottom:6px}
+.feat p{font-size:13px;color:var(--gray)}
+.feat .demo{
+  margin-top:12px;background:var(--ink);color:var(--lime);
+  border-radius:10px;padding:8px 11px;font-size:12px;font-weight:800;
+  transform:rotate(-1deg);
+}
+
+/* ============ 体验官弹幕 ============ */
+.voices{padding:76px 0;background:var(--lime);border-top:var(--border);border-bottom:var(--border)}
+.voices .sec-sub{color:rgba(10,10,10,.6)}
+.voices .sec-title .hl{background:linear-gradient(transparent 58%,var(--paper) 58%)}
+.voice-wall{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:680px){.voice-wall{grid-template-columns:1fr 1fr}}
+@media(min-width:980px){.voice-wall{grid-template-columns:1fr 1fr 1fr}}
+.voice{
+  background:var(--paper);border:var(--border);border-radius:14px;
+  box-shadow:var(--shadow-sm);padding:16px 18px;font-size:14px;line-height:1.65;
+}
+.voice:nth-child(3n+1){--r:-1.2deg;transform:rotate(var(--r))}
+.voice:nth-child(3n+2){--r:.8deg;transform:rotate(var(--r))}
+.voice:nth-child(3n){--r:-.5deg;transform:rotate(var(--r))}
+.voice .meta{
+  display:flex;align-items:center;gap:8px;margin-top:10px;
+  font-size:11px;font-weight:900;letter-spacing:.1em;color:var(--gray);
+}
+.voice .meta .av{
+  width:24px;height:24px;border-radius:50%;background:var(--lime);
+  border:2px solid var(--ink);display:grid;place-items:center;font-size:11px;
+}
+.voices-disclaim{margin-top:22px;font-size:12px;color:rgba(10,10,10,.55);text-align:center;font-weight:700}
+
+/* ============ 路线图 ============ */
+.roadmap{padding:76px 0}
+.road-line{display:flex;flex-direction:column;gap:22px;position:relative;margin-top:8px}
+@media(min-width:860px){.road-line{flex-direction:row;align-items:stretch}}
+.road-item{flex:1;padding:20px 18px}
+.road-item:nth-child(1){--r:-1deg;transform:rotate(var(--r))}
+.road-item:nth-child(2){--r:.8deg;transform:rotate(var(--r))}
+.road-item:nth-child(3){--r:-.6deg;transform:rotate(var(--r))}
+.road-item .phase{
+  display:inline-block;background:var(--ink);color:var(--lime);
+  font-weight:900;font-size:11px;letter-spacing:.2em;
+  padding:4px 11px;border-radius:999px;margin-bottom:10px;
+}
+.road-item h4{font-size:17px;font-weight:900;margin-bottom:6px}
+.road-item p{font-size:13px;color:var(--gray)}
+.road-item.bone{background:var(--ink);color:var(--paper)}
+.road-item.bone p{color:rgba(255,255,255,.62)}
+.road-item.bone .phase{background:var(--lime);color:var(--ink)}
+.bone-svg{margin:12px auto 4px}
+
+/* ============ FOOTER ============ */
+footer{
+  background:var(--ink);color:var(--paper);
+  border-top:var(--border);padding:44px 0 32px;text-align:center;
+}
+footer .f-logo{font-size:24px;font-weight:900;letter-spacing:.06em}
+footer .f-logo .en{color:var(--lime);font-family:var(--mono);font-size:12px;letter-spacing:.3em;display:block;margin-top:4px}
+footer .f-line{margin:16px auto 0;font-size:13px;color:rgba(255,255,255,.55);max-width:520px}
+footer .f-badge{
+  display:inline-block;margin-top:20px;
+  border:2.5px solid var(--lime);color:var(--lime);
+  font-weight:900;font-size:12px;letter-spacing:.22em;
+  padding:6px 16px;border-radius:999px;transform:rotate(-1.5deg);
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="nav">
+    <div class="logo">
+      <span class="paw">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#D6F740"><circle cx="7" cy="7" r="2.6"/><circle cx="12" cy="5" r="2.6"/><circle cx="17" cy="7" r="2.6"/><path d="M12 10c-3.6 0-6.5 2.7-6.5 5.6 0 2 1.6 3.4 3.4 3.4 1.2 0 2.1-.5 3.1-.5s1.9.5 3.1.5c1.8 0 3.4-1.4 3.4-3.4C18.5 12.7 15.6 10 12 10z"/></svg>
+      </span>
+      <span>毒舌修勾 <span class="en">ROASTPUP</span></span>
+    </div>
+    <a class="nav-cta" href="#play">领养一只</a>
+  </div>
+</header>
+
+<!-- ============ 顶部弹幕 ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__inner">
+    <span>汪!知道了知道了别催</span><span>修勾搬砖中 47%,监工退散</span><span>交作业!求小饼干🍪</span><span>鸽王行为预警:此人已鸽 2 天</span><span>狗头军师已上线</span><span>ROASTPUP · 嘴欠 · 但靠谱</span>
+    <span>汪!知道了知道了别催</span><span>修勾搬砖中 47%,监工退散</span><span>交作业!求小饼干🍪</span><span>鸽王行为预警:此人已鸽 2 天</span><span>狗头军师已上线</span><span>ROASTPUP · 嘴欠 · 但靠谱</span>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero dotted">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="reveal">
+        <span class="tag">品牌提案 D · MEME 互怼特调</span>
+        <h1>
+          你对象<span class="strike">不听话</span>?<br>
+          让<span class="dog">狗</span>来管。
+        </h1>
+        <p class="hero-lead">
+          「毒舌修勾」是一只<b>嘴很欠但办事靠谱</b>的柴犬管家:她说→他办,进度全程直播。<b>替她催他,替他求饶</b>——狠话它来说,和气你们留。
+        </p>
+        <div class="hero-ctas">
+          <a class="btn-main" href="#play">让狗上岗 🐕</a>
+          <a class="btn-ghost" href="#wanted">先看通缉令</a>
+        </div>
+        <p class="hero-note">双向备忘录 · 收到 / 在办 / 办妥 · AI 出方案 · 到期自动开骂(骂他,不骂你)</p>
+      </div>
+
+      <div class="phone-zone reveal" style="--r:0deg">
+        <span class="float-sticker fs-1">到期自动开催 ⏰</span>
+        <span class="float-sticker fs-2">已阴阳怪气 3 次</span>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-title"><span class="dot"></span>今日任务 · 修勾监工中</div>
+          <div class="chat">
+            <div class="bubble bubble--her"><span class="who">她说</span>周五纪念日,餐厅你订!别又忘了。</div>
+            <div class="bubble bubble--pup"><span class="who">修勾传话</span><span class="st">收到</span>汪,知道了知道了别催。</div>
+            <div class="bubble bubble--pup"><span class="who">修勾直播</span><span class="st">在办</span>修勾搬砖中 47%,监工退散。<span class="prog"><i></i></span></div>
+            <div class="bubble bubble--pup"><span class="who">修勾报喜</span><span class="st">办妥</span>交作业!米其林窗边位已锁。求小饼干🍪</div>
+            <div class="bubble bubble--alert"><span class="who">修勾警报</span><span class="st">超时</span>「修水龙头」已鸽 2 天——鸽王行为预警,全网通缉!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 痛点 ============ -->
+<section class="pain">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag tag--outline">吵架现场还原</span>
+      <h2 class="sec-title">「我说过了」vs「你没说过」<br>——<span class="hl">这架没有赢家</span></h2>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-vs">汪?</div>
+      <div class="sticker pain-card reveal">
+        <span class="role">她的委屈</span>
+        <h3>「说了八百遍,他的耳朵是装饰品吗?」</h3>
+        <p>倒垃圾、修水龙头、订纪念日餐厅——每件事都要<b>说三遍、催五遍、气一遍</b>。不催=没人干,催了=「你好烦」。合着我才是那个备忘录?</p>
+      </div>
+      <div class="sticker pain-card reveal">
+        <span class="role">他的冤枉</span>
+        <h3>「我真不是故意鸽,我是真·忘了。」</h3>
+        <p>上班被老板催,回家被对象催,脑子内存就 8G。不是不想干,是<b>忘了自己答应过</b>。等想起来的时候,战争已经爆发了。</p>
+      </div>
+    </div>
+    <p class="pain-punch reveal">所以——催人这种<span class="hl">得罪人的活</span>,交给一条不怕得罪人的狗。</p>
+  </div>
+</section>
+
+<!-- ============ 三步玩法 ============ -->
+<section class="steps dotted" id="play">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">三步上手</span>
+      <h2 class="sec-title">她动嘴,他动手,<span class="hl">狗动全身</span></h2>
+      <p class="sec-sub">双向备忘录的经典闭环,换上一身柴犬皮:每一步都有修勾替你把话说得刚刚好欠揍。</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <span class="num">1</span>
+        <h3>她说 · 下达任务</h3>
+        <p>说句话就行,「狗头军师」自动拆成可执行方案:买什么、几点办、预算多少,连攻略都替他做好。</p>
+        <div class="quote">军师:「纪念日方案已拟好,他抄作业就行。」</div>
+      </div>
+      <div class="step reveal">
+        <span class="num">2</span>
+        <h3>他办 · 进度直播</h3>
+        <p>一键回「收到」,进度条实时同步。她不用问「怎么样了」,修勾替他汇报得明明白白。</p>
+        <div class="quote">「修勾搬砖中 47%,监工退散。」</div>
+      </div>
+      <div class="step reveal">
+        <span class="num">3</span>
+        <h3>办妥 · 领小饼干</h3>
+        <p>完成打卡,修勾替他邀功;要是鸽了?通缉令伺候,再走「小饼干补偿协议」赎身。</p>
+        <div class="quote">「交作业!求小饼干🍪」</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 特调功能 ============ -->
+<section class="features" id="wanted">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag tag--outline">特调功能</span>
+      <h2 class="sec-title">鸽了?<span class="hl">全网通缉</span>。<br>认罚?小饼干抵债。</h2>
+      <p class="sec-sub">惩罚不伤感情的秘诀:把「问责」做成两个人都想截图发朋友圈的梗。</p>
+    </div>
+
+    <div class="feat-hero-grid">
+      <!-- 通缉令 -->
+      <div class="wanted-zone reveal" style="--r:0deg">
+        <div class="wanted">
+          <div class="wt">通 缉</div>
+          <div class="wt-en">WANTED · DEAD TIRED OR ALIVE</div>
+          <div class="mug">
+            <!-- 柴犬瞪眼版 -->
+            <svg width="150" height="120" viewBox="0 0 150 120" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="瞪眼柴犬通缉照">
+              <path d="M44 44 L26 6 L66 22 Z" fill="#FAFAF2"/>
+              <path d="M106 44 L124 6 L84 22 Z" fill="#FAFAF2"/>
+              <ellipse cx="75" cy="68" rx="44" ry="38" fill="#FAFAF2"/>
+              <path d="M31 62 Q26 68 31 74 M119 62 Q124 68 119 74" stroke-width="3"/>
+              <path d="M52 56 L68 62"/>
+              <path d="M98 56 L82 62"/>
+              <circle cx="62" cy="70" r="3.5" fill="#0A0A0A" stroke="none"/>
+              <circle cx="88" cy="70" r="3.5" fill="#0A0A0A" stroke="none"/>
+              <ellipse cx="75" cy="84" rx="6" ry="4.5" fill="#0A0A0A" stroke="none"/>
+              <path d="M75 88 L75 95 M67 97 Q75 102 83 97"/>
+            </svg>
+          </div>
+          <div class="crime">此人接单「修水龙头」<br><span class="big">已鸽 2 天</span><br>鸽王行为预警 · 全网通缉</div>
+          <div class="bounty">悬赏:<b>一杯奶茶</b> · 举报热线:你对象本人 · 编号 GW-002</div>
+          <div class="stamp">已 立 案</div>
+        </div>
+      </div>
+
+      <!-- 小饼干补偿协议 -->
+      <div class="sticker cookie-deal reveal">
+        <h3>小饼干补偿协议 🍪</h3>
+        <div class="sub-en">COOKIE COMPENSATION PROTOCOL</div>
+        <ul class="deal-list">
+          <li class="done"><span class="box">✓</span>鸽 1 天 · 奶茶一杯,三分糖去冰<span class="price">-1 🍪</span></li>
+          <li><span class="box"></span>鸽 2 天 · 洗碗包周,含锅<span class="price">-3 🍪</span></li>
+          <li><span class="box"></span>鸽 3 天 · 周末行程她全权定夺<span class="price">-5 🍪</span></li>
+          <li><span class="box"></span>办妥即赦免 · 通缉令当场撕毁<span class="price">+2 🍪</span></li>
+        </ul>
+        <p class="deal-note">* 赎回价目由两人共同签署,修勾只负责执行和看戏。债务以小饼干计价,概不赊账。</p>
+      </div>
+    </div>
+
+    <div class="feat-grid">
+      <div class="sticker feat reveal">
+        <span class="ic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.4" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h13"/><path d="M18 15l3 3-3 3" /></svg>
+        </span>
+        <h4>毒舌催办文案引擎</h4>
+        <p>AI 每次换着花样阴阳怪气,绝不重复。催 100 次,骂出 100 种花活。</p>
+        <div class="demo">「垃圾已在门口静置 6 小时,再放要成精了。」</div>
+      </div>
+      <div class="sticker feat reveal">
+        <span class="ic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="3"/><path d="M8 9h.01M12 9h.01M16 9h.01M9 13q3 2 6 0M12 17v4M8 21h8"/></svg>
+        </span>
+        <h4>互怼表情包回复</h4>
+        <p>不想打字?丢一张修勾表情包完成回怼:委屈汪、装死汪、狗腿汪任选。</p>
+        <div class="demo">她:「?」 → 他:[装死汪.jpg]</div>
+      </div>
+      <div class="sticker feat reveal">
+        <span class="ic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V10M12 20V4M18 20v-7"/><path d="M3 20h18"/></svg>
+        </span>
+        <h4>鸽王榜(opt-in)</h4>
+        <p>自嘲向排行榜:本月谁鸽得多,谁头像挂榜首。双方同意才开,只许自黑。</p>
+        <div class="demo">本月鸽王:他 🕊️×4 vs 她 🕊️×1</div>
+      </div>
+      <div class="sticker feat reveal">
+        <span class="ic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01"/><path d="M8 15h8"/><path d="M12 3v3"/></svg>
+        </span>
+        <h4>狗头军师</h4>
+        <p>AI 僚机:任务一到,方案先行。礼物清单、道歉话术、约会攻略,全都嚼碎了喂到嘴边。</p>
+        <div class="demo">「哄人方案已生成,成功率 91%,照念。」</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 中场弹幕 ============ -->
+<div class="marquee marquee--flip" aria-hidden="true">
+  <div class="marquee__inner">
+    <span>嘴欠是天赋 · 靠谱是本分</span><span>狠话狗来说 · 和气你们留</span><span>鸽王克星已就位</span><span>ROASTPUP IS WATCHING YOU</span><span>今日份阴阳怪气已送达</span>
+    <span>嘴欠是天赋 · 靠谱是本分</span><span>狠话狗来说 · 和气你们留</span><span>鸽王克星已就位</span><span>ROASTPUP IS WATCHING YOU</span><span>今日份阴阳怪气已送达</span>
+  </div>
+</div>
+
+<!-- ============ 体验官弹幕墙 ============ -->
+<section class="voices">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">体验官弹幕</span>
+      <h2 class="sec-title">被狗管上之后,<span class="hl">他们说</span></h2>
+    </div>
+    <div class="voice-wall">
+      <div class="voice reveal">「以前催他像讨债,现在狗替我讨。他被通缉令羞辱到当晚就把水龙头修了,建议全国推广。」
+        <div class="meta"><span class="av">🐶</span>@奶茶三分糖 · 监工方</div>
+      </div>
+      <div class="voice reveal">「被阴阳怪气居然不想吵架,因为骂我的是狗不是她。骂完还给我出方案,这狗有点东西。」
+        <div class="meta"><span class="av">🦴</span>@被通缉的本人 · 干活方</div>
+      </div>
+      <div class="voice reveal">「鸽王榜开了一个月,我俩为了不上榜首卷起来了。家务完成率历史新高,离谱但有效。」
+        <div class="meta"><span class="av">🕊️</span>@前任鸽王 · 已退位</div>
+      </div>
+      <div class="voice reveal">「『修勾搬砖中 47%』一出,我妈问我为什么对着备忘录笑。催人软件做成电子宠物,谁想的,鬼才。」
+        <div class="meta"><span class="av">🍪</span>@小饼干债主 · 监工方</div>
+      </div>
+      <div class="voice reveal">「小饼干协议签完,鸽一次奶茶一杯。他现在办事比上班还积极——毕竟上班没人管他叫好狗狗。」
+        <div class="meta"><span class="av">📋</span>@协议甲方 · 监工方</div>
+      </div>
+      <div class="voice reveal">「最喜欢办妥时那句『交作业!求小饼干』,像养了条真狗。区别是这条狗还会替我订餐厅。」
+        <div class="meta"><span class="av">⭐</span>@修勾饲养员 · 双向用户</div>
+      </div>
+    </div>
+    <p class="voices-disclaim">* 内测体验官故事 · 情景演绎,非真实用户评价</p>
+  </div>
+</section>
+
+<!-- ============ 路线图 ============ -->
+<section class="roadmap dotted">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag tag--outline">修勾进化路线</span>
+      <h2 class="sec-title">从嘴欠,到<span class="hl">挂在你身上</span>嘴欠</h2>
+    </div>
+    <div class="road-line">
+      <div class="sticker road-item reveal">
+        <span class="phase">PHASE 1 · NOW</span>
+        <h4>App 特调上线</h4>
+        <p>双向备忘录全套玩法 + 毒舌催办引擎 + 通缉令 + 小饼干协议。先把狗养熟。</p>
+      </div>
+      <div class="sticker road-item reveal">
+        <span class="phase">PHASE 2</span>
+        <h4>表情包宇宙 & 鸽王赛季</h4>
+        <p>修勾表情包持续更新,鸽王榜按季结算,赛季末发「年度鸽王」纪念皮肤——自黑也要有排面。</p>
+      </div>
+      <div class="sticker road-item bone reveal">
+        <span class="phase">PHASE 3 · 硬件预告</span>
+        <h4>骨头挂坠 · 随身修勾</h4>
+        <svg class="bone-svg" width="150" height="60" viewBox="0 0 150 60" fill="none" stroke="#D6F740" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="骨头造型挂坠线稿">
+          <path d="M36 22 a11 11 0 1 0 -8 18 a11 11 0 1 0 8 -2 h74 a11 11 0 1 0 8 2 a11 11 0 1 0 -8 -18 z"/>
+          <circle cx="75" cy="30" r="3" fill="#D6F740" stroke="none"/>
+        </svg>
+        <p>骨头造型蓝牙挂坠:任务到期震动 + 汪汪提示音,把「别忘了」挂在钥匙串上。敬请期待。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="f-logo">毒舌修勾<span class="en">ROASTPUP · A ROAST A DAY KEEPS THE FIGHT AWAY</span></div>
+    <p class="f-line">一只嘴很欠但办事靠谱的柴犬管家。替她催他,替他求饶——狠话狗来说,和气你们留。</p>
+    <span class="f-badge">品牌提案 D · 特调系列</span>
+  </div>
+</footer>
+
+<script>
+/* reveal:IntersectionObserver 渐现 */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+      });
+    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }else{
+    els.forEach(function(el){el.classList.add('in');});
+  }
+})();
+</script>
+<script>/* reveal-fallback 双保险:1.5s 后强制显示 */setTimeout(function(){document.querySelectorAll(".reveal").forEach(function(e){e.classList.add("in")})},1500)</script>
+</body>
+</html>

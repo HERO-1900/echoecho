@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>爸妈听话 · 父母端主界面设计稿 390×844</title>
+<!--
+  静态高保真设计稿(非真实功能)· 品牌线「爸妈听话」父母端
+  共享信息架构:顶部小家名+统计条 / 中部任务卡(收到/在办+进度/办妥) / 底部大语音键
+  真适老化:正文 ≥22pt(≈30px)、高对比(米黄底 × 深墨字 × 枣红主色)、单列大卡、每卡只一件事、超大按钮
+-->
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FBF3E2;
+  --cream-2:#FFFDF6;
+  --jujube:#8C2B26;
+  --jujube-deep:#6E1F1B;
+  --ink:#2B1D12;
+  --ink-soft:#6B5540;
+  --green:#3E6B35;
+  --line:#D8C6A8;
+  --sans:"PingFang SC","Hiragino Sans GB","Source Han Sans SC","Noto Sans CJK SC","Microsoft YaHei",-apple-system,sans-serif;
+}
+html,body{background:#E4D9C3}
+body{display:flex;justify-content:center;padding:30px 0;font-family:var(--sans);-webkit-font-smoothing:antialiased}
+svg{display:block}
+
+/* ============ 屏幕画板 390×844 ============ */
+.screen{
+  position:relative;width:390px;height:844px;flex:none;overflow:hidden;
+  border-radius:48px;background:var(--cream);color:var(--ink);
+  box-shadow:0 0 0 1px rgba(110,31,27,.25),0 30px 70px rgba(60,40,20,.45);
+  display:flex;flex-direction:column;
+}
+
+/* ============ 状态栏 + 灵动岛 ============ */
+.sb{position:relative;height:54px;flex:none}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:124px;height:36px;border-radius:20px;background:#1A120A}
+.sb-side{position:absolute;top:12px;height:36px;display:flex;align-items:center;gap:6px}
+.sb-time{left:28px;font-size:17px;font-weight:700;color:var(--ink)}
+.sb-icons{right:24px;color:var(--ink)}
+.sb-icons svg{height:12px}
+
+/* ============ 顶部:小家名 + 牵挂 + 统计条 ============ */
+.head{flex:none;padding:2px 22px 0;display:flex;align-items:center;gap:12px}
+.head .heart{width:40px;height:40px;flex:none;border-radius:50%;background:var(--jujube);display:grid;place-items:center}
+.head .heart svg{width:22px;height:22px;color:#FFF6E8}
+.home-name{font-size:23px;font-weight:800;letter-spacing:2px}
+.home-name small{display:block;font-size:15px;font-weight:500;color:var(--ink-soft);letter-spacing:1px;margin-top:2px}
+.care{
+  flex:none;margin:8px 18px 0;padding:8px 16px;
+  background:var(--cream-2);border:2px solid var(--jujube);border-radius:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.care svg{width:26px;height:26px;color:var(--jujube);flex:none}
+.care .t{font-size:22px;font-weight:800;letter-spacing:1px}
+.care .t b{color:var(--jujube);font-size:26px;padding:0 3px}
+.stats{flex:none;display:flex;gap:10px;margin:8px 18px 0}
+.stats .cell{
+  flex:1;text-align:center;padding:6px 4px 6px;border-radius:16px;
+  background:rgba(140,43,38,.08);border:1.5px solid var(--line);
+  font-size:15px;font-weight:600;color:var(--ink-soft);letter-spacing:1px;line-height:1.28;
+}
+.stats .cell b{display:block;font-size:21px;font-weight:800;color:var(--ink)}
+.stats .cell.done-c{background:rgba(62,107,53,.1)}
+.stats .cell.done-c b{color:var(--green)}
+
+/* ============ 任务大卡:每卡只一件事 ============ */
+.cards{flex:1;padding:10px 18px 0;display:flex;flex-direction:column;gap:10px;min-height:0;overflow:hidden}
+.card{
+  flex:none;background:var(--cream-2);border:2.5px solid var(--line);
+  border-radius:24px;padding:11px 17px 11px;
+  box-shadow:0 3px 0 rgba(140,60,20,.08);
+}
+.card.urgent{border-color:var(--jujube)}
+.card .when{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:700;color:var(--jujube);letter-spacing:1px}
+.card .when svg{width:20px;height:20px;flex:none}
+.card .thing{font-size:30px;font-weight:800;letter-spacing:1px;margin-top:4px;line-height:1.3}
+.card .ask{font-size:19px;font-weight:600;color:var(--ink-soft);margin-top:1px}
+.big-btn{
+  margin-top:8px;height:56px;border-radius:18px;
+  background:var(--jujube);color:#FFF6E8;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  font-size:28px;font-weight:800;letter-spacing:4px;
+  box-shadow:0 4px 0 var(--jujube-deep);
+}
+.big-btn svg{width:30px;height:30px;flex:none}
+/* 在办卡:步数进度 */
+.walkbar{height:18px;border-radius:99px;background:#EDE0C6;border:1.5px solid var(--line);overflow:hidden;margin-top:7px}
+.walkbar i{display:block;height:100%;width:60%;border-radius:99px;background:linear-gradient(90deg,#B4553F,var(--jujube))}
+.walk-cap{display:flex;justify-content:space-between;align-items:baseline;margin-top:4px}
+.walk-cap .n{font-size:24px;font-weight:800;color:var(--jujube)}
+.walk-cap .n small{font-size:17px;font-weight:600;color:var(--ink-soft);letter-spacing:1px}
+.walk-cap .hint{font-size:17px;font-weight:600;color:var(--ink-soft)}
+/* 办妥卡 */
+.card.done-card{background:#F3F0E2;border-color:#B9C9A8}
+.done-row{display:flex;align-items:center;gap:13px;margin-top:6px}
+.done-badge{width:48px;height:48px;flex:none;border-radius:50%;background:var(--green);display:grid;place-items:center}
+.done-badge svg{width:28px;height:28px;color:#F5F2E4}
+.done-row .d1{font-size:22px;font-weight:800;color:var(--green)}
+.done-row .d2{font-size:17px;font-weight:600;color:var(--ink-soft);margin-top:2px}
+
+/* ============ 底部:全宽大语音键 ============ */
+.dock{flex:none;padding:9px 18px 4px;background:var(--cream);border-top:2px solid var(--line)}
+.voice{
+  height:78px;border-radius:26px;
+  background:linear-gradient(180deg,#9C332D,var(--jujube) 55%,var(--jujube-deep));
+  color:#FFF6E8;display:flex;align-items:center;justify-content:center;gap:15px;
+  box-shadow:0 5px 0 #55211E,0 10px 24px rgba(110,31,27,.35);
+}
+.voice svg{width:38px;height:38px;flex:none}
+.voice .v1{font-size:27px;font-weight:800;letter-spacing:2px;line-height:1.3}
+.voice .v2{display:block;font-size:15px;font-weight:500;letter-spacing:2px;color:rgba(255,246,232,.75)}
+.home-ind{width:120px;height:5px;border-radius:99px;background:rgba(43,29,18,.4);margin:7px auto 0}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="pHeart" fill="currentColor">
+    <path d="M12 20.5 C6.5 16.5 3 13 3 9.3 A4.8 4.8 0 0 1 12 6.6 A4.8 4.8 0 0 1 21 9.3 C21 13 17.5 16.5 12 20.5 Z"/>
+  </g>
+  <g id="pPill" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+    <rect x="3" y="8.5" width="18" height="8" rx="4" transform="rotate(-30 12 12)"/>
+    <path d="M9.7 8 L14.3 16" transform="rotate(-30 12 12)"/>
+  </g>
+  <g id="pClock" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+    <circle cx="12" cy="12" r="9"/><path d="M12 7 V12 L15.5 14"/>
+  </g>
+  <g id="pWalk" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="13.5" cy="4.5" r="2"/><path d="M13 8 L10 13 L12.5 16 L12 21 M10 13 L14.5 12 L17 15 M10.5 15.5 L7.5 20"/>
+  </g>
+  <g id="pCheck" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 12.5 L10 18 L19.5 6.5"/>
+  </g>
+  <g id="pMic" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11 a6.5 6.5 0 0 0 13 0 M12 17.5 V21 M8.5 21 h7"/>
+  </g>
+</defs></svg>
+
+<div class="screen">
+
+  <!-- 状态栏 -->
+  <div class="sb">
+    <div class="island"></div>
+    <div class="sb-side sb-time">08:05</div>
+    <div class="sb-side sb-icons">
+      <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+      <svg viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 12 L11.6 8.3 A5 5 0 0 0 5.4 8.3 Z"/><path d="M2.8 5.2 A8.6 8.6 0 0 1 14.2 5.2 L12.4 7.3 A5.9 5.9 0 0 0 4.6 7.3 Z"/><path d="M0 2 A12.8 12.8 0 0 1 17 2 L15.2 4.1 A10.1 10.1 0 0 0 1.8 4.1 Z"/></svg>
+      <svg viewBox="0 0 27 12" fill="none" stroke="currentColor"><rect x=".7" y=".7" width="21" height="10.6" rx="3" opacity=".5"/><rect x="2.5" y="2.5" width="14" height="7" rx="1.6" fill="currentColor" stroke="none"/><path d="M24 4 a2.6 2.6 0 0 1 0 4" opacity=".5"/></svg>
+    </div>
+  </div>
+
+  <!-- 顶部小家名 -->
+  <div class="head">
+    <span class="heart"><svg viewBox="0 0 24 24"><use href="#pHeart"/></svg></span>
+    <div class="home-name">咱们一家<small>爸妈听话 · 和闺女连着心</small></div>
+  </div>
+
+  <!-- 牵挂一行 -->
+  <div class="care">
+    <svg viewBox="0 0 24 24"><use href="#pHeart"/></svg>
+    <div class="t">闺女今天的牵挂:<b>3</b>件</div>
+  </div>
+
+  <!-- 统计条 -->
+  <div class="stats">
+    <div class="cell done-c"><b>1 件</b>已办好</div>
+    <div class="cell"><b>2 件</b>还没办</div>
+    <div class="cell"><b>2 条</b>闺女留言</div>
+  </div>
+
+  <!-- 任务大卡:每卡只一件事 -->
+  <div class="cards">
+
+    <!-- 收到(待办) -->
+    <div class="card urgent">
+      <div class="when"><svg viewBox="0 0 24 24"><use href="#pPill"/></svg>上午 8:00 · 降压药</div>
+      <div class="thing">白色小药片,吃了吗?</div>
+      <div class="ask">点一下,闺女就放心了</div>
+      <div class="big-btn"><svg viewBox="0 0 24 24"><use href="#pCheck"/></svg>吃了</div>
+    </div>
+
+    <!-- 在办 + 进度 -->
+    <div class="card">
+      <div class="when"><svg viewBox="0 0 24 24"><use href="#pWalk"/></svg>下午 · 出门走一走</div>
+      <div class="thing">今天走够 2000 步</div>
+      <div class="walkbar"><i></i></div>
+      <div class="walk-cap">
+        <span class="n">1200<small> / 2000 步</small></span>
+        <span class="hint">正在办 · 闺女看得见</span>
+      </div>
+    </div>
+
+    <!-- 办妥 -->
+    <div class="card done-card">
+      <div class="when"><svg viewBox="0 0 24 24"><use href="#pClock"/></svg>早上 7:30 · 量血压</div>
+      <div class="done-row">
+        <span class="done-badge"><svg viewBox="0 0 24 24"><use href="#pCheck"/></svg></span>
+        <div>
+          <div class="d1">办好了 · 128 / 82</div>
+          <div class="d2">闺女看到了,回了句「真棒」</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 底部全宽大语音键 -->
+  <div class="dock">
+    <div class="voice">
+      <svg viewBox="0 0 24 24"><use href="#pMic"/></svg>
+      <div class="v1">按住,跟闺女说话<span class="v2">松开手,话就送到闺女手机上</span></div>
+    </div>
+    <div class="home-ind"></div>
+  </div>
+
+</div>
+</body>
+</html>

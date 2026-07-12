@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>念响品牌矩阵 · 一套底层,五副面孔</title>
+<meta name="description" content="五条产品线的品牌矩阵、调研依据、差异化功能比例与发展计划书">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{--ink:#232B31;--paper:#F7F3EC;--line:#E5DCCB;--mist:#77848D;
+--cA:#E8604C;--cB:#C73E3A;--cC:#8C1F3F;--cD:#9DBE1E;--cE:#8A2B23}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;background:var(--paper);color:var(--ink);line-height:1.75}
+.serif{font-family:"Songti SC","Noto Serif SC",serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px 90px}
+header.top{text-align:center;padding:72px 22px 20px}
+.kick{font-size:12px;letter-spacing:3px;color:var(--mist)}
+h1{font-size:clamp(30px,5vw,46px);margin:12px 0 8px}
+h1 em{font-style:normal;color:var(--cA)}
+.sub{color:#6d7a83;max-width:640px;margin:0 auto;font-size:15px}
+h2{font-size:clamp(22px,3.4vw,32px);margin:72px 0 6px;display:flex;gap:10px;align-items:center}
+h2::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--cA);box-shadow:0 0 0 4px #FBEAE6}
+.lead{color:#77848D;font-size:14px;margin-bottom:22px}
+.js .rv{opacity:0;transform:translateY(22px);transition:all .6s cubic-bezier(.2,.7,.3,1)}
+.js .rv.in{opacity:1;transform:none}
+/* 核心层 */
+.core{background:var(--ink);color:var(--paper);border-radius:24px;padding:34px;display:grid;grid-template-columns:1.2fr 1fr;gap:26px;align-items:center}
+.core .big{font-size:clamp(19px,2.6vw,25px);line-height:1.6}
+.core .big b{color:#F6B8AC}
+.core .aiq{font-family:"Songti SC",serif;font-size:16px;border-left:3px solid var(--cA);padding-left:16px;opacity:.95}
+.core .stat{font-size:12px;color:#9fb0ba;margin-top:10px}
+/* 五卡 */
+.brands{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:26px}
+.bc{border-radius:18px;padding:18px 15px;background:#fff;border:1px solid var(--line);border-top:5px solid;display:flex;flex-direction:column;gap:8px}
+.bc .nm{font-size:17px;font-weight:800}
+.bc .en{font-size:10.5px;letter-spacing:1.5px;color:var(--mist)}
+.bc .who{font-size:12px;color:#5d6a73}
+.bc .ai{font-size:12px;color:#5d6a73;border-top:1px dashed var(--line);padding-top:8px}
+.bc .ai b{font-size:11px;color:var(--mist);display:block}
+.bc a{margin-top:auto;font-size:12px;color:#fff;text-decoration:none;text-align:center;border-radius:99px;padding:7px 0;font-weight:600}
+.tagrow{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:10px;padding:2px 8px;border-radius:99px;background:var(--paper);color:#6d7a83}
+/* 比例条 */
+.ratio{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px}
+.bar{display:flex;height:46px;border-radius:12px;overflow:hidden;font-size:13px;color:#fff;font-weight:600;text-align:center}
+.bar .b70{flex:7;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.bar .b30{flex:3;background:var(--cA);display:flex;align-items:center;justify-content:center}
+.ratio table{width:100%;border-collapse:collapse;font-size:13px;margin-top:18px}
+.ratio th{text-align:left;color:var(--mist);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);font-size:12px}
+.ratio td{padding:9px 10px;border-bottom:1px solid #f0e9db;vertical-align:top}
+.ratio td:first-child{white-space:nowrap;font-weight:700}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:baseline}
+/* 调研 */
+.res{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}
+.rc b{font-size:26px;color:var(--cA)}
+.rc p{font-size:13px;color:#5d6a73;margin-top:6px}
+.warn{background:#FCF3E3;border:1px solid #ecd9b0;border-radius:14px;padding:14px 18px;font-size:13px;color:#8a6b2f;margin-top:14px}
+/* 时间线 */
+.ph{border-left:2px solid var(--line);margin-left:8px;padding-left:26px}
+.ph .n{position:relative;padding-bottom:26px}
+.ph .n::before{content:"";position:absolute;left:-33px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--cA);box-shadow:0 0 0 4px #FBEAE6}
+.ph .n.f::before{background:#fff;border:2px solid var(--mist);box-shadow:none}
+.ph time{font-size:12px;font-weight:700;color:var(--cA)}
+.ph .n.f time{color:var(--mist)}
+.ph b{display:block;font-size:17px;margin:2px 0 3px}
+.ph p{font-size:14px;color:#5d6a73}
+/* 90天表 */
+.plan{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 22px 18px}
+.plan table{width:100%;border-collapse:collapse;font-size:13.5px}
+.plan th{text-align:left;padding:14px 10px 8px;color:var(--mist);font-size:12px;border-bottom:1px solid var(--line)}
+.plan td{padding:10px;border-bottom:1px solid #f0e9db;vertical-align:top}
+.plan td:first-child{font-weight:700;white-space:nowrap}
+/* 英文名 */
+.enm{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ec{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.ec.top{border:2px solid var(--cA)}
+.ec b{font-size:19px}
+.ec .why{font-size:12.5px;color:#5d6a73;margin-top:6px}
+.ec .rk{font-size:10px;color:var(--cA);letter-spacing:2px}
+footer{text-align:center;font-size:12px;color:#b0a493;border-top:1px solid var(--line);padding:26px;margin-top:70px}
+@media(max-width:900px){.brands{grid-template-columns:1fr 1fr}.core{grid-template-columns:1fr}.res,.enm{grid-template-columns:1fr}}
+@media(max-width:520px){.brands{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="kick">念响科技 · 品牌与产品线矩阵 v1.0.0</div>
+  <h1 class="serif">一套底层,<em>五副面孔</em></h1>
+  <p class="sub">同一个"说一句 → 有着落"的通信范式,针对不同人群与关系形态,长出五条产品线。本页含调研依据、差异化设计与可执行计划书。</p>
+</header>
+<div class="wrap">
+
+<h2 class="rv">核心不变层</h2>
+<div class="lead rv">无论皮肤怎么换,这一层"简单到令人发指"——它是所有玩法的地基。</div>
+<div class="core rv">
+  <div>
+    <div class="big"><b>说一句话</b> → 对方那里变成任务卡 → <b>收到 · 在办 · 办妥</b>。<br>没有第四步。</div>
+    <div class="stat">80 人功能偏好调研:「语音说完自动变任务卡」被 66/80 人选进 top3,断层第一 —— 核心范式即最大公约数。</div>
+  </div>
+  <div class="aiq">"AI 把「记住」的成本转移给机器,<br>把「被记住」的感受留给人。"<div class="stat" style="margin-top:8px">—— AI 原生价值定位(docs/research/AI_NATIVE_VALUE.md)</div></div>
+</div>
+
+<h2 class="rv">五条产品线</h2>
+<div class="lead rv">点击直达各自 GTM 提案页(A-E 均已上线可访问)。</div>
+<div class="brands">
+  <div class="bc rv" style="border-top-color:var(--cA)">
+    <div class="nm">念响</div><div class="en">主线 · 英文名见下方提案</div>
+    <div class="who">👤 25-45 成熟关系/文艺系;老夫老妻票仓(v1 调研 3:1)</div>
+    <div class="tagrow"><span class="tag">温柔回响</span><span class="tag">墨青×珊瑚</span><span class="tag">衬线</span></div>
+    <div class="ai"><b>AI 侧重</b>关系记忆:纪念日周期提醒、"她不吃香菜"型长期记忆</div>
+    <div class="ai"><b>特调功能</b>回响仪式 · 纪念日档案 · 年度回响册</div>
+    <a href="/gtm/nianxiang" style="background:var(--cA)">看提案 A</a>
+  </div>
+  <div class="bc rv" style="border-top-color:var(--cB)">
+    <div class="nm">拉勾勾</div><div class="en">PINKY PROMISE</div>
+    <div class="who">👤 18-28 恋爱前中期;年轻组票仓(v1 调研 4:3)</div>
+    <div class="tagrow"><span class="tag">童趣契约</span><span class="tag">樱粉×朱砂</span><span class="tag">盖章</span></div>
+    <div class="ai"><b>AI 侧重</b>仪式感放大:拉勾动效、兑现印章、周年契约书</div>
+    <div class="ai"><b>特调功能</b>拉勾三步 · 说到做到印章 · 小指挂坠(硬件首发)</div>
+    <a href="/gtm/pinky" style="background:var(--cB)">看提案 B</a>
+  </div>
+  <div class="bc rv" style="border-top-color:var(--cC)">
+    <div class="nm">女王陛下</div><div class="en">HER MAJESTY</div>
+    <div class="who">👤 20-35 亚文化圈层/权力反差玩法(细分小众,高粘性)</div>
+    <div class="tagrow"><span class="tag">暗黑鎏金</span><span class="tag">圣旨×狗牌</span><span class="tag">双人确认制</span></div>
+    <div class="ai"><b>AI 侧重</b>角色化文案引擎(宫廷腔),规则先于游戏的安全阀</div>
+    <div class="ai"><b>特调功能</b>圣旨卡 · 求摸头验收 · 刻字狗牌挂坠</div>
+    <a href="/gtm/queen" style="background:var(--cC)">看提案 C</a>
+  </div>
+  <div class="bc rv" style="border-top-color:var(--cD)">
+    <div class="nm">毒舌修勾</div><div class="en">ROASTPUP</div>
+    <div class="who">👤 18-30 玩梗青年;「毒舌催办」功能 18/80 入 top3 的票仓</div>
+    <div class="tagrow"><span class="tag">meme 贴纸</span><span class="tag">荧光绿×黑</span><span class="tag">互怼</span></div>
+    <div class="ai"><b>AI 侧重</b>毒舌文案引擎:阴阳怪气催办,替她催、替他求饶</div>
+    <div class="ai"><b>特调功能</b>鸽王通缉令 · 小饼干赎回协议 · 弹幕互怼</div>
+    <a href="/gtm/roastpup" style="background:var(--cD);color:#1a1a1a">看提案 D</a>
+  </div>
+  <div class="bc rv" style="border-top-color:var(--cE)">
+    <div class="nm">爸妈听话</div><div class="en">OKPARENTS</div>
+    <div class="who">👤 28-45 子女 × 55-75 父母;「长辈大字」18/80 入 top3</div>
+    <div class="tagrow"><span class="tag">家庭挂历</span><span class="tag">米黄×枣红</span><span class="tag">适老化</span></div>
+    <div class="ai"><b>AI 侧重</b>医嘱翻译成大白话 · 异常安静守护(不监控,只守护)</div>
+    <div class="ai"><b>特调功能</b>吃药打卡 · 一天三顿小卡片 · 床头一键呼叫盒</div>
+    <a href="/gtm/parents" style="background:var(--cE)">看提案 E</a>
+  </div>
+</div>
+
+<h2 class="rv">差异化功能比例:70% 共用底盘 + 30% 品牌特调</h2>
+<div class="lead rv">工程上一套代码、一套数据模型;品牌切换=话术包+主题+特调功能开关。这保证五条线不是五个产品,是一个产品的五种人格。</div>
+<div class="ratio rv">
+  <div class="bar"><div class="b70">70% 共用:语音→任务卡 · 三态 · 结对 · AI 方案 · 分享 · 搜索</div><div class="b30">30% 特调</div></div>
+  <table>
+    <tr><th>产品线</th><th>特调功能(30% 的具体内容)</th><th>刻意不做</th></tr>
+    <tr><td><span class="dot" style="background:var(--cA)"></span>念响</td><td>回响仪式加强版、纪念日周期任务、年度回响册(可打印)</td><td>排行、互怼类玩法</td></tr>
+    <tr><td><span class="dot" style="background:var(--cB)"></span>拉勾勾</td><td>拉勾确认动效、兑现印章墙、赎回=补一个约会</td><td>毒舌文案(与人设冲突)</td></tr>
+    <tr><td><span class="dot" style="background:var(--cC)"></span>女王陛下</td><td>宫廷话术包、求摸头验收、双人确认制开关(安全阀)</td><td>默认开启(必须双人确认)</td></tr>
+    <tr><td><span class="dot" style="background:var(--cD)"></span>毒舌修勾</td><td>毒舌催办引擎、鸽王通缉令、小饼干赎回协议、opt-in 鸽王榜</td><td>煽情文案;榜单默认关(调研仅 1/80 选排行)</td></tr>
+    <tr><td><span class="dot" style="background:var(--cE)"></span>爸妈听话</td><td>大字模式、吃药打卡、医嘱白话翻译、异常安静守护、床头硬件</td><td>位置/通话监控(红线)、进度百分比(父母不需要)</td></tr>
+  </table>
+</div>
+
+<h2 class="rv">调研依据(两轮 130 个模拟用户 + 22 个深度 persona)</h2>
+<div class="res">
+  <div class="rc rv"><b>66/80</b><p>「语音说完自动变任务卡」入选 top3 次数,断层第一。核心范式=语音即录入,别的都是叠加。</p></div>
+  <div class="rc rv"><b>20:19</b><p>v1 五五开但分层清晰:拉勾勾赢年轻组(4:3),念响赢老夫老妻(3:1)——系列化的直接依据。</p></div>
+  <div class="rc rv"><b>1/80</b><p>「opt-in 趣味排行」几乎无人选;而「赎回玩法」19/80——竞争性排名弱需求,俏皮的补过机制才是对的玩法。</p></div>
+</div>
+<div class="warn rv">⚠️ 诚实标注:以上为 AI 模拟调研(Kimi/Sonnet/MiniMax 扮演),非真实用户;v2 的五品牌互选票型出现均匀化偏差,品牌偏好以 v1 分层信号为准,功能偏好榜信号可用。正式投放前需真实用户小样本复核。明细:docs/research/。</div>
+
+<h2 class="rv">发展叙事与优先级</h2>
+<div class="lead rv">叙事主线:先让"有着落"成为一种关系语言(主线),再用不同方言说给不同的人听(系列),最后落到手上(硬件)。</div>
+<div class="ph">
+  <div class="n rv"><time>现在 · Phase 1</time><b>念响主线立标准</b><p>现有 v1.0 产品即念响线;打磨核心范式与口碑,英文名与域名定稿,小程序调研(创始人负责)。</p></div>
+  <div class="n f rv"><time>+30 天 · Phase 2</time><b>模式引擎上线</b><p>话术包+主题的架构改造(一套代码五种人格),毒舌修勾作为第一个"模式"内测——它是纯软件、票仓明确、传播性最强。</p></div>
+  <div class="n f rv"><time>+60 天 · Phase 3</time><b>拉勾勾硬件众筹(七夕档)</b><p>小指挂坠双件装 ¥299-349,BOM ¥55-75;拉勾勾品牌页转化,DJI 等现成设备当"官方适配"垫场。</p></div>
+  <div class="n f rv"><time>+90 天 · Phase 4</time><b>爸妈听话独立入口</b><p>需求最刚、决策人(子女)=付费人;以微信小程序形态优先(父母端零安装)。女王陛下作为皮肤随模式引擎低成本上线,不独立发。</p></div>
+</div>
+
+<h2 class="rv">90 天可执行计划书</h2>
+<div class="plan rv"><table>
+  <tr><th>窗口</th><th>产品</th><th>增长</th><th>验证指标</th></tr>
+  <tr><td>0-30 天</td><td>模式引擎架构;回响仪式/赎回玩法上线;Web Push;转写繁→简</td><td>念响页投放小红书试水;种子 50 对情侣内测</td><td>次周留存 ≥40%;人均周念念 ≥5 条</td></tr>
+  <tr><td>30-60 天</td><td>毒舌修勾模式公测;原生 App 壳(开发者账号就绪后);挂坠 ID 设计定稿</td><td>修勾梗图物料投抖音/B站;邀请码裂变</td><td>模式切换使用率 ≥25%;CAC≤¥15</td></tr>
+  <tr><td>60-90 天</td><td>拉勾勾挂坠众筹上线;爸妈听话小程序 MVP</td><td>七夕 campaign;众筹平台+线下快闪</td><td>众筹 ≥2000 件;付费转化 ≥5%</td></tr>
+</table></div>
+
+<h2 class="rv">念响 · 英文名提案</h2>
+<div class="lead rv">Sayso 已否决(so 有满不在乎感)。六个候选,推荐第一个。</div>
+<div class="enm">
+  <div class="ec top rv"><div class="rk">主推</div><b>Reecho</b><div class="why">re + echo,"再一次回响"。读音利落(锐扣),拼写独特可注册,直译"念念不忘必有回响"的后半句;与创始仓库 echoecho 一脉相承,资产无缝继承。</div></div>
+  <div class="ec rv"><div class="rk">备选 1</div><b>Resono</b><div class="why">拉丁语 resonare(共鸣)。国际化、高级感强,适合将来出海与硬件品牌;缺点是与"念"的中文语感距离稍远。</div></div>
+  <div class="ec rv"><div class="rk">备选 2</div><b>Everecho</b><div class="why">every + echo,"每一句都有回响"。语义最直白,slogan 天然:"Every word echoes back";略长。</div></div>
+  <div class="ec rv"><div class="rk">备选 3</div><b>Murmur</b><div class="why">呢喃耳语,亲密感拉满,英文原生词好读好记;缺点:重名产品多,商标难。</div></div>
+  <div class="ec rv"><div class="rk">备选 4</div><b>Echoly</b><div class="why">echo + -ly,轻快现代,域名友好;造词感稍强。</div></div>
+  <div class="ec rv"><div class="rk">备选 5</div><b>Kokoro Echo → Koecho</b><div class="why">ko(心/声)+ echo,东亚语感与英文的混血;小众但有记忆点。</div></div>
+</div>
+
+<footer>念响科技(暂定)· 品牌与产品线矩阵 · 数据与调研明细见 GitHub 仓库 docs/research · 本页由 AI 生成,模拟调研已如实标注</footer>
+</div>
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+setTimeout(()=>document.querySelectorAll('.rv:not(.in)').forEach(e=>e.classList.add('in')),1500);
+</script>
+</body>
+</html>

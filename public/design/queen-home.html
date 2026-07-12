@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>女王陛下 · App 主界面设计稿 390×844</title>
+<!--
+  静态高保真设计稿(非真实功能)· 品牌线 C「女王陛下」
+  共享信息架构:顶部小家名+统计条 / 中部任务卡(收到/在办+进度/办妥) / 底部输入条+大语音键
+  视觉基因取自 /public/gtm/queen.html:曜石黑 #0D0A0C · 勃艮第 #7A1E2E/#A62639 · 鎏金 #C9A45C/#E9CB8F · 衬线标题 · 金色发丝线
+-->
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --obsidian:#0D0A0C;
+  --panel:#1A1318;
+  --panel-2:#221822;
+  --burgundy:#7A1E2E;
+  --burgundy-deep:#3E0F1A;
+  --burgundy-bright:#A62639;
+  --gold:#C9A45C;
+  --gold-bright:#E9CB8F;
+  --gold-dim:rgba(201,164,92,.34);
+  --gold-line:rgba(201,164,92,.22);
+  --paper:#F3E9DA;
+  --paper-70:rgba(243,233,218,.72);
+  --paper-50:rgba(243,233,218,.52);
+  --paper-30:rgba(243,233,218,.30);
+  --serif:"Bodoni 72","Didot","Playfair Display","Songti SC","STSongti-SC","Noto Serif SC","Source Han Serif SC",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Source Han Sans SC","Noto Sans CJK SC","Microsoft YaHei",-apple-system,sans-serif;
+}
+html,body{background:#070507}
+body{display:flex;justify-content:center;padding:30px 0;font-family:var(--sans);-webkit-font-smoothing:antialiased}
+svg{display:block}
+
+/* ============ 屏幕画板 390×844 ============ */
+.screen{
+  position:relative;width:390px;height:844px;flex:none;overflow:hidden;
+  border-radius:48px;
+  background:
+    radial-gradient(420px 300px at 88% -60px,rgba(122,30,46,.38),transparent 70%),
+    radial-gradient(360px 300px at -80px 42%,rgba(122,30,46,.16),transparent 70%),
+    var(--obsidian);
+  color:var(--paper);
+  box-shadow:0 0 0 1px rgba(201,164,92,.28),0 30px 80px rgba(0,0,0,.8);
+  display:flex;flex-direction:column;
+}
+
+/* ============ 状态栏 + 灵动岛 ============ */
+.sb{position:relative;height:54px;flex:none}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:124px;height:36px;border-radius:20px;background:#000}
+.sb-side{position:absolute;top:12px;height:36px;display:flex;align-items:center;gap:6px}
+.sb-time{left:30px;font-size:15px;font-weight:600;letter-spacing:.4px;color:var(--paper)}
+.sb-icons{right:24px;color:var(--paper)}
+.sb-icons svg{width:auto;height:12px}
+
+/* ============ 顶部:小家名 ============ */
+.head{flex:none;padding:8px 22px 0;display:flex;align-items:center;justify-content:space-between}
+.head .crown{width:30px;height:30px;color:var(--gold)}
+.home-name{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:3px;color:var(--gold-bright);line-height:1.25}
+.home-name small{display:block;font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:2px;color:var(--paper-30);text-transform:uppercase;margin-top:3px;white-space:nowrap}
+.head-left{display:flex;align-items:center;gap:11px}
+.avatars{display:flex}
+.av{width:32px;height:32px;border-radius:50%;border:1px solid var(--gold-dim);display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:13px;color:var(--gold-bright);background:linear-gradient(160deg,var(--burgundy),var(--burgundy-deep))}
+.av+.av{margin-left:-9px;background:linear-gradient(160deg,#2A1F28,#171017)}
+
+/* ============ 统计条:本周护驾达成率 ============ */
+.stats{
+  flex:none;margin:14px 16px 0;padding:13px 16px 12px;
+  border:1px solid var(--gold-line);border-radius:18px;
+  background:linear-gradient(170deg,var(--panel-2),var(--panel));
+  position:relative;overflow:hidden;
+}
+.stats::before{content:"";position:absolute;inset:5px;border:1px solid rgba(201,164,92,.12);border-radius:13px;pointer-events:none}
+.stats-row{display:flex;align-items:baseline;justify-content:space-between}
+.stats-label{font-size:11px;letter-spacing:3px;color:var(--gold);font-weight:600}
+.stats-num{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--gold-bright);letter-spacing:1px}
+.stats-num small{font-size:13px;font-style:normal;margin-left:1px}
+.stats-bar{height:4px;border-radius:99px;background:rgba(243,233,218,.1);margin-top:9px;overflow:hidden}
+.stats-bar i{display:block;height:100%;width:92%;border-radius:99px;background:linear-gradient(90deg,var(--burgundy-bright),var(--gold))}
+.stats-sub{display:flex;gap:14px;margin-top:9px;font-size:10.5px;letter-spacing:1px;color:var(--paper-50)}
+.stats-sub b{color:var(--gold-bright);font-weight:600;font-family:var(--serif);font-style:italic;font-size:12.5px}
+.stats-sub .dot{width:3px;height:3px;border-radius:50%;background:var(--gold-dim);align-self:center}
+
+/* ============ 任务卡列表(圣旨卡) ============ */
+.list-cap{flex:none;display:flex;align-items:center;gap:10px;padding:18px 22px 10px;font-size:10.5px;letter-spacing:3.5px;color:var(--gold);font-weight:600}
+.list-cap::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold-dim),transparent)}
+.cards{flex:1;padding:6px 16px 0;display:flex;flex-direction:column;gap:15px;min-height:0}
+.tcard{
+  position:relative;
+  background:linear-gradient(165deg,#241923,#1B1319);
+  border:1px solid rgba(201,164,92,.18);border-radius:18px;
+  padding:14px 16px 13px;flex:none;
+}
+.tcard .no{font-size:9.5px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:6px}
+.tcard .no svg{width:11px;height:11px}
+.tcard .no .when{color:var(--paper-30);letter-spacing:1px;font-weight:500}
+.tcard .txt{font-size:14.5px;color:var(--paper);margin-top:7px;line-height:1.6;padding-right:44px}
+.tcard .meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:11px}
+/* 火漆印 */
+.seal{
+  position:absolute;top:-10px;right:14px;width:52px;height:52px;
+  border-radius:50% 46% 52% 48%/48% 52% 46% 54%;
+  background:radial-gradient(circle at 35% 30%,#C4404F,#7A1E2E 55%,#45111E 100%);
+  box-shadow:0 5px 12px rgba(0,0,0,.55),inset 0 2px 4px rgba(255,255,255,.16),inset 0 -3px 6px rgba(0,0,0,.5);
+  transform:rotate(-9deg);display:grid;place-items:center;
+}
+.seal::before{content:"";position:absolute;inset:6px;border-radius:inherit;border:1.5px solid rgba(233,203,143,.32)}
+.seal svg{width:20px;height:20px;color:rgba(233,203,143,.85)}
+.seal.wax-done{background:radial-gradient(circle at 35% 30%,#E9CB8F,#B08C43 55%,#6B501F 100%)}
+.seal.wax-done svg{color:rgba(46,28,6,.8)}
+/* 三态徽章 */
+.badge{display:inline-flex;align-items:center;gap:6px;flex:none;font-size:11px;font-weight:700;letter-spacing:1px;padding:5px 12px;border-radius:999px}
+.badge svg{width:12px;height:12px}
+.badge.received{background:rgba(201,164,92,.13);color:var(--gold-bright);border:1px solid rgba(201,164,92,.35)}
+.badge.doing{background:rgba(166,38,57,.2);color:#E79AA6;border:1px solid rgba(166,38,57,.55)}
+.badge.done{background:linear-gradient(160deg,var(--burgundy-bright),var(--burgundy));color:var(--gold-bright);border:1px solid rgba(233,203,143,.45)}
+.pbar{height:4px;border-radius:99px;background:rgba(243,233,218,.1);overflow:hidden;flex:1}
+.pbar i{display:block;height:100%;width:68%;border-radius:99px;background:linear-gradient(90deg,var(--burgundy-bright),var(--gold))}
+/* 军师注脚 */
+.ai{margin-top:11px;border:1px dashed rgba(201,164,92,.35);border-radius:12px;padding:8px 12px;font-size:11.5px;line-height:1.6;color:var(--paper-70);background:rgba(201,164,92,.05);display:flex;gap:8px;align-items:flex-start}
+.ai svg{width:14px;height:14px;color:var(--gold);flex:none;margin-top:2px}
+.ai b{color:var(--gold-bright);font-weight:600}
+/* 摸头验收按钮(办妥卡) */
+.pat-btn{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:1px;color:var(--gold-bright);border:1px solid var(--gold-dim);border-radius:999px;padding:6px 13px;background:rgba(201,164,92,.08)}
+.pat-btn svg{width:13px;height:13px}
+.proof{font-size:10.5px;color:var(--paper-30);letter-spacing:.5px}
+
+/* ============ 底部:输入条 + 大语音键 ============ */
+.dock{flex:none;padding:12px 16px 6px;border-top:1px solid var(--gold-line);background:linear-gradient(180deg,rgba(13,10,12,.4),rgba(13,10,12,.95) 45%)}
+.dock-row{display:flex;align-items:center;gap:12px}
+.input{
+  flex:1;height:48px;display:flex;align-items:center;gap:10px;padding:0 16px;
+  border:1px solid var(--gold-line);border-radius:999px;
+  background:linear-gradient(170deg,#201620,#171017);
+}
+.input svg{width:16px;height:16px;color:var(--gold);flex:none}
+.input .ph{font-size:13.5px;color:var(--paper-30);letter-spacing:1px}
+.voice{
+  width:62px;height:62px;flex:none;border-radius:50%;display:grid;place-items:center;position:relative;
+  background:linear-gradient(155deg,#E9CB8F 0%,#C9A45C 40%,#8A6A2F 100%);
+  box-shadow:0 8px 22px rgba(122,30,46,.5),inset 0 2px 3px rgba(255,240,200,.7),inset 0 -3px 6px rgba(40,25,0,.5);
+}
+.voice::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--gold-dim)}
+.voice svg{width:24px;height:24px;color:#2E1C06}
+.dock-hint{text-align:center;font-size:9.5px;letter-spacing:3px;color:var(--paper-30);margin-top:8px}
+.home-ind{width:120px;height:5px;border-radius:99px;background:rgba(243,233,218,.28);margin:8px auto 0}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="iCrown" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M15 72 L10 32 L32 48 L50 22 L68 48 L90 32 L85 72 Z"/><path d="M22 84 H78"/>
+    <circle cx="10" cy="28" r="4.5" fill="currentColor" stroke="none"/><circle cx="50" cy="17" r="4.5" fill="currentColor" stroke="none"/><circle cx="90" cy="28" r="4.5" fill="currentColor" stroke="none"/>
+  </g>
+  <g id="iPaw" fill="currentColor">
+    <ellipse cx="50" cy="66" rx="20" ry="16"/><ellipse cx="26" cy="42" rx="9" ry="11"/><ellipse cx="43" cy="30" rx="9" ry="11"/><ellipse cx="61" cy="30" rx="9" ry="11"/><ellipse cx="77" cy="42" rx="9" ry="11"/>
+  </g>
+  <g id="iBone" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 38 a10 10 0 1 0 -8 16 a10 10 0 1 0 8 16 l40 -8 a10 10 0 1 0 8 -16 a10 10 0 1 0 -8 -16 l-40 8 Z"/>
+  </g>
+  <g id="iAdvisor" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 12 L58 34 L82 34 L63 48 L70 72 L50 58 L30 72 L37 48 L18 34 L42 34 Z"/>
+  </g>
+  <g id="iHand" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 88 V46 a7 7 0 0 1 14 0 v-8 a7 7 0 0 1 14 0 v6 a7 7 0 0 1 14 0 v8 a6 6 0 0 1 12 0 v18 c0 12 -8 18 -18 18 h-16 c-10 0 -20 -8 -20 -20"/>
+  </g>
+  <g id="iScroll" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M26 16 H80 a8 8 0 0 1 0 16 H74 V78 a8 8 0 0 1 -8 8 H22 a8 8 0 0 1 -8 -8 V70 h16"/><path d="M26 16 a8 8 0 0 0 -8 8 v46"/><path d="M38 40 H60 M38 54 H60"/>
+  </g>
+  <g id="iMic" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="36" y="10" width="28" height="52" rx="14"/><path d="M22 48 a28 28 0 0 0 56 0 M50 76 V90 M36 90 H64"/>
+  </g>
+</defs></svg>
+
+<div class="screen">
+
+  <!-- 状态栏 -->
+  <div class="sb">
+    <div class="island"></div>
+    <div class="sb-side sb-time">21:36</div>
+    <div class="sb-side sb-icons">
+      <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+      <svg viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 12 L11.6 8.3 A5 5 0 0 0 5.4 8.3 Z"/><path d="M2.8 5.2 A8.6 8.6 0 0 1 14.2 5.2 L12.4 7.3 A5.9 5.9 0 0 0 4.6 7.3 Z" opacity=".95"/><path d="M0 2 A12.8 12.8 0 0 1 17 2 L15.2 4.1 A10.1 10.1 0 0 0 1.8 4.1 Z" opacity=".95"/></svg>
+      <svg viewBox="0 0 27 12" fill="none" stroke="currentColor"><rect x=".7" y=".7" width="21" height="10.6" rx="3" opacity=".5"/><rect x="2.5" y="2.5" width="14" height="7" rx="1.6" fill="currentColor" stroke="none"/><path d="M24 4 a2.6 2.6 0 0 1 0 4" opacity=".5"/></svg>
+    </div>
+  </div>
+
+  <!-- 顶部小家名 -->
+  <div class="head">
+    <div class="head-left">
+      <svg class="crown" viewBox="0 0 100 100"><use href="#iCrown"/></svg>
+      <div class="home-name">陛下的小王国<small>Her Majesty's Court · 同居第 412 天</small></div>
+    </div>
+    <div class="avatars"><span class="av">Q</span><span class="av">犬</span></div>
+  </div>
+
+  <!-- 统计条:本周护驾达成率 -->
+  <div class="stats">
+    <div class="stats-row">
+      <span class="stats-label">本周护驾达成率</span>
+      <span class="stats-num">92<small>%</small></span>
+    </div>
+    <div class="stats-bar"><i></i></div>
+    <div class="stats-sub">
+      <span>圣旨 <b>12</b> 道</span><span class="dot"></span>
+      <span>办妥 <b>11</b> 道</span><span class="dot"></span>
+      <span>摸头 <b>×9</b></span>
+    </div>
+  </div>
+
+  <!-- 任务卡列表 -->
+  <div class="list-cap">今日圣旨 · ROYAL DECREES</div>
+  <div class="cards">
+
+    <!-- 收到 -->
+    <div class="tcard">
+      <div class="seal"><svg viewBox="0 0 100 100"><use href="#iPaw"/></svg></div>
+      <div class="no"><svg viewBox="0 0 100 100"><use href="#iScroll"/></svg>圣旨 No.043<span class="when">· 刚刚</span></div>
+      <div class="txt">下班顺路把我的快递取了,再带一杯燕麦拿铁,少冰。</div>
+      <div class="meta">
+        <span class="proof">忠犬已接旨</span>
+        <span class="badge received"><svg viewBox="0 0 100 100"><use href="#iBone"/></svg>汪!遵命</span>
+      </div>
+    </div>
+
+    <!-- 在办 + 进度 -->
+    <div class="tcard">
+      <div class="seal"><svg viewBox="0 0 100 100"><use href="#iPaw"/></svg></div>
+      <div class="no"><svg viewBox="0 0 100 100"><use href="#iScroll"/></svg>圣旨 No.042<span class="when">· 2 小时前</span></div>
+      <div class="txt">周年纪念日的餐厅,给我三个不会翻车的选项。</div>
+      <div class="meta">
+        <div class="pbar"><i></i></div>
+        <span class="badge doing">拼命摇尾巴中 68%</span>
+      </div>
+      <div class="ai">
+        <svg viewBox="0 0 100 100"><use href="#iAdvisor"/></svg>
+        <span><b>军师</b>:已按「窗边位 + 安静 + 有黑珍珠」筛出 3 家候选,附人均与订位攻略,请忠犬过目。</span>
+      </div>
+    </div>
+
+    <!-- 办妥 -->
+    <div class="tcard">
+      <div class="seal wax-done"><svg viewBox="0 0 100 100"><use href="#iCrown"/></svg></div>
+      <div class="no"><svg viewBox="0 0 100 100"><use href="#iScroll"/></svg>圣旨 No.041<span class="when">· 昨天</span></div>
+      <div class="txt">换季了,把加湿器找出来,洗干净上岗。</div>
+      <div class="meta">
+        <span class="badge done"><svg viewBox="0 0 100 100"><use href="#iPaw"/></svg>办妥 · 求摸头</span>
+        <span class="pat-btn"><svg viewBox="0 0 100 100"><use href="#iHand"/></svg>摸摸头,准了</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 底部输入条 + 大语音键 -->
+  <div class="dock">
+    <div class="dock-row">
+      <div class="input">
+        <svg viewBox="0 0 100 100"><use href="#iScroll"/></svg>
+        <span class="ph">颁一道旨意…</span>
+      </div>
+      <div class="voice"><svg viewBox="0 0 100 100"><use href="#iMic"/></svg></div>
+    </div>
+    <div class="dock-hint">长按金印 · 语音降旨</div>
+    <div class="home-ind"></div>
+  </div>
+
+</div>
+</body>
+</html>
