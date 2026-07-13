@@ -1,0 +1,390 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>拉勾勾 Pinky Promise · Logo 提案 v2 · 人手,不是铁钩</title>
+<script>document.documentElement.className='js';</script>
+<style>
+:root{
+  --cream:#FFF8F0; --ink:#33272A; --pink:#F4A7B9; --red:#C73E3A; --indigo:#35657B;
+  --bg:#FFF8F0; --fg:#33272A; --mut:#8A7A75; --card:#FFFFFF; --edge:#EBDDD2; --soft:#FDF1E7;
+}
+html[data-t="dark"]{
+  --bg:#1A1416; --fg:#F3E7DE; --mut:#9B8A84; --card:#241C1F; --edge:#3A2E32; --soft:#2A2023;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.65;transition:background .4s,color .4s}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px 120px}
+.rv{opacity:1;transform:none}
+html.js .rv{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+html.js .rv.in{opacity:1;transform:none}
+header{padding:76px 0 40px;border-bottom:1px solid var(--edge)}
+.eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--red);font-weight:700}
+h1{font-size:clamp(34px,5.4vw,58px);line-height:1.1;letter-spacing:-.02em;margin:16px 0 0;font-weight:800}
+h1 em{font-style:normal;color:var(--pink)}
+.lede{margin-top:20px;max-width:680px;color:var(--mut);font-size:15px}
+.lede b{color:var(--fg);font-weight:650}
+.toolbar{position:fixed;top:20px;right:20px;z-index:50}
+.tgl{border:1px solid var(--edge);background:var(--card);color:var(--fg);border-radius:999px;
+  padding:9px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.tgl:hover{border-color:var(--pink)}
+section{padding:56px 0;border-bottom:1px solid var(--edge)}
+h2{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:26px}
+.why{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:820px){.why{grid-template-columns:1fr}}
+.box{border:1px solid var(--edge);border-radius:18px;padding:24px;background:var(--card)}
+.box.bad{border-color:#E4A8A4}
+.box h3{font-size:15px;margin-bottom:10px;font-weight:750}
+.box.bad h3{color:var(--red)}
+.box p{font-size:13.5px;color:var(--mut)}.box p+p{margin-top:9px}
+.box b{color:var(--fg);font-weight:650}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--soft);padding:1px 5px;border-radius:5px}
+.pal{display:flex;gap:12px;flex-wrap:wrap}
+.sw{border:1px solid var(--edge);border-radius:14px;overflow:hidden;width:132px;background:var(--card)}
+.sw i{display:block;height:60px}
+.sw span{display:block;padding:8px 10px;font-size:10.5px;letter-spacing:.06em;color:var(--mut);font-family:ui-monospace,Menlo,monospace}
+.sw span b{display:block;color:var(--fg);font-size:11.5px;font-family:inherit;letter-spacing:0;font-weight:650}
+.card{border:1px solid var(--edge);border-radius:24px;background:var(--card);padding:30px;margin-top:26px;
+  display:grid;grid-template-columns:1fr 358px;gap:34px}
+@media(max-width:980px){.card{grid-template-columns:1fr}}
+.ctop{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
+.num{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--cream);background:var(--ink);border-radius:8px;padding:5px 9px;flex:none;margin-top:3px}
+html[data-t="dark"] .num{background:var(--pink);color:#241C1F}
+.cname{font-size:21px;font-weight:800;letter-spacing:-.01em;line-height:1.3}
+.cmed{font-size:11.5px;color:var(--mut);letter-spacing:.05em;margin-top:2px}
+.badge{margin-left:auto;flex:none;font-size:11px;font-weight:700;padding:6px 12px;border-radius:999px;white-space:nowrap;margin-top:2px}
+.b-y{background:#E7F3EA;color:#1F6B39}.b-m{background:#FDF0DC;color:#95601A}.b-n{background:#FBE4E2;color:#A32B26}
+html[data-t="dark"] .b-y{background:#1D3325;color:#8FD3A6}
+html[data-t="dark"] .b-m{background:#3A2E19;color:#E8C07A}
+html[data-t="dark"] .b-n{background:#3A211F;color:#EC9C96}
+.rows{display:flex;flex-direction:column;gap:20px}
+.row{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.unit{display:flex;flex-direction:column;align-items:center;gap:7px}
+.cap{font-size:9.5px;color:var(--mut);letter-spacing:.08em;font-family:ui-monospace,Menlo,monospace}
+.tile{border-radius:22.5%;overflow:hidden;position:relative;flex:none;background:var(--bg2);
+  box-shadow:0 1px 0 rgba(0,0,0,.05),0 10px 30px -14px rgba(0,0,0,.28)}
+.tile svg{display:block;width:100%;height:100%}
+.big{width:196px;height:196px}.s60{width:60px;height:60px}.s30{width:30px;height:30px}
+.zoom{width:96px;height:96px;border-radius:18%;border:1px dashed var(--edge);display:flex;align-items:center;justify-content:center;background:var(--soft)}
+.zoom .tile{transform:scale(3.2)}
+.lock{display:flex;align-items:center;gap:14px;padding:14px 20px;border-radius:14px;flex:none}
+.lock .lgo{width:52px;height:52px;flex:none}
+.lock .zh{font-size:21px;font-weight:800;letter-spacing:.04em}
+.lock .en{font-size:8.5px;letter-spacing:.32em;font-weight:700;margin-top:4px;opacity:.62}
+.meta dt{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-top:16px}
+.meta dt:first-child{margin-top:0}
+.meta dd{font-size:13.5px;margin-top:5px}
+.meta dd.m{color:var(--mut)}
+.meta .idea{font-size:15px;font-weight:650;line-height:1.55}
+.meta b{font-weight:700}
+footer{padding:56px 0;color:var(--mut);font-size:12.5px}
+footer a{color:var(--pink)}
+
+/* ============================================================
+   DRAWING LAYER — everything crosses the <use> boundary via
+   inherited CSS custom properties + plain decoration classes.
+   NO `.vN <descendant>` selectors (they can't reach into use-shadow).
+   ============================================================ */
+.tile{
+  --bg2:#FFF8F0; --sk:#FFD9D2; --ln:#33272A; --ac:#F4A7B9; --ac2:#C73E3A;
+  --w-pk:11; --w-wr:30; --w-th:24;
+  --uw-sh:7; --uw-pk:17; --uw-wr:38; --uw-th:31;
+  --hfo:.32;
+}
+.tile.dk{--bg2:#241C1F; --sk:#F7C9C4; --ln:#F3E7DE}
+/* base hand shapes */
+.sh{fill:var(--sk);stroke:none}
+.ul .sh{fill:var(--ln);stroke:var(--ln);stroke-width:var(--uw-sh);stroke-linejoin:round}
+.pk{fill:none;stroke:var(--sk);stroke-width:var(--w-pk);stroke-linecap:round;stroke-linejoin:round}
+.ul .pk{stroke:var(--ln);stroke-width:var(--uw-pk)}
+.wr{fill:none;stroke:var(--sk);stroke-width:var(--w-wr);stroke-linecap:round}
+.ul .wr{stroke:var(--ln);stroke-width:var(--uw-wr)}
+.th{fill:none;stroke:var(--sk);stroke-width:var(--w-th);stroke-linecap:round}
+.ul .th{stroke:var(--ln);stroke-width:var(--uw-th)}
+/* decorations — plain classes, colored via inherited vars w/ fallbacks */
+.hi{fill:var(--hi,#FFFFFF);opacity:.5}
+.hi2{fill:var(--hi2,#FFF3EC);opacity:.6}
+.shade{fill:var(--shade,#D98F88);opacity:.4}
+.crease{fill:none;stroke:var(--crease,#C98D89);stroke-width:2.4;stroke-linecap:round;opacity:.7}
+.nail{fill:var(--nail,#FFF1EB);opacity:.9}
+.blush{fill:var(--blush,#F5889C);opacity:.6}
+.spark{fill:var(--spark,#33272A)}
+.heartfill{fill:var(--ac);opacity:var(--hfo)}
+.seal{fill:var(--seal,#C73E3A)}
+.sealin{fill:none;stroke:var(--sealin,#FFF8F0);stroke-width:2.4;opacity:.4}
+.fp{fill:none;stroke:var(--fp,#C73E3A);stroke-width:2.2;opacity:.85}
+/* structural helper groups — plain classes set inheritable vars */
+.carve{--sk:var(--bg2);--ln:var(--bg2)}
+.wash{--sk:var(--ac);--ln:var(--ac);opacity:.7;filter:url(#f-wash)}
+.hand-a{--sk:#F4A7B9}
+.hand-b{--sk:#35657B}
+
+/* ---- per-variant palette / weights (VARS ONLY — these inherit in) ---- */
+.v1{--sk:#FFFFFF;--ln:#33272A;--uw-sh:17;--uw-pk:29;--uw-wr:51;--uw-th:43}
+.v1.dk{--sk:#2E2529;--ln:#F6ECE4}
+.v2{--sk:#33272A;--ln:#FFF8F0}
+.v2.dk{--sk:#F3E7DE;--ln:#241C1F}
+.v3{--sk:#FFFDFB;--ln:#33272A;--uw-sh:8;--uw-pk:18;--uw-wr:40;--uw-th:33}
+.v3.dk{--sk:#2C2327;--ln:#F3E7DE}
+.v4{--sk:url(#g-clay);--ln:#E7A39D;--bg2:#FFF1E7;--hi:#FFFFFF}
+.v4.dk{--bg2:#221A1D;--ln:#B87C77}
+.v5{--sk:#FFD9D2;--ln:#4A3238;--uw-sh:5;--uw-pk:15;--uw-wr:36;--uw-th:29}
+.v5.dk{--sk:#F0BDB6;--ln:#2A1F22}
+.v6{}
+.v6.dk{--hfo:.44}
+.v7{--bg2:#FFF8F0;--seal:#C73E3A;--sealin:#FFF8F0}
+.v7.dk{--bg2:#241C1F;--seal:#D8524D}
+.v8{--sk:#FFD9D2;--ln:#33272A;--uw-sh:10;--uw-pk:20;--uw-wr:42;--uw-th:35}
+.v8.dk{--sk:#FFD9D2;--ln:#241C1F;--spark:#FFD9D2}
+.v9{--ln:#FFF8F0}
+.v9.dk{--ln:#241C1F}
+.v10{--sk:#FBE0D8;--ln:#C73E3A;--uw-sh:6;--uw-pk:16;--uw-wr:37;--uw-th:30;--fp:#C73E3A}
+.v10.dk{--sk:#F5CFC7;--ln:#8E2723;--fp:#E86B65}
+</style>
+
+<!-- ================= SPRITE ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <!-- LEFT hand base: 拳 + 竖起拇指 + 3 指关节(朝内) + 小臂 -->
+  <g id="hb">
+    <path class="wr" d="M32,126 L26,160"/>
+    <ellipse class="sh" cx="36" cy="100" rx="26" ry="30"/>
+    <path class="th" d="M30,80 L36,56"/>
+    <circle class="sh" cx="50" cy="74" r="9.5"/>
+    <circle class="sh" cx="60" cy="88" r="9.5"/>
+    <circle class="sh" cx="64" cy="103" r="9"/>
+  </g>
+  <g id="hL">
+    <use href="#hb"/>
+    <path class="pk" d="M66,110 C80,109 96,110 108,114 C120,118 126,130 118,140 C110,150 96,144 95,131"/>
+    <circle class="sh" cx="95" cy="131" r="6"/>
+  </g>
+  <g id="hR">
+    <g transform="translate(200,0) scale(-1,1)"><g transform="translate(0,20)"><use href="#hb"/></g></g>
+    <path class="pk" d="M134,134 C120,135 104,134 92,130 C80,126 74,114 82,104 C90,94 104,100 105,113"/>
+    <circle class="sh" cx="105" cy="113" r="6"/>
+  </g>
+  <g id="pair">
+    <g><g class="ul"><use href="#hL"/></g><use href="#hL"/></g>
+    <g><g class="ul"><use href="#hR"/></g><use href="#hR"/></g>
+  </g>
+  <!-- heart variant: two half-heart pinkies -->
+  <g id="hL6"><use href="#hb"/>
+    <path class="pk" d="M66,110 C76,120 88,128 100,136 C114,126 124,112 125,96 C126,84 116,76 106,80 C100,82 99,86 100,90"/></g>
+  <g id="hR6"><g transform="translate(200,0) scale(-1,1)"><g transform="translate(0,20)"><use href="#hb"/></g></g>
+    <path class="pk" d="M134,130 C124,134 112,130 100,136 C86,126 76,112 75,96 C74,84 84,76 94,80 C100,82 101,86 100,90"/></g>
+
+  <radialGradient id="g-clay" cx="34%" cy="26%" r="82%">
+    <stop offset="0" stop-color="#FFE7DF"/><stop offset=".55" stop-color="#FBC9C2"/><stop offset="1" stop-color="#E39C97"/>
+  </radialGradient>
+  <filter id="f-clay" x="-30%" y="-30%" width="170%" height="170%">
+    <feDropShadow dx="0" dy="4" stdDeviation="4.5" flood-color="#8A5A55" flood-opacity=".32"/></filter>
+  <filter id="f-rough" x="-14%" y="-14%" width="128%" height="128%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="3.2" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="f-seal" x="-14%" y="-14%" width="128%" height="128%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="4" seed="3" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="f-wash" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="2.6"/></filter>
+  <clipPath id="cp-fists"><ellipse cx="36" cy="100" rx="26" ry="30"/><ellipse cx="164" cy="120" rx="26" ry="30"/></clipPath>
+
+  <!-- ===== 10 symbols ===== -->
+  <symbol id="v1" viewBox="-8 9 216 216">
+    <g class="wash" transform="translate(5,6)"><use href="#pair"/></g>
+    <g filter="url(#f-rough)"><use href="#pair"/></g></symbol>
+  <symbol id="v2" viewBox="-8 9 216 216"><use href="#pair"/></symbol>
+  <symbol id="v3" viewBox="-8 9 216 216"><use href="#pair"/></symbol>
+  <symbol id="v4" viewBox="-8 9 216 216">
+    <g filter="url(#f-clay)"><use href="#hL"/></g>
+    <g filter="url(#f-clay)"><use href="#hR"/></g>
+    <ellipse class="hi" cx="27" cy="86" rx="9" ry="6" transform="rotate(-24 27 86)"/>
+    <ellipse class="hi" cx="155" cy="106" rx="9" ry="6" transform="rotate(-24 155 106)"/></symbol>
+  <symbol id="v5" viewBox="-8 9 216 216">
+    <use href="#pair"/>
+    <g clip-path="url(#cp-fists)">
+      <ellipse class="shade" cx="42" cy="126" rx="30" ry="22"/>
+      <ellipse class="shade" cx="170" cy="146" rx="30" ry="22"/>
+      <ellipse class="hi2" cx="26" cy="84" rx="12" ry="8" transform="rotate(-26 26 84)"/>
+      <ellipse class="hi2" cx="154" cy="104" rx="12" ry="8" transform="rotate(-26 154 104)"/>
+    </g>
+    <path class="crease" d="M46,74 C52,82 55,93 55,104"/>
+    <path class="crease" d="M154,94 C148,102 145,113 145,124"/>
+    <ellipse class="nail" cx="95" cy="131" rx="3.2" ry="2.4" transform="rotate(-30 95 131)"/>
+    <ellipse class="nail" cx="105" cy="113" rx="3.2" ry="2.4" transform="rotate(-30 105 113)"/></symbol>
+  <symbol id="v6" viewBox="-8 9 216 216">
+    <path class="heartfill" d="M100,136 C114,126 125,112 125,97 C125,84 116,77 106,80 C102,81 100,85 100,89 C100,85 98,81 94,80 C84,77 75,84 75,97 C75,112 86,126 100,136 Z"/>
+    <g><g class="ul"><use href="#hL6"/></g><use href="#hL6"/></g>
+    <g><g class="ul"><use href="#hR6"/></g><use href="#hR6"/></g></symbol>
+  <symbol id="v7" viewBox="-8 9 216 216">
+    <g filter="url(#f-seal)">
+      <rect class="seal" x="-8" y="9" width="216" height="216" rx="30"/>
+      <g class="carve"><use href="#pair"/></g></g>
+    <rect class="sealin" x="0" y="17" width="200" height="200" rx="22"/></symbol>
+  <symbol id="v8" viewBox="-8 9 216 216">
+    <use href="#pair"/>
+    <circle class="blush" cx="28" cy="112" r="8"/>
+    <circle class="blush" cx="156" cy="132" r="8"/>
+    <circle class="blush" cx="95" cy="131" r="4.5"/>
+    <circle class="blush" cx="105" cy="113" r="4.5"/>
+    <path class="spark" d="M170,50 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 z"/>
+    <path class="spark" d="M22,44 l2.4,6 6,2.4 -6,2.4 -2.4,6 -2.4,-6 -6,-2.4 6,-2.4 z"/>
+    <path class="spark" d="M150,178 l2,5 5,2 -5,2 -2,5 -2,-5 -5,-2 5,-2 z"/></symbol>
+  <symbol id="v9" viewBox="-8 9 216 216">
+    <g class="hand-a"><g class="ul"><use href="#hL"/></g><use href="#hL"/></g>
+    <g class="hand-b"><g class="ul"><use href="#hR"/></g><use href="#hR"/></g></symbol>
+  <symbol id="v10" viewBox="-8 9 216 216">
+    <use href="#pair"/>
+    <g class="fp" clip-path="url(#cp-fists)">
+      <ellipse cx="36" cy="100" rx="5" ry="6"/><ellipse cx="36" cy="100" rx="9.5" ry="11.5"/>
+      <ellipse cx="36" cy="100" rx="14" ry="17"/><ellipse cx="36" cy="100" rx="18.5" ry="22.5"/>
+      <ellipse cx="36" cy="100" rx="23" ry="28"/>
+      <ellipse cx="164" cy="120" rx="5" ry="6"/><ellipse cx="164" cy="120" rx="9.5" ry="11.5"/>
+      <ellipse cx="164" cy="120" rx="14" ry="17"/><ellipse cx="164" cy="120" rx="18.5" ry="22.5"/>
+      <ellipse cx="164" cy="120" rx="23" ry="28"/>
+      <path d="M36,68 L36,80"/><path d="M164,152 L164,140"/></g></symbol>
+</defs></svg>
+
+<div class="toolbar"><button class="tgl" id="tg">◐ 深/浅看板</button></div>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow rv">Brand Proposal v2 · 推倒重来</div>
+  <h1 class="rv">拉勾勾<br><em>是两只小指,不是两个铁钩。</em></h1>
+  <p class="lede rv">
+    v1 被全盘否决的根因不是"画得不好",是<b>画错了东西</b>——它由 <code>A17 17 0 1 1</code> 这类纯圆弧拼成两个互相咬合的金属钩,没有拳头、没有指关节、没有拇指,大脑只能读成五金件。
+    v2 的第一动作不是画,是<b>去看一张真实的照片</b>(Wikimedia Commons《Pinky swear closeup》),从人手解剖重建几何:
+    <b>握拳的体块 + 朝内的指关节起伏 + 竖起的拇指 + 从下方升起的小臂</b>。拳头承载"这是手",勾住只是中间那个很小的细节。10 个变体共用同一套底层骨架,只换"画法/媒介"。
+  </p>
+</header>
+
+<section>
+  <h2>为什么 v1 翻车 / v2 修了什么</h2>
+  <div class="why">
+    <div class="box bad rv">
+      <h3>v1 的三个致命错误</h3>
+      <p><b>1. 没有手,只有钩。</b>纯圆弧构成,没有拳头体块,大脑没有"手"的落脚点,只好读成钩子 / 锚 / 问号。</p>
+      <p><b>2. 等宽工业线条 + 完美圆弧。</b>真手指有关节、会变粗细、指尖是圆润指腹。完美圆弧正是机械感的来源。</p>
+      <p><b>3. 抽象度过高。</b>"拉勾勾"是童年、是撒娇、是体温,需要肉感;过度几何化把温度全蒸发了。</p>
+    </div>
+    <div class="box rv">
+      <h3>v2 的四条修正(全 10 版共用)</h3>
+      <p><b>1. 拳头是主角。</b>每只手 = 圆润拳体 + 3 个朝内的指关节 + <b>竖起的拇指</b>(最强的"这是手"信号,v1 完全没有) + 从画面下方升起的小臂。</p>
+      <p><b>2. 手是镜像,结是旋转。</b>照片给的答案:两手左右镜像,但两根小指绕结心 180° 旋转对称,才可能真正互穿——此前"纯镜像"推演必然把两指糊成一坨,根因在此。</p>
+      <p><b>3. 小指分掌节与勾节两段</b>(粗→细),指尖带圆润指腹,缠绕是有机螺旋而非正圆。</p>
+      <p><b>4. 一高一低 = 两个人。</b>右手整体下移、略小,不靠性别符号、靠身形差异说"这是两个人"。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>色板</h2>
+  <div class="pal rv">
+    <div class="sw"><i style="background:#F4A7B9"></i><span><b>樱粉</b>#F4A7B9</span></div>
+    <div class="sw"><i style="background:#C73E3A"></i><span><b>朱砂</b>#C73E3A</span></div>
+    <div class="sw"><i style="background:#FFF8F0"></i><span><b>奶油</b>#FFF8F0</span></div>
+    <div class="sw"><i style="background:#33272A"></i><span><b>墨</b>#33272A</span></div>
+    <div class="sw"><i style="background:#FFD9D2"></i><span><b>肤(派生)</b>#FFD9D2</span></div>
+    <div class="sw"><i style="background:#35657B"></i><span><b>靛青(突破)</b>#35657B</span></div>
+  </div>
+</section>
+
+<section><h2>10 个变体</h2><div id="cards"></div></section>
+
+<footer>几何 ground truth:Wikimedia Commons《Pinky swear closeup》(CC)。单文件纯内联,零外部依赖。渐现动画 <code>html.js</code> 门控 + 1.5s <code>setTimeout</code> 兜底。</footer>
+</div>
+
+<script>
+const V=[
+ {n:1,name:"手绘线条派",med:"MARKER / 马克笔线稿 + 溢出铺色",score:"y",st:"能",
+  idea:"墨线勾轮廓,粉色马克笔故意画出线外——像小孩涂色本没涂准。",
+  pro:"最有体温;线外溢色是手工感最低成本、最高辨识度的信号;墨线让指间叠压最清楚。",
+  con:"线稿在 30px 会掉线重;深浅底需两套线色(已分别配置)。",
+  eye:"能。拳 + 拇指 + 关节三件套齐全,轮廓线让叠压关系一目了然。"},
+ {n:2,name:"剪影派",med:"SOLID SILHOUETTE / 实心剪影",score:"y",st:"能",
+  idea:"只留剪影,用奶油色的'缝'切开两手的叠压——最古典也最不会错。",
+  pro:"可读性天花板。30px 唯一还能保住结构的做法;单色可印可刻可绣。",
+  con:"无肉感与明暗,温度全靠形体的圆润度撑。",
+  eye:"能。10 版里一眼度最高,<b>建议作为主 App icon</b>。"},
+ {n:3,name:"极简白描",med:"HAIRLINE CONTOUR / 等宽发丝线",score:"m",st:"勉强",
+  idea:"工笔白描:一根等宽的线只描轮廓,不填色不上调子。",
+  pro:"最克制高级,做线性 UI 图标(tab bar)天然合适,不与内容抢。",
+  con:"30px 必糊(线宽被压到亚像素)。<b>诚实说:叠压处必须断笔</b>,否则丢失前后关系反而读不出两只手——我判断'断笔'比'一笔'更重要,没有为满足命题牺牲可读性。",
+  eye:"勉强。120px 以上没问题,30px 不能用,须换剪影。"},
+ {n:4,name:"圆润积木派",med:"CLAY / 黏土捏塑",score:"y",st:"能",
+  idea:"像黏土一坨坨捏出来:拳是球、关节是小球、手指是软管,带柔和体积光与落影。",
+  pro:"体积感 = 温度感,10 版里最'可爱可捏';落影自然解决前后遮挡。",
+  con:"渐变 + 投影在极小尺寸退化成一坨模糊;单色 / 印刷场景需另出剪影版。",
+  eye:"能。球体堆叠反而强化了'指关节'的读法。"},
+ {n:5,name:"温柔写实",med:"SOFT REALISM / 明暗 + 指甲",score:"y",st:"能",
+  idea:"最接近真手:皮肤色 + 掌缘暗部 + 高光 + 一点指甲,但仍是平涂插画不是照片。",
+  pro:"'这是人的手'说得最狠;指甲是压垮'铁钩'嫌疑的最后一根稻草。",
+  con:"信息量最大,60px 以下暗部高光互相污染;品牌感偏软、不够锋利。",
+  eye:"能,且是'一眼认出人手'最强的一版(有指甲)。"},
+ {n:6,name:"心形合抱",med:"HEART / 双指各画一半心",score:"y",st:"能",
+  idea:"两根小指各画心的一半,在心尖交叉扣住——心不是装饰,心<b>就是</b>这两根手指本身。",
+  pro:"概念最锋利:承诺 = 心;心的负空间加粉底后极跳。",
+  con:"为成心形,小指弯曲比真实解剖夸张;少了粉底会弱一半。",
+  eye:"能(手仍是手),但注意力先被心抓走,'小指'是第二眼才读到。"},
+ {n:7,name:"朱砂印",med:"SEAL / 手刻印章",score:"m",st:"勉强",
+  idea:"朱砂方印,双手阴刻留白。呼应中国人的承诺仪式——拉勾之后要'盖章'(大拇指一按)。",
+  pro:"文化根最深;大色块在一堆浅色 App 图标里最跳;边缘侵蚀噪声=手刻非机雕。",
+  con:"阴刻靠留白读形,留白在 30px 被朱砂吃掉;红块偏重,长期看会腻。",
+  eye:"勉强。120px 完全没问题,30px 只剩红方块。"},
+ {n:8,name:"童趣派",med:"PLAYFUL / 加粗轮廓 + 腮红",score:"y",st:"能",
+  idea:"轮廓加粗成贴纸,拳头和指尖点小红晕,撒三颗星——撒娇,不幼稚。",
+  pro:"加粗轮廓让 30px 存活率显著高于线稿;腮红把肉感直接点出来。",
+  con:"星星在小尺寸变噪点(30px 应关掉);略甜,走成年克制路线会偏。",
+  eye:"能。粗轮廓 + 腮红,拳头体块最厚实。"},
+ {n:9,name:"双色分手派",med:"DUOTONE / 樱粉 × 靛青",score:"y",st:"能",
+  idea:"两只手用两个颜色分开——不是'男蓝女粉'的性别符号,是<b>两个独立人格</b>。",
+  pro:"'这是两个人',一个色差胜过一切造型技巧;30px 时颜色是最后活下来的信息。",
+  con:"<b>一次色板突破</b>,加了靛青 #35657B。理由:四色全暖,两手在小尺寸黏成一团肉色;冷暖对冲是切开'你/我'的唯一手段。不接受可退回樱粉×朱砂,但对比度掉一半。",
+  eye:"能,且是 30px 下唯一还能分辨'两只'手的版本。"},
+ {n:10,name:"指纹契约",med:"FINGERPRINT / 大胆突破版",score:"y",st:"能",
+  idea:"手的体块里长出指纹螺纹。<b>拉勾 + 按手印</b>:小指是童年的契约,指纹是成年的契约,两种最高承诺叠在一起。",
+  pro:"唯一有'第二层':远看两只手,近看两枚指纹=两个独一无二的人;缩小时螺纹融成实心剪影,<b>退化路径天然安全</b>。",
+  con:"螺纹在 60px 会起摩尔纹(线宽已压到 2.2 并只铺在拳体);印刷注意最小线宽。",
+  eye:"能。兜底形态就是剪影派。"}
+];
+const S={y:["b-y","一眼认出 ✓ 能"],m:["b-m","一眼认出 △ 勉强"],n:["b-n","一眼认出 ✗ 不能"]};
+const ic=v=>`<svg viewBox="0 0 200 200"><use href="#v${v}" width="200" height="200"/></svg>`;
+document.getElementById('cards').innerHTML=V.map(v=>`
+<div class="card rv">
+ <div>
+  <div class="ctop">
+   <span class="num">${String(v.n).padStart(2,'0')}</span>
+   <div><div class="cname">${v.name}</div><div class="cmed">${v.med}</div></div>
+   <span class="badge ${S[v.score][0]}">${S[v.score][1]}</span>
+  </div>
+  <div class="rows">
+   <div class="row">
+    <div class="unit"><div class="tile big v${v.n}">${ic(v.n)}</div><div class="cap">1024 · LIGHT</div></div>
+    <div class="unit"><div class="tile big v${v.n} dk">${ic(v.n)}</div><div class="cap">1024 · DARK</div></div>
+    <div class="unit"><div class="tile s60 v${v.n}">${ic(v.n)}</div><div class="cap">60px</div></div>
+    <div class="unit"><div class="tile s60 v${v.n} dk">${ic(v.n)}</div><div class="cap">60 DK</div></div>
+    <div class="unit"><div class="tile s30 v${v.n}">${ic(v.n)}</div><div class="cap">30px</div></div>
+    <div class="unit"><div class="tile s30 v${v.n} dk">${ic(v.n)}</div><div class="cap">30 DK</div></div>
+    <div class="unit"><div class="zoom"><div class="tile s30 v${v.n}">${ic(v.n)}</div></div><div class="cap">30px ×3.2 生死线</div></div>
+   </div>
+   <div class="row">
+    <div class="lock" style="background:#FFF8F0;color:#33272A"><div class="lgo tile v${v.n}">${ic(v.n)}</div><div><div class="zh">拉勾勾</div><div class="en">PINKY PROMISE</div></div></div>
+    <div class="lock" style="background:#241C1F;color:#F3E7DE"><div class="lgo tile v${v.n} dk">${ic(v.n)}</div><div><div class="zh">拉勾勾</div><div class="en">PINKY PROMISE</div></div></div>
+   </div>
+  </div>
+ </div>
+ <dl class="meta">
+  <dt>设计概念</dt><dd class="idea">${v.idea}</dd>
+  <dt>优点</dt><dd class="m">${v.pro}</dd>
+  <dt>风险</dt><dd class="m">${v.con}</dd>
+  <dt>一眼能认出是小指吗</dt><dd><b>${v.st}</b> — ${v.eye}</dd>
+ </dl>
+</div>`).join('');
+
+const H=document.documentElement;
+document.getElementById('tg').onclick=()=>H.dataset.t=H.dataset.t==='dark'?'light':'dark';
+const els=[...document.querySelectorAll('.rv')];
+try{
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+  els.forEach((e,i)=>{e.style.transitionDelay=(Math.min(i,6)*45)+'ms';io.observe(e)});
+}catch(e){els.forEach(e=>e.classList.add('in'))}
+setTimeout(()=>els.forEach(e=>e.classList.add('in')),1500);
+</script>

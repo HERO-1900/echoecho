@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>终局命名决策看板 · 决赛圈 13 · 排雷墙 · 出海命名 · 韩国红线</title>
+<meta name="description" content="双向情侣备忘录 App 终局定名会议看板：160 候选（R1 80 + R2 80）收敛出的 13 个决赛圈、被击毙的名字、中日韩美出海命名维度、韩国性别框架战略红线与决策指引。">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --ink:#1F2A30; --seal:#C0392B; --paper:#F4F1EC;
+  --bg:#EFEBE4; --surface:#FDFBF8; --surface2:#F7F3ED;
+  --fg:#1F2A30; --fg-dim:#5F707A; --fg-faint:#8D9BA3;
+  --line:rgba(31,42,48,.14); --line-soft:rgba(31,42,48,.07);
+  --shadow:0 1px 2px rgba(31,42,48,.05), 0 14px 34px -14px rgba(31,42,48,.18);
+  --shadow-lg:0 2px 6px rgba(31,42,48,.06), 0 30px 60px -22px rgba(31,42,48,.30);
+  --low:#1F7A52; --low-bg:rgba(31,122,82,.10);
+  --mid:#B4661A; --mid-bg:rgba(180,102,26,.12);
+  --high:#C0392B; --high-bg:rgba(192,57,43,.11);
+  --dead:#5B1410; --dead-bg:rgba(91,20,16,.12);
+  --danger-bg:#15191C; --danger-fg:#E7E1D8; --danger-line:rgba(231,225,216,.13);
+  --gold:#B08D57;
+}
+html[data-theme="dark"]{
+  --bg:#12181C; --surface:#1B2429; --surface2:#212C32;
+  --fg:#E9E3DA; --fg-dim:#94A3AC; --fg-faint:#6C7B84;
+  --line:rgba(233,227,218,.15); --line-soft:rgba(233,227,218,.07);
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 18px 44px -16px rgba(0,0,0,.6);
+  --shadow-lg:0 2px 8px rgba(0,0,0,.4), 0 34px 70px -24px rgba(0,0,0,.7);
+  --low:#4FBF8B; --low-bg:rgba(79,191,139,.14);
+  --mid:#E0A14F; --mid-bg:rgba(224,161,79,.14);
+  --high:#EE7566; --high-bg:rgba(238,117,102,.14);
+  --dead:#F0A79C; --dead-bg:rgba(240,167,156,.13);
+  --danger-bg:#0C1013; --danger-fg:#E7E1D8; --danger-line:rgba(231,225,216,.12);
+  --gold:#C9A86A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC",sans-serif;
+  line-height:1.72;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background .4s ease,color .4s ease}
+.serif{font-family:"Songti SC","Noto Serif SC",Georgia,serif}
+.mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(14px,3.4vw,40px)}
+.narrow{max-width:820px}
+.js .rv{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.js .rv.in{opacity:1;transform:none}
+a{color:inherit}
+
+/* ---------- topbar ---------- */
+.topbar{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line-soft)}
+.tb{display:flex;align-items:center;gap:14px;height:56px}
+.tb .brand{font-weight:700;letter-spacing:.02em;white-space:nowrap;font-size:15px}
+.tb .brand .seal{color:var(--seal)}
+.tb nav{margin-left:auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tb nav::-webkit-scrollbar{display:none}
+.tb nav a{padding:6px 10px;border-radius:8px;font-size:13px;color:var(--fg-dim);text-decoration:none;white-space:nowrap}
+.tb nav a:hover{background:var(--surface2);color:var(--fg)}
+.tgl{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--fg-dim);
+  border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer}
+.tgl:hover{color:var(--fg)}
+
+/* ---------- section ---------- */
+section{padding:clamp(40px,5.4vw,78px) 0;border-top:1px solid var(--line-soft)}
+section:first-of-type{border-top:0}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-faint);margin-bottom:12px;font-weight:600}
+h1{font-size:clamp(30px,5.6vw,58px);line-height:1.1;letter-spacing:-.01em;font-weight:800}
+h2{font-size:clamp(23px,3.4vw,36px);line-height:1.16;letter-spacing:-.01em;font-weight:800;margin-bottom:6px}
+h3{font-size:clamp(17px,2vw,21px);font-weight:700;letter-spacing:.01em}
+.sub{color:var(--fg-dim);font-size:clamp(15px,1.7vw,18px);margin-top:14px;max-width:70ch}
+p{margin:0 0 12px}
+.lead{font-size:17px;color:var(--fg-dim)}
+.hl{color:var(--seal);font-weight:700}
+.uline{background:linear-gradient(transparent 62%,var(--mid-bg) 0)}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(38px,6vw,70px)}
+.hero .tag{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--fg-dim);
+  border:1px solid var(--line);border-radius:999px;padding:5px 13px;margin-bottom:22px;background:var(--surface)}
+.hero .tag b{color:var(--seal)}
+.echo-mark{font-family:"Songti SC","Noto Serif SC",serif;color:var(--seal)}
+.kfacts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:34px}
+.kf{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;box-shadow:var(--shadow)}
+.kf .n{font-size:clamp(24px,3.4vw,34px);font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kf .n small{font-size:14px;font-weight:600;color:var(--fg-faint)}
+.kf .l{font-size:12.5px;color:var(--fg-dim);margin-top:3px;line-height:1.5}
+@media(max-width:680px){.kfacts{grid-template-columns:repeat(2,1fr)}}
+
+.callout{margin-top:30px;border:1px solid var(--line);border-left:4px solid var(--seal);
+  background:var(--surface);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+.callout.mid{border-left-color:var(--mid)}
+.callout.info{border-left-color:var(--fg-faint)}
+.callout h4{font-size:14px;font-weight:700;margin-bottom:6px;letter-spacing:.02em}
+.callout p{font-size:14.5px;color:var(--fg-dim);margin:0}
+.callout p+p{margin-top:8px}
+
+/* boss decisions strip */
+.decisions{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:680px){.decisions{grid-template-columns:1fr}}
+.dec{background:var(--surface2);border:1px solid var(--line-soft);border-radius:12px;padding:14px 16px}
+.dec .h{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-faint);font-weight:700;margin-bottom:8px}
+.dec ul{list-style:none;font-size:14px;color:var(--fg-dim);display:flex;flex-direction:column;gap:7px}
+.dec li{padding-left:20px;position:relative;line-height:1.55}
+.dec li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--low)}
+.dec li.no::before{background:var(--high);border-radius:2px}
+.dec li b{color:var(--fg)}
+
+/* ---------- filters ---------- */
+.filters{position:sticky;top:56px;z-index:40;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  padding:14px 0 12px;margin-bottom:8px;border-bottom:1px solid var(--line-soft)}
+.frow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.frow .lbl{font-size:12px;color:var(--fg-faint);font-weight:600;margin-right:2px;letter-spacing:.04em}
+.pill{border:1px solid var(--line);background:var(--surface);color:var(--fg-dim);
+  border-radius:999px;padding:6px 13px;font-size:13px;cursor:pointer;transition:.15s;white-space:nowrap}
+.pill:hover{color:var(--fg)}
+.pill[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.count{margin-left:auto;font-size:12.5px;color:var(--fg-faint);font-variant-numeric:tabular-nums}
+
+/* ---------- finalist cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+.cc{background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .25s,transform .25s}
+.cc[open]{box-shadow:var(--shadow-lg)}
+.cc summary{list-style:none;cursor:pointer;padding:18px 20px;display:block;outline:none}
+.cc summary::-webkit-details-marker{display:none}
+.cc .top{display:flex;align-items:flex-start;gap:12px}
+.cc .name{font-size:24px;font-weight:800;letter-spacing:.01em;line-height:1.15}
+.cc .name .en{font-size:13px;font-weight:600;color:var(--fg-faint);margin-left:8px;letter-spacing:.02em}
+.cc .rd{font-size:12px;color:var(--fg-faint);margin-top:2px;letter-spacing:.03em}
+.cc .rank{flex:none;width:34px;height:34px;border-radius:9px;background:var(--surface2);
+  display:grid;place-items:center;font-weight:800;font-size:15px;color:var(--fg-dim);border:1px solid var(--line-soft)}
+.cc .rank.star{background:var(--seal);color:#fff;border-color:var(--seal)}
+.cc .meta{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none}
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;letter-spacing:.02em}
+.b-low{color:var(--low);background:var(--low-bg)}
+.b-mid{color:var(--mid);background:var(--mid-bg)}
+.b-high{color:var(--high);background:var(--high-bg)}
+.terr{font-size:11px;color:var(--fg-faint);font-weight:600}
+.cc .quip{margin-top:12px;font-size:14px;color:var(--fg-dim);line-height:1.6}
+.cc .quip .lead-in{color:var(--fg);font-weight:700}
+.cc .exp{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:12.5px;color:var(--seal);font-weight:600}
+.cc .exp .chev{transition:transform .25s;display:inline-block}
+.cc[open] .exp .chev{transform:rotate(90deg)}
+.cc[open] .exp .txt::after{content:"收起详情"}
+.cc .exp .txt::after{content:"展开：体温 · 含义 · 视觉 · 三态 · 检索"}
+.cc .body{padding:0 20px 20px;border-top:1px solid var(--line-soft);margin-top:4px}
+.frow-detail{padding-top:16px;display:flex;flex-direction:column;gap:14px}
+.dl{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:start}
+.dl .k{font-size:12px;font-weight:700;color:var(--fg-faint);letter-spacing:.04em;padding-top:2px}
+.dl .v{font-size:14px;color:var(--fg-dim);line-height:1.62}
+.dl .v b{color:var(--fg)}
+.tri{display:flex;gap:8px;flex-wrap:wrap}
+.tri span{font-size:12.5px;padding:4px 11px;border-radius:8px;background:var(--surface2);border:1px solid var(--line-soft);color:var(--fg-dim)}
+.tri span b{color:var(--fg)}
+.echo-compat{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:2px 9px;border-radius:7px}
+.ec-hi{color:var(--low);background:var(--low-bg)}
+.ec-mid{color:var(--mid);background:var(--mid-bg)}
+.ec-alt{color:var(--fg-dim);background:var(--surface2)}
+.tag-line{font-size:12px;color:var(--fg-faint);font-family:"SF Mono",ui-monospace,monospace}
+
+.empty{display:none;text-align:center;padding:50px 0;color:var(--fg-faint);font-size:15px}
+
+/* ---------- danger / mine wall ---------- */
+.danger{background:var(--danger-bg);color:var(--danger-fg);border-radius:22px;padding:clamp(26px,4vw,48px) clamp(20px,3.4vw,40px);margin-top:20px;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.6)}
+.danger .eyebrow{color:#9AA6AC}
+.danger h2{color:#fff}
+.danger .sub{color:#AEB8BD}
+.mine-group{margin-top:26px}
+.mine-group>.gt{font-size:13px;font-weight:700;letter-spacing:.06em;color:#C6704F;margin-bottom:12px;
+  display:flex;align-items:center;gap:8px}
+.mine-group>.gt::before{content:"☠";font-size:15px}
+.mines{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:760px){.mines{grid-template-columns:1fr}}
+.mine{background:rgba(255,255,255,.028);border:1px solid var(--danger-line);border-radius:12px;padding:13px 15px}
+.mine .mn{font-size:15.5px;font-weight:700;color:#F0E9DF;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.mine .mn .strike{text-decoration:line-through;text-decoration-color:rgba(240,167,156,.6)}
+.mine .mn .mtag{font-size:10.5px;font-weight:700;color:#F0A79C;background:rgba(240,167,156,.12);padding:2px 7px;border-radius:6px;letter-spacing:.03em}
+.mine .why{font-size:13px;color:#AEB8BD;margin-top:6px;line-height:1.55}
+.mine .src{font-size:11.5px;color:#7B878C;margin-top:6px;font-family:"SF Mono",ui-monospace,monospace}
+.mine .src b{color:#C6704F;font-weight:700}
+
+/* ---------- table ---------- */
+.tblwrap{overflow-x:auto;margin-top:22px;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}
+thead th{text-align:left;padding:14px 16px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--fg-faint);font-weight:700;border-bottom:1px solid var(--line);background:var(--surface2);white-space:nowrap}
+tbody td{padding:15px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--fg-dim);line-height:1.55}
+tbody tr:last-child td{border-bottom:0}
+tbody td .flag{font-size:16px;margin-right:6px}
+tbody td b{color:var(--fg)}
+tbody td .rec{font-size:16px;font-weight:800;color:var(--fg);letter-spacing:.01em}
+tbody td .rd2{font-size:11.5px;color:var(--fg-faint);font-family:"SF Mono",ui-monospace,monospace}
+.chip{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;margin-top:6px}
+.chip.ok{color:var(--low);background:var(--low-bg)}
+.chip.warn{color:var(--mid);background:var(--mid-bg)}
+.chip.no{color:var(--high);background:var(--high-bg)}
+
+/* ---------- korea red-line ---------- */
+.kr-card{margin-top:22px;border:2px solid var(--high);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.kr-head{background:var(--high-bg);padding:20px clamp(18px,3vw,30px);border-bottom:1px solid var(--line)}
+.kr-head .flag{font-size:26px}
+.kr-head h3{color:var(--high);font-size:clamp(19px,2.6vw,25px);margin-top:8px}
+.kr-head p{margin:8px 0 0;font-size:14.5px;color:var(--fg-dim)}
+.kr-body{padding:clamp(18px,3vw,30px);background:var(--surface)}
+.kr-block{padding:16px 0;border-top:1px solid var(--line-soft)}
+.kr-block:first-child{padding-top:0;border-top:0}
+.kr-block .bt{font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.kr-block .bt .ic{font-size:15px}
+.kr-block p{font-size:14px;color:var(--fg-dim);margin:0 0 8px}
+.kr-block ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.kr-block li{font-size:13.5px;color:var(--fg-dim);padding-left:22px;position:relative;line-height:1.55}
+.kr-block li::before{content:"→";position:absolute;left:2px;color:var(--seal);font-weight:700}
+.kr-block li b{color:var(--fg)}
+.transform{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:12px}
+@media(max-width:600px){.transform{grid-template-columns:1fr;gap:6px}}
+.transform .from,.transform .to{border-radius:10px;padding:11px 14px;font-size:13px;line-height:1.5}
+.transform .from{background:var(--high-bg);color:var(--fg)}
+.transform .from b{color:var(--high)}
+.transform .to{background:var(--low-bg);color:var(--fg)}
+.transform .to b{color:var(--low)}
+.transform .ar{text-align:center;color:var(--fg-faint);font-weight:700;font-size:18px}
+@media(max-width:600px){.transform .ar{transform:rotate(90deg)}}
+
+/* ---------- guide ---------- */
+.qbox{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+@media(max-width:820px){.qbox{grid-template-columns:1fr}}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.q .qn{font-size:13px;font-weight:800;color:var(--seal);letter-spacing:.04em;margin-bottom:10px}
+.q .qq{font-size:16px;font-weight:700;line-height:1.4;margin-bottom:12px}
+.q .qa{font-size:13.5px;color:var(--fg-dim);line-height:1.6}
+.q .qa b{color:var(--fg)}
+.q .qa .opt{display:block;margin-top:6px;padding-left:14px;position:relative}
+.q .qa .opt::before{content:"·";position:absolute;left:3px;color:var(--seal);font-weight:800}
+
+.steps{margin-top:24px;display:flex;flex-direction:column;gap:2px}
+.step{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line-soft)}
+.step:last-child{border-bottom:0}
+.step .sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--fg);color:var(--bg);
+  display:grid;place-items:center;font-weight:800;font-size:14px}
+.step .sc h4{font-size:15.5px;font-weight:700;margin-bottom:4px}
+.step .sc p{font-size:14px;color:var(--fg-dim);margin:0;line-height:1.6}
+
+/* ---------- my pick ---------- */
+.pick{margin-top:20px;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);background:var(--surface)}
+.pick .ph{background:linear-gradient(135deg,var(--seal),#8f2a20);color:#fff;padding:22px clamp(20px,3vw,32px)}
+.pick .ph .e{font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.8;font-weight:600}
+.pick .ph h3{font-size:clamp(20px,2.8vw,26px);margin-top:6px;color:#fff}
+.pick .pb{padding:clamp(20px,3vw,32px)}
+.tier{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line-soft)}
+.tier:last-child{border-bottom:0}
+.tier .medal{flex:none;font-size:26px;line-height:1}
+.tier .tc h4{font-size:18px;font-weight:800;margin-bottom:3px}
+.tier .tc h4 .en{font-size:13px;color:var(--fg-faint);font-weight:600;margin-left:6px}
+.tier .tc .cond{font-size:12px;color:var(--seal);font-weight:700;margin-bottom:6px;letter-spacing:.02em}
+.tier .tc p{font-size:14px;color:var(--fg-dim);margin:0;line-height:1.62}
+.tier .tc p b{color:var(--fg)}
+
+/* footer */
+footer{padding:40px 0 60px;color:var(--fg-faint);font-size:12.5px;border-top:1px solid var(--line-soft);line-height:1.7}
+footer b{color:var(--fg-dim)}
+.disclaimer{margin-top:14px;padding:14px 16px;background:var(--surface2);border-radius:10px;border:1px solid var(--line-soft)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap tb">
+    <span class="brand">终局命名<span class="seal">决策看板</span></span>
+    <nav>
+      <a href="#summary">摘要</a>
+      <a href="#mines">排雷墙</a>
+      <a href="#finalists">决赛圈 13</a>
+      <a href="#global">出海命名</a>
+      <a href="#korea">🇰🇷 红线</a>
+      <a href="#guide">决策指引</a>
+      <a href="#pick">独立推荐</a>
+    </nav>
+    <button class="tgl" id="themeToggle" aria-label="切换主题">深色</button>
+  </div>
+</div>
+
+<!-- ============ HERO / 决策摘要 ============ -->
+<section class="hero" id="summary">
+  <div class="wrap">
+    <div class="rv in">
+      <span class="tag">开会拍板用 · <b>2026-07-14</b> · 双向情侣备忘录 App</span>
+      <h1>把 <span class="echo-mark">160</span> 个候选<br>收敛成一次拍板。</h1>
+      <p class="sub">原名「念想 / 念响」被注册、英文「Reecho」撞睿声、概念名「拉勾勾」被招聘+货运双重寄生——三条路同时堵死。两轮命名（R1 80 + R2 80）跑完后，困境不是「没有好名字」，而是<span class="hl">好名字太多、每个都在不同维度上有代价</span>。这张看板把它们收敛到 13 个能上会的决赛圈，并把每一个被击毙的名字连同死因钉在墙上。</p>
+    </div>
+
+    <div class="kfacts rv">
+      <div class="kf"><div class="n">160</div><div class="l">总候选<br>R1 80 + R2 80</div></div>
+      <div class="kf"><div class="n">13</div><div class="l">决赛圈<br>3 疆域收敛</div></div>
+      <div class="kf"><div class="n">25<small>+</small></div><div class="l">排雷墙<br>已击毙的名字</div></div>
+      <div class="kf"><div class="n">4</div><div class="l">出海市场<br>中日韩美</div></div>
+    </div>
+
+    <div class="callout info rv">
+      <h4>📏 检索边界（这条必须先讲清楚，否则整张看板会被误读）</h4>
+      <p>本看板所有「干净 / 已占」结论，来自两类<b>可回溯</b>的机读检索：① <b>Apple iTunes Search API</b> 对候选逐条精确查询 App Store 中国区 / 美区占用（记录实际 <span class="mono">resultCount</span> 与 <span class="mono">trackName / sellerName</span>）；② <b>WIPO Global Brand Database / TMview</b> 对日韩官方商标库做<b>机读初筛</b>（KIPO 镜像、JPO 镜像），USPTO TSDR 对已知序列号逐一核验。</p>
+      <p>它们能提前筛掉「明显不能用」的名字，省一轮律师费——但 <b class="hl">≠ 律师逐类核验</b>。机读记录只有 Nice 类号、无指定商品全文；中国 CNIPA 未程序化检索；日本数据单一来源未交叉确认。<b>决赛圈定稿后，Top 3 仍须委托中日韩当地商标代理人做 9 / 35 / 38 / 42 / 45 类正式核验。</b></p>
+    </div>
+
+    <div class="decisions rv">
+      <div class="dec">
+        <div class="h">✅ 老板已认可的方向</div>
+        <ul>
+          <li><b>念想 / 回应</b>变体（惦记、有我呢、记心上…）</li>
+          <li><b>拉勾勾</b>的三四字扩展（我们拉勾、一百年不许变…）</li>
+          <li><b>接住系</b>（老板亲提；与回声括号「」名实合一）</li>
+          <li>回声括号<b>「」</b>作首选 logo 方向，靠上下不对称解决独占</li>
+        </ul>
+      </div>
+      <div class="dec">
+        <div class="h">❌ 老板已否决 / 已判死</div>
+        <ul>
+          <li class="no"><b>念响 / Reecho / 拉勾勾</b>——全部被占或高危</li>
+          <li class="no"><b>虎符 / 盖章 / 结绳</b>——丢了情侣体温，与情侣场景无关</li>
+          <li class="no">打勾不当主状态符号——<b>「打勾是工具，点头是人」</b>，可藏负空间</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 排雷墙 ============ -->
+<section id="mines">
+  <div class="wrap">
+    <div class="danger rv">
+      <div class="eyebrow">The Minefield</div>
+      <h2>☠️ 排雷墙</h2>
+      <p class="sub">每一个名字都是花检索预算换来的地雷坐标——不是「感觉不好」，是有实锤。带 <span style="color:#F0A79C">🔴 官方商标</span> 的是机读官方库命中，其余为 App Store / 公开实体检索命中。</p>
+
+      <div class="mine-group">
+        <div class="gt">中文主名 · 已被占死或高危</div>
+        <div class="mines">
+          <div class="mine">
+            <div class="mn"><span class="strike">念想 / 念响</span></div>
+            <div class="why">原名，已被注册。整个换名工程的起点。</div>
+            <div class="src"><b>依据</b> 现有商标注册（R1 已确认）</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">拉勾勾</span></div>
+            <div class="why">App Store cn/us 前 6 名 100% 是招聘+货运；拉勾网（2013 上线，前程无忧控股 60%）为知名在先商标，9/42/35 类几乎必满。叠字对「拉勾」= 呼叫近似，最易驳回一类。</div>
+            <div class="src"><b>依据</b> iTunes cn 前 6 全招聘/货运 · 拉勾网在先商标</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">回音 / 小回音 / 回音岛</span></div>
+            <div class="why">树洞匿名社交 + <b>腾讯官方「回音交友」</b> + AI 宠物「回音岛」——语音社交赛道四家占死，含腾讯。「回音」二字整条赛道满。</div>
+            <div class="src"><b>依据</b> App Store id1442048344 等 · 腾讯出品</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">叨叨</span></div>
+            <div class="why">「叨叨记账 / AI 语 C 陪伴」（id1613151419），slogan「我会一直陪着你」，玩法是自定义男友/女友角色陪你——<b>与我们情感陪伴心智几乎重合，最危险的一个</b>。</div>
+            <div class="src"><b>依据</b> App Store id1613151419 · daodao.cn</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">念念</span></div>
+            <div class="why">念念手帐（重庆你若科技，id1512075713，2020 上线），安卓多渠道在架。</div>
+            <div class="src"><b>依据</b> App Store id1512075713</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">心上</span></div>
+            <div class="why">北京二手奢侈品交易平台（360 应用 id3144626），下载量级几十万。<b>但三字「记心上」组合仍可用</b>（见决赛圈）。</div>
+            <div class="src"><b>依据</b> 360 应用 id3144626</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">回响</span></div>
+            <div class="why">香柚信息，情感记录同赛道。</div>
+            <div class="src"><b>依据</b> 公开实体检索（R1）</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">咚咚</span></div>
+            <div class="why">京东官方即时通讯工具「京东咚咚」，撞巨头 IM 产品。</div>
+            <div class="src"><b>依据</b> 百度百科独立词条</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">啾啾</span></div>
+            <div class="why">啾啾 / 啾啾交友 / 啾咪语音——全是语音社交，与我们语音优先同赛道撞名。</div>
+            <div class="src"><b>依据</b> App Store id6474222413 等</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">贴贴</span></div>
+            <div class="why">本疆域（信物系）风险最高的一个，检索结论直接建议淘汰。</div>
+            <div class="src"><b>依据</b> App Store 检索（R1 OBJECT §08）</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">妥妥</span></div>
+            <div class="why">App Store id6748727605 已占。「念想」教训的第二具尸体——通用口语必被抢。</div>
+            <div class="src"><b>依据</b> App Store id6748727605</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">有回应</span></div>
+            <div class="why">「回应」（Tianjin Changlin）+ 3 个副标命中，<b>全部是情感 / 社交品类</b>。谁都在说，所以谁都不拥有。</div>
+            <div class="src"><b>依据</b> iTunes cn rc=5，首条 exact「回应」</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">小拇指</span></div>
+            <div class="why">浙江省著名商标（6573881），杭州小拇指汽修 3713 家门店，465 条商标防御体系。<b>比拉勾更死</b>，注册当天就会收异议。（注意：三字「小指头」不同，风险较低）</div>
+            <div class="src"><b>依据</b> 商标号 6573881 · iTunes cn 100% 汽修</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mine-group">
+        <div class="gt">英文名 · 六个最想要的词，五个已死</div>
+        <div class="mines">
+          <div class="mine">
+            <div class="mn"><span class="strike">Reecho</span></div>
+            <div class="why">= 睿声，深圳言域科技 AI 语音克隆平台，已商业运营。<b>现有 nianxiang.html 第 203 行仍在用 REECHO，须一并换掉。</b></div>
+            <div class="src"><b>依据</b> reecho.cn / reecho.dev</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">Held</span></div>
+            <div class="why">美区 3 家同名公司（Held GmbH 德国摩托装备 / Held Inc / Held &amp; Rooted）。「Held」德语=英雄，欧洲注定拿不到。保留作设计代号，注册走 Heldly（us rc=0）。</div>
+            <div class="src"><b>依据</b> iTunes us rc=7，3 家同名公司</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">Kept</span></div>
+            <div class="why">6 条完全同名，含<b>泰国上市银行 Bank of Ayudhya</b> 与 PicCollage 母公司。四字母通用词的宿命。</div>
+            <div class="src"><b>依据</b> iTunes us rc=8，6 条同名</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">Gotcha</span></div>
+            <div class="why">被 <b>Gacha Life / Club</b>（千万级少女换装游戏）全面淹没 ASO——就算商标能拿到，用户永远搜到换装游戏。技术性死刑。</div>
+            <div class="src"><b>依据</b> iTunes us，前三全为 Gacha</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">Caught</span></div>
+            <div class="why">Caught GmbH 同名 + iCaughtYou / Catching a Cheater——<b>全是「抓奸/抓包」品类</b>。一个情侣 App 叫 Caught 会被当查岗工具，正撞我们「不做监工」红线。</div>
+            <div class="src"><b>依据</b> iTunes us，抓包品类占据</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">Pinky Promise</span></div>
+            <div class="why">美区 4 个同名，含同名公司 Pinky Promise Private Limited。</div>
+            <div class="src"><b>依据</b> iTunes us，4 条同名含同名公司</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">Pinky Swear</span></div>
+            <div class="why"><b>美国知名儿童癌症慈善基金会</b>（2003 创立，Charity Navigator 四星，持 pinkyswear.org）。拿儿童癌症慈善的名字卖情侣 App = 公关自杀。</div>
+            <div class="src"><b>依据</b> pinkyswear.org · Pinky Swear Foundation</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">Littlefinger</span></div>
+            <div class="why">《权力的游戏》培提尔·贝里席——全球最著名的<b>背叛者</b>角色。一个讲「守信」的品牌绝不能用。语义自杀。</div>
+            <div class="src"><b>依据</b> IP 语义冲突</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mine-group">
+        <div class="gt">日 / 韩 · 官方商标机读核验（2026-07-14）</div>
+        <div class="mines">
+          <div class="mine">
+            <div class="mn"><span class="strike">ゆびきり / YUBIKIRI（日·单用）</span><span class="mtag">🔴 官方商标</span></div>
+            <div class="why">トレードログ株式会社 登录号 <b>6737520</b>，<b>cls45 含「在线 SNS 服务 + 交友对象介绍」——直接命中情侣 App</b>，LIVE（2023→2033）。这推翻了「日本单用 ゆびきり」的默认假设。→ 改用全句 <b>ゆびきりげんまん</b>。</div>
+            <div class="src"><b>依据</b> WIPO GBD / TMview · JPO 登录号 6737520</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">汉字「指切り」（日）</span></div>
+            <div class="why">与黑道「指詰め」（切手指谢罪）同根同源。日本市场绝不用汉字写法，只用平假名；视觉永不出现刀/血/断指。一票否决级设计红线。</div>
+            <div class="src"><b>依据</b> GLOBAL_GTM §1.1（草の実堂 / 歴人マガジン）</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">콩닥 / kongdak（韩·心跳拟声）</span><span class="mtag">🔴 官方商标</span></div>
+            <div class="why">스파익스(SPIKES) 在 9+42+35+38+45 <b>成套注册且全 LIVE</b>，9 类与 42 类均活跃 = 明确硬冲突。放弃。</div>
+            <div class="src"><b>依据</b> WIPO GBD（KIPO 镜像）· verified LIVE</div>
+          </div>
+          <div class="mine">
+            <div class="mn"><span class="strike">약속 / promise（韩·单用）</span></div>
+            <div class="why">通用词全占（모킷 / TimeTree 等），kr rc=8。单用太泛、高风险。→ 改用「손가락약속」或「꼭꼭약속」。</div>
+            <div class="src"><b>依据</b> iTunes kr rc=8 · 9 类仅 1 件 pending</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mine-group">
+        <div class="gt">老板亲否 · 结构精巧但丢了情侣体温</div>
+        <div class="mines">
+          <div class="mine">
+            <div class="mn"><span class="strike">虎符 / 盖章 / 结绳</span><span class="mtag">老板否决</span></div>
+            <div class="why">隐喻厚重、结构完整，但都是<b>器物 / 公文的语言，与两个人的厨房无关</b>。名字一出口是文物、是衙门。老板判定「丢了情侣体温」——不进决赛圈。（其中「结绳」另有上海同名科技公司需查，「盖章」撞电子印章工具语义泥潭。）</div>
+            <div class="src"><b>依据</b> 老板明确否决 · R1 OBJECT/PROMISE</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 决赛圈 ============ -->
+<section id="finalists">
+  <div class="wrap">
+    <div class="rv in">
+      <div class="eyebrow">The Finalists</div>
+      <h2>🏆 决赛圈 · 13 个</h2>
+      <p class="sub">从「接住系 / 念想·回应 / 拉勾系」三疆域筛出——每个都过了情侣体温测试，检索相对干净。点卡片展开：情侣体温 · 含义故事 · 视觉（「」兼容性）· 三态话术 · 检索结论。默认全部显示；筛选挂了也只是失效，卡片仍在。</p>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="wrap">
+      <div class="frow" style="margin-bottom:8px">
+        <span class="lbl">疆域</span>
+        <button class="pill" data-t="all" aria-pressed="true">全部</button>
+        <button class="pill" data-t="catch" aria-pressed="false">接住系 · 「」名实合一</button>
+        <button class="pill" data-t="echo" aria-pressed="false">念想 · 回应</button>
+        <button class="pill" data-t="pinky" aria-pressed="false">拉勾系 · 承诺仪式</button>
+      </div>
+      <div class="frow">
+        <span class="lbl">检索风险</span>
+        <button class="pill" data-r="all" aria-pressed="true">全部</button>
+        <button class="pill" data-r="low" aria-pressed="false">低</button>
+        <button class="pill" data-r="mid" aria-pressed="false">中</button>
+        <span class="count" id="count"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="grid" id="grid">
+
+      <!-- 1 我接着呢 -->
+      <details class="cc rv" data-t="catch" data-r="low">
+        <summary>
+          <div class="top">
+            <div class="rank star">1</div>
+            <div>
+              <div class="name">我接着呢<span class="en">I've Got You · Heldly</span></div>
+              <div class="rd">wǒ jiē zhe ne · 接住系</div>
+            </div>
+            <div class="meta"><span class="badge b-low">风险 低</span><span class="terr">cn rc=0</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">情感天花板。</span>唯一把「产品是什么」和「我是谁」合成一句话的名字——有主语、有语气、有人格，零占用，与「」严丝合缝。它不像 App 名，像一个人在你耳边说的话。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v"><b>满分。</b>"我给你发到「我接着呢」上了"——句子反而变好听，第一人称是双重承诺。全部候选里最像人话的一个。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">四个字＝一个完整的句子＝一个完整的人格。「我」有主语、「接着」进行时、「呢」软化。黑暗中最想听到的四个字，产品所有功能只是在证明这四个字不是空话。</div></div>
+          <div class="dl"><div class="k">视觉「」</div><div class="v"><span class="echo-compat ec-hi">兼容 10/10 名实合一</span> 「」下半就是「我」，上半是「你说的」，符号是这句话的图解。下引号＝一直举着的手，微抖不放下。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>我接着呢</b></span><span>在办 <b>我办着呢</b></span><span>办妥 <b>我办完了</b></span></div><div style="margin-top:6px">唯一三态天然成句、语气统一、且全是他会说的话——App 每次状态变更都是他在说话。</div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">iTunes cn <b>resultCount=0</b>（零占用）；四字口语句显著性强，驳回风险低。英文注册走 <b>Heldly</b>（us rc=0）。</div></div>
+          <div class="dl"><div class="k">代价</div><div class="v">四字偏长，ASO 弱于两字名，图标下显得「不像正经产品」——但这个品类里，不正经就是体温。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 2 有我呢 -->
+      <details class="cc rv" data-t="echo" data-r="mid">
+        <summary>
+          <div class="top">
+            <div class="rank star">2</div>
+            <div>
+              <div class="name">有我呢<span class="en">Gotchu</span></div>
+              <div class="rd">yǒu wǒ ne · 念想·回应</div>
+            </div>
+            <div class="meta"><span class="badge b-mid">风险 中</span><span class="terr">显著性可解</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">品牌名 = 核心交互反馈。</span>所有情侣 App 在做「表达爱」，只有它在做<b>兑现爱</b>——「有我呢」不兑现就是渣男话术，产品的全部意义就是给这三个字装上齿轮。视觉反甜腻，男性敢装。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v"><b>满分（无之一）。</b>两条容器句全通，还有独有的第三条——"这事你别管了，有我呢"，<b>这句话本身就是产品的完整价值主张</b>。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">中文里一个人能给另一个人的最大安全感，三个字不谈爱，只谈「我在」。「有我呢」＝「必有回响」的口语翻译。</div></div>
+          <div class="dl"><div class="k">视觉</div><div class="v"><span class="echo-compat ec-mid">可融入「」</span> 原方案是开口向下的托底弧（屋檐/肩膀，非闭合＝托底不占有）＋唯一暖点。托底蓝 #35506B ＋ 在这儿橙——<b>刻意反甜腻，不用粉不用心形</b>，这是装到男方手机的前提。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>有我呢</b></span><span>在办 <b>正弄呢</b></span><span>办妥 <b>弄完了</b></span></div><div style="margin-top:6px">「收到」态直接就是品牌名——用户每收到一条任务，屏幕弹出的就是品牌名本身。<b>品牌曝光与产品使用完全同频（唯一）</b>。</div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">未检索到任何同名 App / 品牌 / 商标。风险＝三字口语显著性（商标法 11 条）。对策：字形强设计 ＋ 图形组合 ＋ 并行注册 <b>Gotchu</b> 英文商标。<b>可解的技术问题，不是死局。</b></div></div>
+          <div class="dl"><div class="k">代价</div><div class="v">风险不对称：成了是十年一遇的名字，不成只是换个名字——这个赌值得下。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 3 我们拉勾 -->
+      <details class="cc rv" data-t="pinky" data-r="low">
+        <summary>
+          <div class="top">
+            <div class="rank star">3</div>
+            <div>
+              <div class="name">我们拉勾<span class="en">Pinkypact · WePinky</span></div>
+              <div class="rd">wǒ men lā gōu · 拉勾系</div>
+            </div>
+            <div class="meta"><span class="badge b-low">风险 极低</span><span class="terr">cn 0 / us 0</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">拉勾系唯一活路。</span>同时做到三件本以为要牺牲一件的事：保住童年梗（原话就是「我们拉勾」）、加人称绕开商标、抢回 ASO。41 个实测词里<b>唯一「含拉勾却零结果」</b>的写法。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v">容器句略拗口（△），动作句"这事我们拉勾了"<b>✅✅ 完美</b>。「我们」两个字锁死双人关系，任何 To B / 办公场景都用不了这个名字——最强的体温证明。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">「拉勾勾」是第三人称名词（所以商店归到公司去），加「我们」变回正在发生的动作，把语义从招聘/货运泥潭抢回来。<b>名字即产品定义。</b></div></div>
+          <div class="dl"><div class="k">视觉</div><div class="v"><span class="echo-compat ec-alt">另一套符号系统</span> 不走「」，走<b>拳头小指</b>：两个圆润握拳各伸小指相扣（大小不同＝他与她），负空间天然是心，缩到 16px 退化成 ✓。<b>选拉勾系＝放弃「」。</b></div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>勾上了</b></span><span>在办 <b>勾着呢</b></span><span>办妥 <b>没赖账</b></span></div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">App Store <b>cn=0 / us=0</b>，连模糊都没有。显著性从「叠字（必驳）」跃到「主谓短语（整体审查）」＝从大概率被驳到大概率下证。残留：拉勾网若 9/42 类有防御布局仍可能被引证。<b>必须组合注册「我们拉勾」四字＋拳头图形，绝不单注「拉勾」。</b></div></div>
+          <div class="dl"><div class="k">硬件</div><div class="v">「我们」意味着挂坠<b>必须成对</b>——她的手＋他的手磁吸相扣，单卖没意义。名字顺手把客单价翻倍。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 4 接着呢 -->
+      <details class="cc rv" data-t="catch" data-r="low">
+        <summary>
+          <div class="top">
+            <div class="rank">4</div>
+            <div>
+              <div class="name">接着呢<span class="en">Got It</span></div>
+              <div class="rd">jiē zhe ne · 接住系</div>
+            </div>
+            <div class="meta"><span class="badge b-low">风险 低</span><span class="terr">cn rc=0</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">唯一能被对方当回答说出口的名字。</span>她问"你听见没？"，他答"接着呢"——名字变成了对白。是「我接着呢」的商业化妥协版：短一个字，ASO 与口播都更友好。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v">通过，自然到不像名字。"我接住了"是汇报，"接着呢"是安慰——进行时把产品从「任务完成器」变成「一直在的那个人」。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">「呢」是灵魂，中文里最柔软的语气助词，把一个承诺变成一句安抚。</div></div>
+          <div class="dl"><div class="k">视觉「」</div><div class="v"><span class="echo-compat ec-hi">兼容 10/10</span> 给「」一个新读法：下引号＝「呢」的尾音，那个上扬、慵懒、没说完的尾巴。字体必须手写或圆体，用黑体会死。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>接着呢</b></span><span>在办 <b>办着呢</b></span><span>办妥 <b>办妥了</b></span></div><div style="margin-top:6px">女王陛下线三态「候着呢 / 办着呢 / 办妥了」完美。</div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">iTunes cn <b>resultCount=0</b>，中文侧完全干净。三字口语显著性充足（参照钉钉/得到）。</div></div>
+          <div class="dl"><div class="k">代价</div><div class="v">没有主语，人格弱一档——若对四字名的商店表现有顾虑，选它。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 5 一百年不许变 -->
+      <details class="cc rv" data-t="pinky" data-r="low">
+        <summary>
+          <div class="top">
+            <div class="rank">5</div>
+            <div>
+              <div class="name">一百年不许变<span class="en">No Take-Backs</span></div>
+              <div class="rd">yī bǎi nián bù xǔ biàn · 拉勾系</div>
+            </div>
+            <div class="meta"><span class="badge b-low">风险 极低</span><span class="terr">cn 0 / us 0</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">唯一「风险源不存在」的名字。</span>不是比拉勾勾显著性强，是与拉勾网<b>零字面重合</b>，审查时根本不会被引证。情感天花板与可注册性同时封顶，唯一一次不用取舍。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v">容器句长但笑得出（△），动作句"说好了啊——一百年不许变"（✅✅）。办公味＝0，没有任何一家公司敢这么叫。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">不取「拉钩上吊」（含刀含动作），取童谣情绪最重的落点。不是「我们约好了」，是「你不许赖」——小孩子式的、不讲理的、可爱的强硬。</div></div>
+          <div class="dl"><div class="k">视觉</div><div class="v"><span class="echo-compat ec-alt">拳头小指＋印章</span> 六个字＝一枚印章的印文，可做两行三字的方章，视觉密度极高。不走「」。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>算数了</b></span><span>在办 <b>正在变成真的</b></span><span>办妥 <b>没变</b></span></div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">App Store <b>cn=0 / us=0</b>，「不许变」同样 0/0。英文 <b>No take-backs</b> 是英美小孩拉勾原句（非翻译）。残留：俗语型，阻止不了竞品文案里用。<b>建议与「不许变」组合注册</b>——长名做品牌全称，短名做图标显示名。</div></div>
+          <div class="dl"><div class="k">硬件</div><div class="v">唯一能脱离 App 单卖的实体：一枚真能蘸印泥盖章的微型印章挂坠＋所有盖过的章排成一墙的「信物册」。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 6 兜住 -->
+      <details class="cc rv" data-t="catch" data-r="mid">
+        <summary>
+          <div class="top">
+            <div class="rank">6</div>
+            <div>
+              <div class="name">兜住<span class="en">Heldly</span></div>
+              <div class="rd">dōu zhù · 接住系</div>
+            </div>
+            <div class="meta"><span class="badge b-mid">风险 低-中</span><span class="terr">cn 无同名</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">老板亲提，命中最肥一块肉。</span>唯一同时给品牌<b>动作＋器物＋责任</b>三样的名字，而且从图形层解决了「」的先天缺陷。一个憨憨的、兜得住事的男朋友，比一个高级的男朋友值钱。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v">通过带笑意，"兜"字读出来嘴是圆的。"揣兜里了 / 记在兜里"本就是中文成句。唯一同时是动词和名词的候选。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">一字三关：<b>动作</b>（从下托住不让掉）＋<b>器物</b>（口袋＝容器）＋<b>责任</b>（兜底＝「出了事我给你兜着」）。从「备忘录」跃迁到「这个人」。</div></div>
+          <div class="dl"><div class="k">视觉「」</div><div class="v"><span class="echo-compat ec-hi">兼容 8/10 · 是「」的解药</span> 把下引号从直角折线改成极浅兜形弧，一次性修掉 logo 自评的两条硬伤——「被读成裁剪框」与「纯几何无曲线不温柔」。挂坠可做真的小兜，里面塞纸条。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>兜住了</b></span><span>在办 <b>兜着呢</b></span><span>办妥 <b>办妥了</b></span></div><div style="margin-top:6px">跨代际零解释成本："爸，您的药我兜着呢"——长辈完全听得懂。</div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">iTunes cn rc=8 <b>无同名</b>（一兜糖/竹兜育儿非近似）。风险：金融「兜底」语义在 36 类可能有坑（与 9/42 类不冲突）。英文 Doudou 被双人记录 App 占死，英文须另起。</div></div>
+          <div class="dl"><div class="k">代价</div><div class="v">土。「兜」字有乡土气、憨气，不高级——但这个产品需要的是可靠，不是高级。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 7 记心上 -->
+      <details class="cc rv" data-t="echo" data-r="mid">
+        <summary>
+          <div class="top">
+            <div class="rank">7</div>
+            <div>
+              <div class="name">记心上<span class="en">Heartmark</span></div>
+              <div class="rd">jì xīn shàng · 念想·回应</div>
+            </div>
+            <div class="meta"><span class="badge b-mid">风险 中</span><span class="terr">「心上」引证待查</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">名字即情话，slogan 即定位，logo 一笔成形。</span>「这事我记心上了」——中文里男人能说出的最重承诺之一，且完全不油腻。三件事在一个词里同时闭合，结构完成度最高。CNIPA 一查通过，它就是第一。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v"><b>唯一「名字 = 完整情话」。</b>"这事我记心上了"——名字直接就是这句话本身。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">「记在心上」＝念念不忘的大白话。「记」一头连 memo、一头连 memory、一头连惦记。slogan：<b>「不是记在本上，是记心上。」</b>一句说清与所有 to-do App 的物种差异。</div></div>
+          <div class="dl"><div class="k">视觉</div><div class="v"><span class="echo-compat ec-alt">自有符号</span> 对勾的收尾笔画向上翻成半颗心——是对勾（任务完成）也是心（在乎），一笔画完不可拆分。最容易做成硬件浮雕。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>记心上了</b></span><span>在办 <b>搁心上呢</b></span><span>办妥 <b>了了一桩</b></span></div><div style="margin-top:6px">「了了」有释然感，比「已完成」高一个维度。</div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">「心上」被二手奢侈品平台占（360 应用 id3144626），但<b>「记心上」三字未检索到任何 App / 品牌占用</b>。硬伤：第 9 类可能被「心上」引证近似——<b>唯一一个「CNIPA 一查就能定生死」的候选</b>。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 8 惦记 -->
+      <details class="cc rv" data-t="echo" data-r="mid">
+        <summary>
+          <div class="top">
+            <div class="rank">8</div>
+            <div>
+              <div class="name">惦记<span class="en">Dianji · On My Mind</span></div>
+              <div class="rd">diàn jì · 念想·回应</div>
+            </div>
+            <div class="meta"><span class="badge b-mid">风险 中</span><span class="terr">通用词在先待查</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">体温最高的双字词。</span>「惦记」在中文里天然只用于人对人——<b>没人惦记一个 KPI</b>，这个词自带反工具的免疫力。三态话术能把人说哭。代价是它太好用，别人也会想到，是一场抢注速度的赌。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v"><b>本轮体温最高的双字词，没有之一。</b>"发到惦记上"这句话本身就在说人话——发过去的不是任务，是惦记。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">「念想」被注册了，但它更口语、更烫的同义词是「惦记」——心里一直搁着一个人。血脉最短、最没损耗的一次平移。</div></div>
+          <div class="dl"><div class="k">视觉</div><div class="v"><span class="echo-compat ec-alt">自有符号</span> 偏心圆点：事情没办完圆点是偏的，办完滑到正中「咔」一声归位。<b>硬件可物理表达三态（磁吸滚珠：偏心→归位）——唯一做到的候选。</b></div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>惦记上了</b></span><span>在办 <b>正惦记着</b></span><span>办妥 <b>不用惦记了</b></span></div><div style="margin-top:6px">「不用惦记了」＝替对方卸下心里的重量，所有 to-do 的完成态只有「已完成」。</div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">App Store 站内未发现同名 App。风险：高频通用词，9/42 类<b>大概率已有在先商标</b>（需 CNIPA 实检）。<b>保险方案：「小惦记」</b>——显著性大幅提升、甜度更高，且「小/老」前缀直接生出爸妈线，若「惦记」注册失败立刻退到它、不损失任何东西。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 9 说好了 -->
+      <details class="cc rv" data-t="pinky" data-r="mid">
+        <summary>
+          <div class="top">
+            <div class="rank">9</div>
+            <div>
+              <div class="name">说好了<span class="en">We Said So</span></div>
+              <div class="rd">shuō hǎo le · 拉勾系</div>
+            </div>
+            <div class="meta"><span class="badge b-mid">风险 中</span><span class="terr">显著性偏弱</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">最好用，但不是最动人。</span>全案唯一四句全通（两容器句＋动作句＋微信传播句）。slogan 全案最强：<b>「"好的"不算，"说好了"才算。」</b>——直接把竞品（敷衍）写进自己的定义里。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v"><b>全案唯一四句全通</b>，零办公味零工具味，纯口语。你和伴侣真正说这句话的频率，比「拉勾」高一百倍。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">「拉勾」的成年人版。落地页原话是「他明明回了'好的'，但那两个字根本没进他脑子里」——"好的"是敷衍，"说好了"是承诺，<b>一字之差就是这个产品存在的理由</b>。</div></div>
+          <div class="dl"><div class="k">视觉</div><div class="v"><span class="echo-compat ec-alt">拳头小指</span> 小指勾的负空间做成对话气泡，气泡里放语音波形——<b>唯一能把「语音优先」写进 logo 的候选</b>。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>说好了</b></span><span>在办 <b>正在办</b></span><span>办妥 <b>说到做到</b></span></div><div style="margin-top:6px">状态按钮＝品牌名本身，每天点它就是每天念一次品牌。</div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">cn rc=5 / us rc=5，全模糊<b>无同名</b>。风险：显著性偏弱（常用口语，需图形组合＋使用证据）；周杰伦歌名文化噪音。<b>可解的风险，不是障碍。</b></div></div>
+          <div class="dl"><div class="k">代价</div><div class="v">丢了童年梗——它是「拉勾勾」的平替，不是扩展。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 10 勾住了 -->
+      <details class="cc rv" data-t="pinky" data-r="mid">
+        <summary>
+          <div class="top">
+            <div class="rank">10</div>
+            <div>
+              <div class="name">勾住了<span class="en">Caught · Gozzle</span></div>
+              <div class="rd">gōu zhù le · 拉勾系</div>
+            </div>
+            <div class="meta"><span class="badge b-mid">风险 低-中</span><span class="terr">控制感歧义</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">语义密度＆硬件机制双料第一。</span>三重双关同时命中：小指勾住了 / 事情跑不掉了 / 心被勾住了。挂坠是唯一把状态做进物理世界的设计——摸一下就知道欠不欠她一件事。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v">容器句差（两个「了」打架），动作句"这事勾住了"<b>✅✅</b>——一个完成态的宣告，「这事跑不掉了」。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">语义密度全案第一。被动态＝不是「我勾住了你」，是「勾住了」——两个人一起被这个勾锁住，恰是这个产品的关系哲学。</div></div>
+          <div class="dl"><div class="k">视觉</div><div class="v"><span class="echo-compat ec-alt">拳头小指</span> 强调咬合交点（实心发光的结）。进度＝扣合深度，不是横条。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>勾住了</b></span><span>在办 <b>还勾着</b></span><span>办妥 <b>松开了</b></span></div><div style="margin-top:6px">办妥＝解扣，两根小指松开发出「咔」的一声，比盖章更新鲜。</div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">cn rc=5 全模糊零相关 / us <b>rc=0</b>。英文 Hookd 是约会品类，Hook 词根须避开。<b>风险是语义不是商标</b>：「勾住」有「套牢/控制」的负面引申，而这个产品最怕「监工」指控——须在文案上主动化解（强调被动态）。</div></div>
+          <div class="dl"><div class="k">硬件</div><div class="v"><b>硬件机制全案第一</b>：一对能真扣上、也能真解开的金属坠——扣着＝你还欠她一件事，解开＝办妥，不用看屏幕。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 11 接住 -->
+      <details class="cc rv" data-t="catch" data-r="mid">
+        <summary>
+          <div class="top">
+            <div class="rank">11</div>
+            <div>
+              <div class="name">接住<span class="en">Heldly</span></div>
+              <div class="rd">jiē zhù · 接住系</div>
+            </div>
+            <div class="meta"><span class="badge b-mid">风险 中</span><span class="terr">撞小游戏 ASO</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">疆域正统，名字/符号/机制/心理学母体四位一体。</span>品牌资产厚度最高——这种同构在命名里可遇不可求。但它太「标准答案」，少一点私密性，且被接球小游戏持续拖价。一个正确的名字，不一定是一个动人的名字。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v">通过（本批最高之一）。唯一「名字＝产品动作＝logo 图形」三者同一个词的候选。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">整个疆域的<b>词根</b>。心理学母体「被接住」（依恋安全感，话没掉地上）在下，五重语义（接话/接事/接人/接住/接通）在中，「」符号在上——三层完全对齐。</div></div>
+          <div class="dl"><div class="k">视觉「」</div><div class="v"><span class="echo-compat ec-hi">兼容 10/10 名实合一</span> 「」就是「接住」的字形，图标可纯符号。动效母题＝落下→接住。挂坠上下两瓣可分：她一瓣、他一瓣，合起来才是完整的引号。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>接住了</b></span><span>在办 <b>正接着</b></span><span>办妥 <b>接稳了</b></span></div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">iTunes cn rc=7 <b>无同名 App</b>，但「接住 XX」已是<b>小游戏命名范式</b>（接住罐罐/接住所有的球）——撞语义拖 ASO、给第一眼带来轻浮感。英文侧全脏，走 Heldly。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 12 勾了就算 -->
+      <details class="cc rv" data-t="pinky" data-r="low">
+        <summary>
+          <div class="top">
+            <div class="rank">12</div>
+            <div>
+              <div class="name">勾了就算<span class="en">Once Hooked</span></div>
+              <div class="rd">gōu le jiù suàn · 拉勾系</div>
+            </div>
+            <div class="meta"><span class="badge b-low">风险 低</span><span class="terr">cn 1 / us 1</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">全案唯一一个成年人的名字。</span>其余都在撒娇、卖萌、讲童谣，只有它把桌子一拍：勾了就算。战略价值＝对冲——若担心拉勾系太幼齿、hold 不住 25+ 和已婚人群，这是唯一的解药，且保住了「勾」。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v">容器句✗，动作句"勾了就算"<b>✅✅✅ 全案最「江湖」</b>。四个字一锤定音，赌桌上的、义气的、成年人的分量。办公室没人这么说话。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">「算」三关：算数 / 作数 / 算了（不计较）。全案唯一不「幼」的候选，面向不撒娇的、平等的、更成熟的伴侣（落地页里的老 K 32 岁、大鹏 38 岁）。</div></div>
+          <div class="dl"><div class="k">视觉</div><div class="v"><span class="echo-compat ec-alt">拳头小指＋筹码</span> 令牌/筹码质感，<b>全案唯一可做深色主题</b>的候选。保住「勾」，视觉母题一分不少。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>勾了</b></span><span>在办 <b>办着呢</b></span><span>办妥 <b>说到做到</b></span></div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v">cn / us <b>rc=1</b>，仅一个「木工快算」的模糊匹配。四字整体极其干净，显著性质变。</div></div>
+        </div></div>
+      </details>
+
+      <!-- 13 有着落 -->
+      <details class="cc rv" data-t="echo" data-r="mid">
+        <summary>
+          <div class="top">
+            <div class="rank">13</div>
+            <div>
+              <div class="name">有着落<span class="en">Landed · Settled</span></div>
+              <div class="rd">yǒu zhuó luò · 念想·回应</div>
+            </div>
+            <div class="meta"><span class="badge b-mid">风险 中</span><span class="terr">检索有冲突</span></div>
+          </div>
+          <div class="quip"><span class="lead-in">血脉最正、赛道最空、定位最成熟。</span>不卖甜，卖「你可以依赖这个人」。对 22 岁的情侣不 sexy，对 32 岁的伴侣才致命——选它＝选定一个更年长、更长期、更愿意付费的用户群。这是商业判断，不是审美判断。</div>
+          <div class="exp"><span class="chev">▸</span><span class="txt"></span></div>
+        </summary>
+        <div class="body"><div class="frow-detail">
+          <div class="dl"><div class="k">情侣体温</div><div class="v">通过。结果性的安心，不是过程性的甜——温度来自「放心」，是一种成年人的温柔。</div></div>
+          <div class="dl"><div class="k">含义</div><div class="v">元 slogan「凡事有交代、件件有着落、事事有回音」——回响✗、回音✗、回应✗，<b>「着落」是唯一还活着的分支</b>。把「靠谱」重新定义成情话。</div></div>
+          <div class="dl"><div class="k">视觉</div><div class="v"><span class="echo-compat ec-alt">自有符号</span> 圆点落在地平线压出凹痕——每办妥一件事多一个凹痕，一年下来这条布满痕迹的线就是你们的关系史。</div></div>
+          <div class="dl"><div class="k">三态</div><div class="v"><div class="tri"><span>收到 <b>接下了</b></span><span>在办 <b>在办</b></span><span>办妥 <b>着落了</b></span></div></div></div>
+          <div class="dl"><div class="k">检索</div><div class="v"><b>⚠️ 两份检索有冲突，须复核：</b>一份（ECHO 疆域）标「未发现同名 App」；另一份（接住系疆域）标 iTunes cn 搜「有着落」首条 exact 命中「着落」App（Zhaoluo Technology）。这正是「机读初筛 ≠ 定论」的活样本——决赛圈须以 CNIPA ＋ App Store 人工复核为准。</div></div>
+        </div></div>
+      </details>
+
+    </div>
+    <div class="empty" id="empty">当前筛选没有匹配的候选。</div>
+  </div>
+</section>
+
+<!-- ============ 出海命名维度 ============ -->
+<section id="global">
+  <div class="wrap">
+    <div class="rv in">
+      <div class="eyebrow">Global Naming</div>
+      <h2>🌏 出海命名维度</h2>
+      <p class="sub">一定做硬件、一定出海，中日韩美三国一定做。命名战略＝<b>方案 B（概念统一 ＋ 名字本地化）</b>——因为 App Store / Google Play 支持<b>按语言设置不同显示名</b>，本地化的边际成本≈0（一个账号、一个 bundle、一套代码、四个显示名）。而收益是四个市场各自零解释成本的童年记忆，买不到。</p>
+    </div>
+
+    <div class="callout rv">
+      <h4>🔗 拉勾仪式在中日韩美同源——这是买不到的跨国叙事资产</h4>
+      <p>不是「巧合地相似」，是从日本江户吉原的「指切り」向外扩散的<b>同一个仪式</b>（英文维基把 pinky swear 的源头也指向 yubikiri）。更关键：<b>韩国那一版天然带「拇指盖章（도장）」——这不是我们要发明的隐喻，是韩国小孩六岁就会的动作，且和我们「办妥＝盖章」的三态终点是同一个手势。</b>讲品牌故事时你有一个真实、可考证、跨国的历史叙事，尤其日本媒体会买账（「起源于我们、传遍了世界」）。</p>
+    </div>
+
+    <div class="tblwrap rv">
+      <table>
+        <thead>
+          <tr><th>市场</th><th>推荐本地名</th><th>读音</th><th>理由 · 商标核验</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="flag">🇨🇳</span>中国</td>
+            <td><span class="rec">我们拉勾</span><div class="rd2">Pinkypact / WePinky</div></td>
+            <td>wǒmen lāgōu</td>
+            <td>App Store <b>cn 0 / us 0</b>，唯一「含拉勾却零结果」的写法。<span class="chip ok">主推</span><br><span style="font-size:12.5px">组合注册四字＋拳头图形；<b>绝不单注「拉勾」</b>（会惊动拉勾网）。CNIPA 须专门检索。</span></td>
+          </tr>
+          <tr>
+            <td><span class="flag">🇯🇵</span>日本<br><span style="font-size:11px;color:var(--seal);font-weight:700">首发国</span></td>
+            <td><span class="rec">ゆびきりげんまん</span><div class="rd2">全句 · No Take-Backs</div></td>
+            <td>yubikiri genman</td>
+            <td>全句 App Store rc=0、软件类（9/42）机读初筛空、显著性靠整句强。<span class="chip warn">须代理终检</span><br><span style="font-size:12.5px"><b>单用「ゆびきり」被トレードログ占死（cls45 交友，登录号 6737520）；汉字「指切り」＝设计红线禁用。</b>截取「genman」有 Bina 合同会社在审——须委托日本代理人核 9/42/45。</span></td>
+          </tr>
+          <tr>
+            <td><span class="flag">🇰🇷</span>韩国<br><span style="font-size:11px;color:var(--seal);font-weight:700">最贴合</span></td>
+            <td><span class="rec">손가락약속</span><div class="rd2">备选 꼭꼭약속（童谣原句）</div></td>
+            <td>songarak-yaksok</td>
+            <td>kr App Store 0，<b>9/14/42 类机读核验全空（verified null）</b>——最干净的韩国候选。<span class="chip ok">相对干净</span><br><span style="font-size:12.5px"><b>「약속」单用不可行</b>（通用词全占）；「콩닥」被 SPIKES 成套占死。拉勾＋拇指盖章零教育成本，但产品架构须「约定-共创」对称（见红线卡）。</span></td>
+          </tr>
+          <tr>
+            <td><span class="flag">🇺🇸</span>美国</td>
+            <td><span class="rec">Pinky Pact</span><div class="rd2">全球拉丁文字标 WePinky</div></td>
+            <td>—</td>
+            <td>仪式活着、名字死了——用视觉不用名字。<span class="chip no">避雷</span><br><span style="font-size:12.5px"><b>不用 Pinky Promise</b>（拥挤＋同名公司）、<b>不用 Pinky Swear</b>（撞儿童癌症慈善，公关自杀）。<b>WePinky</b> 是三区 App Store 全零的最干净全球拉丁文字标。</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout mid rv" style="margin-top:20px">
+      <h4>🎯 结论：图形全球统一 ＋ 名字本地化</h4>
+      <p><b>全球统一的图形标</b>：两个拳头各伸出一根小指相扣、负空间是一颗心——没有任何一家公司拥有这个图形（Pinky Swear 占了英文名、拉勾网占了中文名，但图形是空地）。<b>全球统一的拉丁文字标</b>：WePinky。<b>四个本地显示名</b>：我们拉勾 / ゆびきりげんまん / 손가락약속 / Pinky Pact。</p>
+      <p><b>首发日本</b>——不是因为最贴合（最贴合是韩国），而是因为它刚空出来：本土情侣 App 全线阵亡（Pairy 2026-06-30 关服），当前 App Store 情侣类前三名全是韩国 App，1.2 亿人口的市场没有本地玩家，且日本 2025-12 施行智能手机新法可合法绕开 30% IAP 抽成——有时效的窗口。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 韩国战略红线 ============ -->
+<section id="korea">
+  <div class="wrap">
+    <div class="rv in">
+      <div class="eyebrow">Strategic Red Line</div>
+      <h2>🇰🇷 韩国战略红线卡</h2>
+      <p class="sub">这一条影响产品架构，不只影响命名——是生死问题，不是措辞问题。</p>
+    </div>
+
+    <div class="kr-card rv">
+      <div class="kr-head">
+        <div class="flag">⚠️🇰🇷</div>
+        <h3>「指派-验收」框架 = 셔틀앱（跑腿 App）地雷</h3>
+        <p>核心机制「她说→他收到任务→回报『已接收/进行中/已完成』」，在韩男社区眼里就是<b>驯化男友 App</b>。一旦截图挂上 DC Inside / 에펨코리아，24 小时内成 meme。젠더갈등（性别对立）是 20 代最严重的社会断层线。</p>
+      </div>
+      <div class="kr-body">
+
+        <div class="kr-block">
+          <div class="bt"><span class="ic">🧨</span>判例级警告：GS25 집게손 事件（2021）</div>
+          <p>一张海报里一个「捏」的手势被男性社区解读为嘲讽 → <b>全国不买运动 → GS 股价当日 −2.37% → 营销组长引咎去职</b>。没人做过情侣任务 App，所以没有直接判例——但风险形状一致：性别 ＋ 权力关系 ＋ 可截图 UI。</p>
+          <p style="margin-top:8px"><b>连「小指」这个视觉母题在韩国都带电：</b>手势视觉必须明确画成「两根小指相扣（两个人）」，<b>绝不出现「单手捏小指」的构图</b>（后者正是 GS25 的爆点）。框架统一：AI 当 manager，不是她当 manager；视觉统一：永远成对，永不单手。</p>
+        </div>
+
+        <div class="kr-block">
+          <div class="bt"><span class="ic">🔧</span>必须重构为「约定-共创」对称模式（直接影响 PRD）</div>
+          <div class="transform">
+            <div class="from"><b>指派-验收</b><br>她指派 → 他接收（单向流）</div>
+            <div class="ar">→</div>
+            <div class="to"><b>约定-共创</b><br>双向对称，UI 完全对等</div>
+          </div>
+          <ul>
+            <li>「已接收/进行中/已完成」验收态 → 改 <b>「우리의약속（我们的约定）」共同事项</b>，避免完成度评分 / KPI / 督办语汇</li>
+            <li>任务 / 할일 / 지시 / 미션 → <b>약속 / 함께할일 / 우리의기록</b></li>
+            <li>突出「男友做到没」→ 突出 <b>「我们一起完成 N 件事」</b></li>
+            <li>主视觉两角色对等（学 Between 메리&amp;밀크，一对不是主仆）</li>
+            <li>文案必须韩国本地人写，且必须过「男性社区会怎么截图这一屏」的红队测试——非可选项</li>
+          </ul>
+        </div>
+
+        <div class="kr-block">
+          <div class="bt"><span class="ic">💥</span>Between 数据事故 = 十年一遇的信任真空（最大机会）</div>
+          <p>2025-09 执行相册清理时，AWS 存储区分「聊天/相册」的唯一代码值被错误指定 → <b>免费用户相册照片/头像永久删除、无备份、彻底无法恢复</b>，有用户损失 10 年回忆 / 1 万张照片。MAU 从峰值 120 万崩到 23 万（−80%）。</p>
+          <ul>
+            <li>入场第一张牌＝可验证的「数据永不丢失」承诺：<b>「우리는 당신의 기억을 지우지 않습니다（我们不会删掉你的回忆）」</b> ＋ 一键从 Between 导入 ＋ 随时完整导出</li>
+            <li><b>反向红线：</b>中国团队重演一次 = 出局 ＋ PIPC 全体营收 3% 罚款（PIPC 对中国接收方审查极严）</li>
+          </ul>
+        </div>
+
+        <div class="kr-block">
+          <div class="bt"><span class="ic">⚖️</span>声纹识别 = 刑事红线（第一版明确不做）</div>
+          <p>录语音 → STT 转文字 → 任务卡（不做说话人识别）＝ 普通个人信息，常规同意即可。但<b>声纹识别 / speaker diarization（「这是男友还是女友说的」）＝ 민감정보（敏感信息），必须单独同意，违反 = 5 年以下有期徒刑或 5 千万韩元罚金 ＋ 全体营收 3% 过징금。</b>情侣 App 有强烈「自动区分说话人」的冲动——第一版明确不做。</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 决策指引 ============ -->
+<section id="guide">
+  <div class="wrap">
+    <div class="rv in">
+      <div class="eyebrow">Decision Guide</div>
+      <h2>决策指引</h2>
+      <p class="sub">给老板的三问框架——先回答这三个问题，13 个候选自己就会收敛到 3 个。</p>
+    </div>
+
+    <div class="qbox rv">
+      <div class="q">
+        <div class="qn">问题 01</div>
+        <div class="qq">品牌要「最动人」还是「最好用」？</div>
+        <div class="qa">
+          <span class="opt"><b>最动人</b> → 我接着呢 / 有我呢 / 跟我拉勾</span>
+          <span class="opt"><b>最好用</b> → 说好了 / 接着呢</span>
+          <span class="opt"><b>最安全</b> → 一百年不许变 / 我们拉勾</span>
+        </div>
+      </div>
+      <div class="q">
+        <div class="qn">问题 02</div>
+        <div class="qq">主用户是 22 岁热恋，还是 32 岁长期伴侣？</div>
+        <div class="qa">
+          <span class="opt"><b>22 岁热恋</b> → 撒娇口语：有我呢 / 我接着呢 / 惦记</span>
+          <span class="opt"><b>32 岁长期</b> → 成年人版：勾了就算 / 有着落 / 说好了</span>
+          <span style="display:block;margin-top:8px;font-size:12.5px;color:var(--fg-faint)">这决定的是「谁付费」，是商业判断不是审美判断。</span>
+        </div>
+      </div>
+      <div class="q">
+        <div class="qn">问题 03</div>
+        <div class="qq">要不要押「回声括号「」」做主 logo？</div>
+        <div class="qa">
+          <span class="opt"><b>要押「」</b> → 接住系名实合一：我接着呢 / 接住 / 接着呢 / 兜住</span>
+          <span class="opt"><b>不押「」</b> → 拉勾系拳头小指：我们拉勾 / 一百年不许变 / 勾住了</span>
+          <span style="display:block;margin-top:8px;font-size:12.5px;color:var(--fg-faint)">这是两套符号系统——<b>选名字＝选符号</b>，不能事后再改。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rv" style="margin-top:36px">
+      <h3 style="margin-bottom:4px">下一步 · 四件事（按优先级）</h3>
+      <div class="steps">
+        <div class="step"><div class="sn">1</div><div class="sc"><h4>Top 3 送中日韩商标代理逐类核验</h4><p>中国 CNIPA ＋ 日本 J-PlatPat ＋ 韩国 KIPRIS，9 / 35 / 38 / 42 / 45 类。机读初筛到此为止——剩下的必须委托当地代理人。日本名（ゆびきりげんまん全句 ＋ genman 截取）从申请到注册约 6–12 个月，须在众筹前启动。</p></div></div>
+        <div class="step"><div class="sn">2</div><div class="sc"><h4>真情侣体温测试（本看板最大方法论缺口）</h4><p>把 Top 3 拿给至少 5 对真实情侣，让<b>她</b>念那两个句式，记录第一反应。所有文档的体温测试都是作者念的、不是用户念的——上线前必须补。</p></div></div>
+        <div class="step"><div class="sn">3</div><div class="sc"><h4>域名 / App Store 名 / 小程序 / 抖音号占位</h4><p>Top 3 逐个查可用性并抢占。日本图标显示名注意长度（iOS 约 6 个全角字符），「一百年不许变」这类长名须配短形式「不许变」。</p></div></div>
+        <div class="step"><div class="sn">4</div><div class="sc"><h4>韩国产品架构先改，再谈上线</h4><p>「约定-共创」对称模式不是文案调整，是 PRD 级改动——先把单向流改成双向对称、把验收态语汇换成「우리의약속」，再谈韩国上线。</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 独立推荐 ============ -->
+<section id="pick">
+  <div class="wrap">
+    <div class="pick rv">
+      <div class="ph">
+        <div class="e">读完全部 160 候选后的独立立场</div>
+        <h3>我的 Top 3 主品牌推荐</h3>
+      </div>
+      <div class="pb">
+        <p class="lead" style="margin-bottom:20px">这个项目的确定性支柱是<b>「一定做硬件 ＋ 一定出海 ＋ 首发日本 ＋ 韩国最贴合」</b>。谁能同时扛住「跨国叙事、韩国对称与盖章、成对硬件、cn/us 零占用」四件事，谁就该做全球主品牌内核。以此为尺——</p>
+
+        <div class="tier">
+          <div class="medal">🥇</div>
+          <div class="tc">
+            <h4>我们拉勾 <span class="en">中 · 一套四名，不是四个名</span></h4>
+            <div class="cond">中国 我们拉勾 / 日本 ゆびきりげんまん / 韩国 손가락약속 / 全球 WePinky</div>
+            <p>唯一同时解决四件事的方案：<b>拉勾仪式中日韩美同源</b>是买不到的 PR 资产（尤其首发国日本媒体买账）；<b>韩国版自带拇指盖章＝现成的「办妥」手势且天然对称</b>，正好躲开性别地雷；<b>成对挂坠天然双份客单价、印章可脱离 App 单卖</b>；「我们拉勾」cn/us 双 0 是拉勾系唯一活路。唯一代价——容器句拗口——恰恰是它的立场：别的 App 是容器，它是仪式（"这事我们拉勾了"，一句不需要 App 存在也成立的话）。</p>
+          </div>
+        </div>
+
+        <div class="tier">
+          <div class="medal">🥈</div>
+          <div class="tc">
+            <h4>有我呢 <span class="en">Gotchu · 纯软件 / 国内优先路线的最优解</span></h4>
+            <div class="cond">若要一个不依赖仪式系的、单一强中国主名</div>
+            <p>体温满分、心智唯一（<b>兑现爱</b>不是表达爱）、品牌名＝核心交互反馈、视觉反甜腻（男性敢装，而男方安装率是生死线）、五线全适配。它天然是「在场/托底」框架而非「指派」框架，也躲韩国地雷。风险仅显著性——可用字形＋Gotchu 英文＋图形组合解决，风险不对称（成了十年一遇，不成换名）。<b>如果这一版先不做那么重的跨国仪式叙事、先在中国跑通，我押它。</b></p>
+          </div>
+        </div>
+
+        <div class="tier">
+          <div class="medal">🥉</div>
+          <div class="tc">
+            <h4>我接着呢 <span class="en">押「」回声括号路线时的唯一人格名</span></h4>
+            <div class="cond">若老板情感上锁定「」为主 logo、要名实合一</div>
+            <p>接住系里<b>唯一有主语、有人格</b>的名字——三态天然成句且全是他会说的话，App 每次状态变更都是他在说话，与「」严丝合缝，cn rc=0。若更看重「词根厚度＋四位一体」而非人格，则在它与「接住」之间取一。<b>它是「押「」」这条路的天花板；但要注意接住系不承载拉勾的跨国仪式叙事，出海故事会弱一截。</b></p>
+          </div>
+        </div>
+
+        <div class="callout info" style="margin-top:24px;background:var(--surface2)">
+          <h4>一句话立场</h4>
+          <p>如果这个产品的终局真是「硬件＋三国出海」，<b class="hl">主品牌押「我们拉勾」系（配 ゆびきりげんまん / 손가락약속 / WePinky）</b>——它是唯一不需要老板放弃任何东西、又把跨国叙事和成对硬件一起买下的答案。国内若要一个不靠仪式的强口语备胎，<b>有我呢</b>；老板若离不开回声括号「」，<b>我接着呢</b>。三者背后是三条不同的产品路线，选名字之前，先在决策指引的三问里把路线定了。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap narrow">
+    <p><b>终局命名决策看板</b> · 双向情侣备忘录 App · 会议拍板版 · 2026-07-14</p>
+    <p>数据来源：Apple iTunes Search API（entity=software, cn/us 逐条实测）· WIPO Global Brand Database（KIPO 镜像）/ TMview（JPO 镜像）机读初筛 · USPTO TSDR 序列号核验 · WebSearch 交叉验证实体。源文档：NAMING_R2_CATCH / ECHO / PINKY · GLOBAL_GTM · KOREA_MARKET_DEEPDIVE · TRADEMARK_VERIFICATION_JP_KR · NAMING_ECHO / PROMISE / COINED / OBJECT。</p>
+    <div class="disclaimer">
+      <b>检索边界（再次声明）：</b>本看板所有「干净 / 已占」为 AI 公开检索 ＋ 机读官方库<b>初筛</b>，不含指定商品全文、未做 CNIPA 逐类穷举、日本数据单一来源未交叉确认。<b>≠ 律师意见。决赛圈定稿后 Top 3 仍须委托中日韩当地商标代理人正式核验。</b>「有着落」等存在两份检索结论冲突的候选，以人工复核为准。
+    </div>
+  </div>
+</footer>
+
+<script>
+// 主题切换
+(function(){
+  var btn=document.getElementById('themeToggle');
+  var root=document.documentElement;
+  function set(dark){
+    root.setAttribute('data-theme',dark?'dark':'light');
+    btn.textContent=dark?'浅色':'深色';
+  }
+  try{
+    var saved=localStorage.getItem('naming-theme');
+    if(saved){set(saved==='dark');}
+    else{set(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);}
+  }catch(e){set(false);}
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')!=='dark';
+    set(dark);
+    try{localStorage.setItem('naming-theme',dark?'dark':'light');}catch(e){}
+  });
+})();
+
+// 筛选：纯 JS，无依赖。默认全部可见——JS 挂了也只是筛选失效，卡片依然全部显示。
+(function(){
+  var cards=[].slice.call(document.querySelectorAll('#grid .cc'));
+  var countEl=document.getElementById('count');
+  var emptyEl=document.getElementById('empty');
+  var tBtns=[].slice.call(document.querySelectorAll('.pill[data-t]'));
+  var rBtns=[].slice.call(document.querySelectorAll('.pill[data-r]'));
+  var curT='all', curR='all';
+  function apply(){
+    var n=0;
+    cards.forEach(function(c){
+      var ok=(curT==='all'||c.getAttribute('data-t')===curT)&&(curR==='all'||c.getAttribute('data-r')===curR);
+      c.hidden=!ok; if(ok)n++;
+    });
+    if(countEl)countEl.textContent='显示 '+n+' / '+cards.length;
+    if(emptyEl)emptyEl.hidden=(n>0);
+  }
+  function bind(btns,set){
+    btns.forEach(function(b){
+      b.addEventListener('click',function(){
+        btns.forEach(function(x){x.setAttribute('aria-pressed','false')});
+        b.setAttribute('aria-pressed','true');
+        set(b); apply();
+      });
+    });
+  }
+  bind(tBtns,function(b){curT=b.getAttribute('data-t')});
+  bind(rBtns,function(b){curR=b.getAttribute('data-r')});
+  apply();
+})();
+
+// 渐现：IntersectionObserver + 1.5s 兜底（任何原因没触发都强制可见，绝不白屏）
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:.06,rootMargin:'0px 0px -5% 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  }
+  setTimeout(function(){
+    document.querySelectorAll('.rv:not(.in)').forEach(function(e){ e.classList.add('in'); });
+  },1500);
+})();
+</script>
+</body>
+</html>

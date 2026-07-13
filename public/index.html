@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>念响 Reecho · 事事有回应,句句有回响</title>
+<title>念响(名称待定) · 事事有回应,句句有回响</title>
 <meta name="description" content="双向备忘录:说一句,句句有回响。五种人格模式可切换。">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-180.png">
@@ -126,7 +126,7 @@ body[data-mode="E"] .mic{width:64px;height:64px;font-size:26px;border-color:var(
 
 <div class="wrap" id="onb" style="display:none">
   <svg width="52" height="52" viewBox="0 0 56 56"><circle cx="28" cy="28" r="8" fill="#E8604C"/><circle cx="28" cy="28" r="16" fill="none" stroke="#E8604C" stroke-width="2.5" opacity=".45"/><circle cx="28" cy="28" r="24" fill="none" stroke="#E8604C" stroke-width="2" opacity=".2"/></svg>
-  <h1 class="logo">念响 <span style="color:var(--accent)">Reecho</span></h1>
+  <h1 class="logo">念响 <span style="color:var(--accent);font-size:.6em">英文名待定</span></h1>
   <div class="slogan">事事有回应,句句有回响。</div>
   <div class="slogan" style="margin-top:2px">两个人的双向备忘录 · 免注册,建小家发邀请码即可</div>
   <div class="onb-card">
@@ -172,7 +172,7 @@ body[data-mode="E"] .mic{width:64px;height:64px;font-size:26px;border-color:var(
 <script>
 /* ============ 五模式话术包(规格书 docs/MODE_SPEC.md) ============ */
 const MODES={
-  A:{name:'念响',en:'REECHO',desc:'温柔回响 · 默认',sw:'linear-gradient(135deg,#E8604C,#2C3A42)',
+  A:{name:'念响',en:"英文名待定",desc:'温柔回响 · 默认',sw:'linear-gradient(135deg,#E8604C,#2C3A42)',
     unit:'念念',states:{received:'收到',doing:'在办',done:'办妥'},ph:'说件事,让它有着落…',
     ai:'🧭 请 AI 僚机出方案',aiRun:'僚机调研中,好了会出现在这里…',aiSee:'🧭 看 AI 僚机方案',
     cele:['办妥 ✓ 你做到了','TA 那边,已经有回响了'],notif:'🌸 有回响',doneVerb:'办妥了',
@@ -386,7 +386,7 @@ $('#setChip').onclick=()=>{
     <div class="row2"><span>人格模式</span><button class="chip" onclick="modeSheet()">${M().name} · 切换</button></div>
     <div class="row2"><span>硬件(挂坠/DJI 麦克风)</span><button class="chip" onclick="mkDevice()">生成设备 Token</button></div>
     <div class="row2"><span>退出登录</span><button class="chip" onclick="localStorage.removeItem('ee_auth');location.reload()">退出</button></div>
-    <p style="font-size:12px;color:var(--muted);margin-top:14px">念响 Reecho v1.1.0 · AI 方案免费 5 次起 · 会员(心动/陪伴/珍藏)随发布计划上线</p>`;
+    <p style="font-size:12px;color:var(--muted);margin-top:14px">念响(名称待定) v1.1.0 · AI 方案免费 5 次起 · 会员(心动/陪伴/珍藏)随发布计划上线</p>`;
   $('#sheet').classList.add('show')};
 $('#sheet').onclick=e=>{if(e.target.id==='sheet')$('#sheet').classList.remove('show')};
 window.mkDevice=async()=>{const r=await API({path:'/devices',m:'POST',body:{label:'硬件'}});
